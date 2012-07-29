@@ -53,6 +53,12 @@ while True:
 			pygame.quit()
 			sys.exit(0)
 
+		# NOTE (dave) could do something clever here where all
+		#  interested parties for handling keyboard input could
+		#  register themselves on a list, or in a priority queue,
+		#  and then a "try handle event" function could be called
+		#  on each in turn until someone handled the event...
+
 		elif event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_LEFT:
 				posStars = ((posStars[0] + 637) % 640, posStars[1])
