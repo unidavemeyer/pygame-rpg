@@ -39,6 +39,7 @@ iColor = 0
 
 surfStars = pygame.image.load('stars.png')
 posStars = (320, 240)
+posStarsMouse = posStars
 
 # initialize to first color
 
@@ -68,13 +69,24 @@ while True:
 				posStars = (posStars[0], (posStars[1] + 477) % 480)
 			elif event.key == pygame.K_DOWN:
 				posStars = (posStars[0], (posStars[1] + 483) % 480)
+			elif event.key == pygame.K_ESCAPE:
+				pygame.event.post(pygame.event.Event(pygame.QUIT))
 			else:
 				iColor = (iColor + 1) % len(lColor)
 
+		elif event.type == pygame.MOUSEMOTION:
+			posStarsMouse = event.pos
+
 	# redraw the things we want drawn
+
+	# NOTE (davidm) may make sense to have a prioritized list
+	#  of things to draw here, and give each one a chance to
+	#  add something to surfScreen, which should probably be an
+	#  option
 
 	surfScreen.fill(lColor[iColor])
 	surfScreen.blit(surfStars, posStars)
+	surfScreen.blit(surfStars, posStarsMouse)
 			
 	# refresh the screen -- very important to do at the end of the loop!
 
