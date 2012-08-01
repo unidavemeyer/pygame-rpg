@@ -1,0 +1,23 @@
+Random thoughts:
+
+- should have global object to manage event dispatch, drawing
+- should have objects register themselves with the global
+- need to have two modes:  walk the world and combat
+- lists of updating/event handling/drawing objects should be in
+  prioritized lists so that we get the ordering right
+
+- math combat could be fast-as-you-can-go -- each right answer does damage
+- math combat could be answer as many in the time -- each right answer incs dmg
+- math combat could be chosen per weapon
+- punchline for combat is that the weapon should be in charge of events
+
+- random events should always be bounded, and should have a computed/saved
+  value for them so that the player could theoretically discover the timing
+  of something interesting happening (think semi-rares from KoL)
+
+- level could be layout of index -> image mapping, with a map of indexes
+  showing the layout of the level.  Index could also map to passable,
+  impassable, damaging, encounter, etc.
+
+- enemies could be surprise or shown (lean towards latter, but may include
+  former as well or instead)

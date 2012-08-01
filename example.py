@@ -39,8 +39,9 @@ iColor = 0
 # load up an image
 
 surfStars = pygame.image.load('stars.png')
+surfGuy = pygame.image.load('guy.png')
 posStars = (320, 240)
-posStarsMouse = posStars
+posGuy = posStars
 
 # set up a couple of fonts so we can render text
 
@@ -68,20 +69,20 @@ while True:
 
 		elif event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_LEFT:
-				posStars = ((posStars[0] + 637) % 640, posStars[1])
+				posGuy = ((posGuy[0] + 637) % 640, posGuy[1])
 			elif event.key == pygame.K_RIGHT:
-				posStars = ((posStars[0] + 643) % 640, posStars[1])
+				posGuy = ((posGuy[0] + 643) % 640, posGuy[1])
 			elif event.key == pygame.K_UP:
-				posStars = (posStars[0], (posStars[1] + 477) % 480)
+				posGuy = (posGuy[0], (posGuy[1] + 477) % 480)
 			elif event.key == pygame.K_DOWN:
-				posStars = (posStars[0], (posStars[1] + 483) % 480)
+				posGuy = (posGuy[0], (posGuy[1] + 483) % 480)
 			elif event.key == pygame.K_ESCAPE:
 				pygame.event.post(pygame.event.Event(pygame.QUIT))
 			else:
 				iColor = (iColor + 1) % len(lColor)
 
 		elif event.type == pygame.MOUSEMOTION:
-			posStarsMouse = event.pos
+			posStars = event.pos
 
 	# redraw the things we want drawn
 
@@ -92,7 +93,7 @@ while True:
 
 	surfScreen.fill(lColor[iColor])
 	surfScreen.blit(surfStars, posStars)
-	surfScreen.blit(surfStars, posStarsMouse)
+	surfScreen.blit(surfGuy, posGuy)
 
 	# generate some text
 
