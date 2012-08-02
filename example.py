@@ -33,6 +33,7 @@ colorPurple = pygame.Color(255, 0, 255)
 colorBlack = pygame.Color(0, 0, 0)
 colorWhite = pygame.Color(255, 255, 255)
 lColor = [colorRed, colorGreen, colorBlue, colorPurple, colorBlack, colorWhite]
+lColorStr = ['Red', 'Green', 'Blue', 'Purple', 'Black', 'White']
 iColor = 0
 
 # load up an image
@@ -40,6 +41,11 @@ iColor = 0
 surfStars = pygame.image.load('stars.png')
 posStars = (320, 240)
 posStarsMouse = posStars
+
+# set up a couple of fonts so we can render text
+
+font32 = pygame.font.Font('/usr/share/fonts/truetype/freefont/FreeSans.ttf', 32)
+font16 = pygame.font.Font('/usr/share/fonts/truetype/freefont/FreeMono.ttf', 16)
 
 # initialize to first color
 
@@ -87,6 +93,14 @@ while True:
 	surfScreen.fill(lColor[iColor])
 	surfScreen.blit(surfStars, posStars)
 	surfScreen.blit(surfStars, posStarsMouse)
+
+	# generate some text
+
+	surfColor32 = font32.render(lColorStr[iColor], False, lColor[(iColor+1) % len(lColor)]);
+	surfColor16 = font16.render(lColorStr[iColor], False, lColor[(iColor+1) % len(lColor)]);
+
+	surfScreen.blit(surfColor32, (10, 10))
+	surfScreen.blit(surfColor16, (10, 50))
 			
 	# refresh the screen -- very important to do at the end of the loop!
 
