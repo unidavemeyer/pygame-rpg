@@ -1,10 +1,30 @@
 Random thoughts:
 
-- should have global object to manage event dispatch, drawing
-- should have objects register themselves with the global
 - need to have two modes:  walk the world and combat
-- lists of updating/event handling/drawing objects should be in
-  prioritized lists so that we get the ordering right
+	- actually, may also want transition in/out, main menu, pause menu;
+	  seems like we should make this a state machine of some kind with
+	  transitions and the like
+- need world/level/room object(s)
+	- renders static level geometry
+	- handles "hot zones" (i.e., doors, etc.)
+- need combat layout/display object
+	- renders combat display (borders, help, etc.)
+- need hero object
+	- handles map-mode input
+	- updates position of player in map mode, based on input
+	- updates stats of player in combat mode, based on damage, xp, etc.
+	- renders self in map-mode, combat-mode
+- need weapon object(s)
+	- handles combat-mode input
+	- updates combat-mode damage calculations, etc.
+	- renders questions/answers/progress for attack in combat mode
+	- renders self, maybe, in both modes?
+- need enemy object(s)
+	- updates based on player/clock/whatever data in map-mode
+	- updates damage to player in combat-mode
+	- updates health, stats in map-mode based on damage
+	- renders position in map-mode
+	- renders self, anims in combat-mode
 
 - math combat could be fast-as-you-can-go -- each right answer does damage
 - math combat could be answer as many in the time -- each right answer incs dmg
