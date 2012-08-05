@@ -5,6 +5,19 @@
 import pygame
 import sys
 
+import Menu
+
+class Mode:
+	"""Enum-type class tracking various game modes."""
+
+	# BB (dave) should make these read-only attributes
+
+	MENU = 0		# player is using the menu
+	WORLDMAP = 1	# player is navigating the world map
+	COMBAT = 2		# player is in combat
+
+
+
 class Game:
 	"""Glues together the whole game.  Runs the game loop and provides"""
 	""" services to register objects for update, event handling, and"""
@@ -17,6 +30,8 @@ class Game:
 
 		self.fpsClock = None
 		self.surfScreen = None
+
+		self.m_mode = Mode.MENU
 
 	def AddUpdate(self, obj, priority):
 		"""Add obj to the priority list of objects to update.  obj is expected"""
@@ -56,6 +71,16 @@ class Game:
 
 		self.mpPriHandler[priority].remove(obj)
 
+	def Mode(self):
+		"""Queries the current game mode, which will be a value from the Mode enum class"""
+
+		return self.m_mode
+
+	def SetMode(self, mode):
+		"""Sets the current mode for the game, which must be from the Mode enum class"""
+
+		self.m_mode = mode
+
 	def Run(self):
 
 		# Set up pygame
@@ -64,6 +89,10 @@ class Game:
 		self.fpsClock = pygame.time.Clock()
 		self.surfScreen = pygame.display.set_mode((640,480))
 		pygame.display.set_caption('Arithmancer')
+
+		# Set up starter objects
+
+		Menu.Menu()
 
 		# Run the main loop
 
@@ -117,4 +146,6 @@ game = Game()
 # Command-line driver (how the whole thing operates)
 
 if __name__ == '__main__':
-	game.Run()
+	import Game
+	print "Main: game is", Game.game
+	Game.game.Run()
