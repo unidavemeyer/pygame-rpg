@@ -146,6 +146,9 @@ game = Game()
 # Command-line driver (how the whole thing operates)
 
 if __name__ == '__main__':
+	# BB (dave) funny construction here so that we talk to the
+	#  same singleton game instance that all other modules are
+	#  using
+
 	import Game
-	print "Main: game is", Game.game
 	Game.game.Run()

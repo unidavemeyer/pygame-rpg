@@ -6,10 +6,11 @@ import Game
 import pygame
 
 class Menu:
-	def __init__(self):
-		print "Menu: game is", Game.game
+	"""Manages the menu for the game -- used when paused, when starting the"""
+	""" game, etc."""
 
-		Game.game.AddUpdate(self, 10)		# relatively early update
+	def __init__(self):
+		Game.game.AddUpdate(self, 10)	# relatively early update
 		Game.game.AddRender(self, 100)	# relatively late render (more on top)
 		Game.game.AddHandler(self, 10)	# relatively early event handler
 
@@ -91,6 +92,8 @@ class Menu:
 		print "Resume not yet implemented"
 
 	def OnNewGame(self):
+		# BB (dave) create a world connected to the intro map
+
 		print "New game not yet implemented"
 
 	def OnSaveGame(self):
