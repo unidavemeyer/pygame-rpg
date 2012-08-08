@@ -4,6 +4,7 @@
 
 import Game
 import pygame
+import World
 
 class Menu:
 	"""Manages the menu for the game -- used when paused, when starting the"""
@@ -92,9 +93,11 @@ class Menu:
 		print "Resume not yet implemented"
 
 	def OnNewGame(self):
-		# BB (dave) create a world connected to the intro map
+		"""Generates a new game by creating a World linked to start.wld and"""
+		""" changing the game mode."""
 
-		print "New game not yet implemented"
+		world = World.World('worlds/start.wld')
+		Game.game.SetMode(Game.Mode.WORLDMAP)
 
 	def OnSaveGame(self):
 		print "Save game not yet implemented"
