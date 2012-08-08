@@ -54,7 +54,7 @@ class Menu:
 		if event.type != pygame.KEYDOWN:
 			return False
 
-		if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+		if event.key == pygame.K_ESCAPE:
 			Game.game.SetMode(Game.Mode.MENU)
 			return True
 

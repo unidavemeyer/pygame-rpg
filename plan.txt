@@ -1,14 +1,5 @@
 Random thoughts:
 
-- need to have two modes:  walk the world and combat
-	- actually, may also want transition in/out, main menu, pause menu;
-	  seems like we should make this a state machine of some kind with
-	  transitions and the like
-- need world/level/room object(s)
-	- renders static level geometry
-	- handles "hot zones" (i.e., doors, etc.)
-- need combat layout/display object
-	- renders combat display (borders, help, etc.)
 - need hero object
 	- handles map-mode input
 	- updates position of player in map mode, based on input
@@ -19,12 +10,20 @@ Random thoughts:
 	- updates combat-mode damage calculations, etc.
 	- renders questions/answers/progress for attack in combat mode
 	- renders self, maybe, in both modes?
+- need inventory screen
+	- handles examination of weapons, other items
+	- handles equiping items
+	- needs to render to display info
+	- needs to handle input when active
+	- needs its own mode...?  Maybe sub-mode of WORLDMAP?
 - need enemy object(s)
 	- updates based on player/clock/whatever data in map-mode
 	- updates damage to player in combat-mode
 	- updates health, stats in map-mode based on damage
 	- renders position in map-mode
 	- renders self, anims in combat-mode
+- need combat layout/display object
+	- renders combat display (borders, help, etc.)
 
 - math combat could be fast-as-you-can-go -- each right answer does damage
 - math combat could be answer as many in the time -- each right answer incs dmg
