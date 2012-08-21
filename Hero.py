@@ -4,6 +4,7 @@
 
 import Game
 import pygame
+import Vec
 
 class Hero:
 	"""The game contains a single Hero instance, which handles input, rendering, and"""
@@ -20,14 +21,60 @@ class Hero:
 		self.surf = pygame.Surface((32, 32))
 		self.surf.fill(pygame.Color(128, 128, 192))
 
+		# Tracking for key events
+
+		class KeyState:
+			def __init__(self):
+				self.tickUp = 0
+				self.tickDown = 0
+
+			def FIsPressed(self):
+				return self.tickDown > self.tickUp
+
+			def TicksHeld(self):
+				if not FIsPressed():
+					return 0
+
+				return pygame.time.get_ticks() - self.tickDown
+
+		self.mpKeyState = {
+				pygame.K_UP: KeyState(),
+				pygame.K_DOWN: KeyState(),
+				pygame.K_LEFT: KeyState(),
+				pygame.K_RIGHT: KeyState(),
+			}
+
+		# position, velocity, etc.
+
+		self.v = Vec.Vec(0, 0)
+		self.pos = Vec.Vec(0, 0)
+
 	def OnUpdate(self):
 		if Game.game.Mode() == Game.Mode.COMBAT:
 			# BB (dave) Handle damge, etc.
 			pass
 
 		elif Game.game.Mode() == Game.Mode.WORLDMAP:
-			# BB (dave) Handle motion, etc.
-			pass
+
+			# BB (dave) Time step shouldn't be hard coded...
+
+			dT = 0.03
+			sdVMax = 200.0
+
+			# Compute new velocity
+
+			# NOTE (dave) this treatment means we smooth in (via acceleration)
+			#  and also smooth out (since accel decreases as we approach target)
+
+			vTarget = self.VTargetCompute()
+			dV = vTarget - self.v
+			dVLim = Vec.VecLimitLen(dV, sdVMax)
+
+			self.v += dT * dVLim
+
+			# Compute new position
+
+			self.pos += dT * self.v
 
 	def FHandleEvent(self, event):
 		if Game.game.Mode() != Game.Mode.WORLDMAP:
@@ -36,12 +83,42 @@ class Hero:
 		# BB (dave) handle 'i' key to go to inventory
 
 		if event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_UP:
-			elif event.key == pygame.K_DOWN:
-			elif event.key == pygame.K_LEFT:
-			elif event.key == pygame.K_RIGHT:
+			keystate = self.mpKeyState.get(event.key)
+			if keystate:
+				keystate.tickDown = pygame.time.get_ticks()
 		if event.type == pygame.KEYUP:
-			if event.key == pygame.K_UP:
-			elif event.key == pygame.K_DOWN:
-			elif event.key == pygame.K_LEFT:
-			elif event.key == pygame.K_RIGHT:
+			keystate = self.mpKeyState.get(event.key)
+			if keystate:
+				keystate.tickUp = pygame.time.get_ticks()
+
+	def OnRender(self, surfScreen):
+		if Game.game.Mode() == Game.Mode.WORLDMAP:
+			# BB (dave) very basic positioning here -- can flow off sides, no collision, etc.
+			surfScreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
+		
+	def VTargetCompute(self):
+		"""Uses current keyboard input to determine target velocity."""
+
+		vMax = 120.0
+
+		vY = 0.0
+
+		ksUp = self.mpKeyState.get(pygame.K_UP)
+		ksDown = self.mpKeyState.get(pygame.K_DOWN)
+
+		if ksUp.FIsPressed() and not ksDown.FIsPressed():
+			vY = -vMax
+		elif ksDown.FIsPressed() and not ksUp.FIsPressed():
+			vY = vMax
+
+		vX = 0.0
+
+		ksLeft = self.mpKeyState.get(pygame.K_LEFT)
+		ksRight = self.mpKeyState.get(pygame.K_RIGHT)
+
+		if ksLeft.FIsPressed() and not ksRight.FIsPressed():
+			vX = -vMax
+		elif ksRight.FIsPressed() and not ksLeft.FIsPressed():
+			vX = vMax
+
+		return Vec.Vec(vX, vY)

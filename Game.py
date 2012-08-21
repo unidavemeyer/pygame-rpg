@@ -5,6 +5,7 @@
 import pygame
 import sys
 
+import Hero
 import Menu
 
 class Mode:
@@ -93,6 +94,7 @@ class Game:
 		# Set up starter objects
 
 		Menu.Menu()
+		Hero.Hero()
 
 		# Run the main loop
 
