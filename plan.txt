@@ -35,3 +35,11 @@ Random thoughts:
 
 - enemies could be surprise or shown (lean towards latter, but may include
   former as well or instead)
+
+- Maybe crafting mechanic produces random or pseudo-random item, but combines
+  all bonuses from both input items.  Difficulty then based on total number
+  of points of bonuses, perhaps.
+
+- Maybe we don't bother to track xp -- character levels up by improving
+  equipment?  Seems like it might make sense -- cap things based on the player's
+  skill somehow rather than the arbitrary limits of xp...
