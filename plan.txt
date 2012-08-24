@@ -1,10 +1,5 @@
 Random thoughts:
 
-- need hero object
-	- handles map-mode input
-	- updates position of player in map mode, based on input
-	- updates stats of player in combat mode, based on damage, xp, etc.
-	- renders self in map-mode, combat-mode
 - need weapon object(s)
 	- handles combat-mode input
 	- updates combat-mode damage calculations, etc.

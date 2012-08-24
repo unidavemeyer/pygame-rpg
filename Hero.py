@@ -49,6 +49,18 @@ class Hero:
 		self.v = Vec.Vec(0, 0)
 		self.pos = Vec.Vec(0, 0)
 
+		# player statistics
+
+		self.hpMax = 100
+		self.hpCur = self.hpMax
+		self.xp = 0
+
+		# inventory
+
+		self.gold = 0
+		self.lItem = []
+		self.weapon = None
+
 	def OnUpdate(self):
 		if Game.game.Mode() == Game.Mode.COMBAT:
 			# BB (dave) Handle damge, etc.
@@ -59,7 +71,8 @@ class Hero:
 			# BB (dave) Time step shouldn't be hard coded...
 
 			dT = 0.03
-			sdVMax = 200.0
+			sdVMax = 600.0
+			rsdV = 10.0
 
 			# Compute new velocity
 
@@ -68,9 +81,15 @@ class Hero:
 
 			vTarget = self.VTargetCompute()
 			dV = vTarget - self.v
-			dVLim = Vec.VecLimitLen(dV, sdVMax)
+			dVScaled = rsdV * dV
+			dVLim = Vec.VecLimitLen(dVScaled, sdVMax)
 
+			vOld = self.v
 			self.v += dT * dVLim
+
+			if "DEBUG" == 0:
+				print "vTarget: %s dV: %s dVScaled %s dVLim %s v %s vNext %s" % \
+					(vTarget, dV, dVScaled, dVLim, vOld, self.v)
 
 			# Compute new position
 
@@ -86,20 +105,37 @@ class Hero:
 			keystate = self.mpKeyState.get(event.key)
 			if keystate:
 				keystate.tickDown = pygame.time.get_ticks()
+				return True
 		if event.type == pygame.KEYUP:
 			keystate = self.mpKeyState.get(event.key)
 			if keystate:
 				keystate.tickUp = pygame.time.get_ticks()
+				return True
+
+		return False
 
 	def OnRender(self, surfScreen):
 		if Game.game.Mode() == Game.Mode.WORLDMAP:
 			# BB (dave) very basic positioning here -- can flow off sides, no collision, etc.
 			surfScreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
 		
+	def OnDamage(self, damage):
+		# BB (davidm) enqueue damage to be dealt with at update time
+		pass
+
+	def AddItem(self, item):
+		self.lItem.append(item)
+
+	def AddGold(self, dGold):
+		self.gold += dGold
+
+	def AddXp(self, dXp):
+		self.xp += dXp
+
 	def VTargetCompute(self):
 		"""Uses current keyboard input to determine target velocity."""
 
-		vMax = 120.0
+		vMax = 180.0
 
 		vY = 0.0
 

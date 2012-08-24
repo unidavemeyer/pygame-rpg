@@ -51,6 +51,11 @@ class Vec:
 
 		return Vec(other * self.x, other * self.y)
 
+	def __repr__(self):
+		"""Prints out a version of this vector."""
+
+		return "(%.3f, %.3f)" % (self.x, self.y)
+
 
 
 def VecLimitLen(vec, sMax):
