@@ -68,28 +68,28 @@ class Hero:
 
 		elif Game.game.Mode() == Game.Mode.WORLDMAP:
 
-			# BB (dave) Time step shouldn't be hard coded...
-
-			dT = 0.03
-			sdVMax = 600.0
-			rsdV = 10.0
-
 			# Compute new velocity
 
-			# NOTE (dave) this treatment means we smooth in (via acceleration)
-			#  and also smooth out (since accel decreases as we approach target)
+			# We do a fairly simple "n% of the difference" approach here,
+			#  which isn't a realistic acceleration, but lets us make things
+			#  fairly rapid to collapse to the target velocity anyway
 
+			# BB (dave) don't use fixed dT
+
+			rdV = 0.6
+			dT = 0.03
+
+			vCur = self.v
 			vTarget = self.VTargetCompute()
-			dV = vTarget - self.v
-			dVScaled = rsdV * dV
-			dVLim = Vec.VecLimitLen(dVScaled, sdVMax)
+			dV = vTarget - vCur
+			self.v = vCur + rdV * dV
 
-			vOld = self.v
-			self.v += dT * dVLim
+			if dV.Len() < 0.5:
+				self.v = vTarget
 
 			if "DEBUG" == 0:
-				print "vTarget: %s dV: %s dVScaled %s dVLim %s v %s vNext %s" % \
-					(vTarget, dV, dVScaled, dVLim, vOld, self.v)
+				print "vCur: %s vTarget: %s dV: %s vNext %s" % \
+					(vCur, vTarget, dV, self.v)
 
 			# Compute new position
 
