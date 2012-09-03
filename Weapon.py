@@ -10,6 +10,14 @@ class Weapon:
 	""" Responsible for rendering questions and handling input during"""
 	""" combat, and then determining damage to deal to the opponent."""
 
+	# BB (davidm) figure out where to really load this from...
+
+	s_font = pygame.font.Font('/usr/share/fonts/truetype/freefont/FreeMono.ttf', 20)
+
+	s_colorCur = pygame.Color(128, 128, 192)
+	s_colorPass = pygame.Color(128, 255, 128)
+	s_colorFail = pygame.Color(255, 128, 128)
+
 	def __init__(self):
 		Game.game.AddUpdate(self, 20)	# relatively early update
 		Game.game.AddRender(self, 90)	# relatively late render (more on top)
@@ -93,24 +101,28 @@ class Sword(Weapon):
 			self.strProblem = None
 			return
 
-		# if we've answered a question, deal damage to our opponent
+		# if we've answered a question, deal damage to our opponent, etc.
 
 		if self.fSubmitAnswer:
+			colorOld = Weapon.s_colorFail
+
 			if self.nUser == self.nAnswer:
 				# TODO: damage opponent
-				# TODO: generate surface in "success" form
-			else:
-				# TODO: generate surface in "failure" form
+				colorOld = Weapon.s_colorPass
+
+			strOld = "%s = %d" % (self.strProblem, self.nUser)
+			self.surfOld = Weapon.s_font.render(strOld, False, colorOld)
 
 			self.strProblem = None
 			self.fSubmitAnswer = False
 
-		# TODO: if we don't have a problem, generate one
+		# if we need a problem, generate one
 
 		if not self.strProblem:
-			# TODO: generate a problem to answer, along with its answer
-
-		print "Sword update"
+			n1 = random.randint(0, 9)
+			n2 = random.randint(0, 9)
+			self.strProblem = "%d + %d"
+			self.nAnswer = n1 + n2
 
 	def FHandleEvent(self, event):
 		if Game.game.Mode() != Game.Mode.COMBAT:
@@ -130,8 +142,18 @@ class Sword(Weapon):
 		if Game.game.Mode() != Game.Mode.COMBAT:
 			return
 
-		# TODO: render old answer, if any
-		# TODO: render current problem + user entry
+		if self.surfOld:
+			surfScreen.blit(self.surfOld, (20, 400))
+
+		strUser = ''
+		if self.nUser != None:
+			strUser = "%d" % self.nUser
+
+		strDisplay = "%s = %s" % (self.strProblem, strUser)
+
+		surfDisplay = Weapon.s_font.render(strDisplay, False, Weapon.s_colorCur)
+
+		surfScreen.blit(surfDisplay, (20, 425))
 
 	def OnDigit(self, n):
 		if not self.nUser:
