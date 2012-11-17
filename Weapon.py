@@ -56,6 +56,13 @@ class Sword(Weapon):
 
 		# Keyboard keys we know how to handle
 
+		# BB (davidm) seems like this handling should be moved up to
+		#  the Weapon class so that all weapons get that behavior by
+		#  default and don't have to do anything special.  Maybe we
+		#  should abstract out the problem generation, solution stuff,
+		#  and then go from there?  Tough to know for sure before we've
+		#  really gotten everything running with a weapon or two, though.
+
 		self.mpKeyFn = {
 				pygame.K_0:			lambda: self.OnDigit(0),
 				pygame.K_1:			lambda: self.OnDigit(1),

@@ -1,24 +1,22 @@
 Random thoughts:
 
-- need weapon object(s)
-	- handles combat-mode input
-	- updates combat-mode damage calculations, etc.
-	- renders questions/answers/progress for attack in combat mode
-	- renders self, maybe, in both modes?
-- need inventory screen
-	- handles examination of weapons, other items
-	- handles equiping items
-	- needs to render to display info
-	- needs to handle input when active
-	- needs its own mode...?  Maybe sub-mode of WORLDMAP?
 - need enemy object(s)
 	- updates based on player/clock/whatever data in map-mode
 	- updates damage to player in combat-mode
 	- updates health, stats in map-mode based on damage
 	- renders position in map-mode
 	- renders self, anims in combat-mode
+- need weapon object(s)
+	- updates combat-mode damage calculations, etc.
+	- renders self, maybe, in both modes?
 - need combat layout/display object
 	- renders combat display (borders, help, etc.)
+- need inventory screen
+	- handles examination of weapons, other items
+	- handles equiping items
+	- needs to render to display info
+	- needs to handle input when active
+	- needs its own mode...?  Maybe sub-mode of WORLDMAP?
 
 - math combat could be fast-as-you-can-go -- each right answer does damage
 - math combat could be answer as many in the time -- each right answer incs dmg
@@ -43,3 +41,13 @@ Random thoughts:
 - Maybe we don't bother to track xp -- character levels up by improving
   equipment?  Seems like it might make sense -- cap things based on the player's
   skill somehow rather than the arbitrary limits of xp...
+
+- Should we do everything as dynamic difficulty somehow?  Arrange it so that
+  the player always feels like they're strong enough for basic challenges,
+  but barely make it past bosses, etc.?  How do we manage information like that?
+  Make it so that defeats decrement the difficulty?  Make it so that we track
+  how fast the player defeats opponents and ramp the difficulty up so that they
+  get fairly wounded?  Track player damage vs. opponent damage?  Arrange so that
+  the farther ahead the opponent gets, the worse they get?  With some rate or limit
+  so that you can really be up against something too hard?  How do we modify?  Treat
+  weapon damage modifiers as the key to opening up new areas?  Hmmm....
