@@ -95,6 +95,19 @@ class Hero:
 
 			self.pos += dT * self.v
 
+			# TODO: collide with the world
+
+			# Interact with an NPC if we should
+
+			# BB (davidm) No ordering here; we'll interact with whatever NPC we happen to be
+			#  in range of, and if multiple, whichever happens to be first in the game's NPC
+			#  list.  Might consider doing something that involves priority here as well...
+
+			for npc in Game.game.LNpc():
+				if npc.FShouldInteract(self.pos):
+					npc.OnInteract()
+					break
+
 	def FHandleEvent(self, event):
 		if Game.game.Mode() != Game.Mode.WORLDMAP:
 			return False

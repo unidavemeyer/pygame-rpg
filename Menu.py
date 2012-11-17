@@ -97,6 +97,11 @@ class Menu:
 		""" changing the game mode."""
 
 		world = World.World('worlds/start.wld')
+
+		# TODO: add an npc here once we have one we can fight
+		# npc = Npc.X()
+		# Game.game.AddNpc(npc)
+
 		Game.game.SetMode(Game.Mode.WORLDMAP)
 
 	def OnSaveGame(self):

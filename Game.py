@@ -25,9 +25,10 @@ class Game:
 	""" rendering."""
 
 	def __init__(self):
-		self.mpPriUpdate = {}
-		self.mpPriRender = {}
-		self.mpPriHandler = {}
+		self.mpPriUpdate = {}		# priority based list of update objects
+		self.mpPriRender = {}		# priority based list of render objects
+		self.mpPriHandler = {}		# priority based list of handler objects
+		self.lNpc = []				# (unsorted) list of NPCs currently in the world
 
 		self.fpsClock = None
 		self.surfScreen = None
@@ -81,6 +82,12 @@ class Game:
 		"""Sets the current mode for the game, which must be from the Mode enum class"""
 
 		self.m_mode = mode
+
+	def AddNpc(self, npc):
+		self.lNpc.append(npc)
+
+	def LNpc(self):
+		return self.lNpc
 
 	def Run(self):
 
