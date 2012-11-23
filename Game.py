@@ -29,6 +29,9 @@ class Game:
 		self.mpPriRender = {}		# priority based list of render objects
 		self.mpPriHandler = {}		# priority based list of handler objects
 		self.lNpc = []				# (unsorted) list of NPCs currently in the world
+		self.hero = None			# current hero object
+		self.menu = None			# current menu object
+		self.npcCombatant = None	# current npc the hero is fighting (if any)
 
 		self.fpsClock = None
 		self.surfScreen = None
@@ -86,8 +89,24 @@ class Game:
 	def AddNpc(self, npc):
 		self.lNpc.append(npc)
 
+	def RemoveNpc(self,npc):
+		lNpcNew = [x for x in self.lNpc if x != npc]
+		self.lNpc = lNpcNew
+		
 	def LNpc(self):
 		return self.lNpc
+
+	def SetNpcCombatant(self, npc):
+		self.npcCombatant = npc
+
+	def NpcCombatant(self):
+		return self.npcCombatant
+
+	def Menu(self):
+		return self.menu
+
+	def Hero(self):
+		return self.hero
 
 	def Run(self):
 
@@ -100,8 +119,8 @@ class Game:
 
 		# Set up starter objects
 
-		Menu.Menu()
-		Hero.Hero()
+		self.menu = Menu.Menu()
+		self.hero = Hero.Hero()
 
 		# Run the main loop
 

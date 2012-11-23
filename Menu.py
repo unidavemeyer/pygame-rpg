@@ -3,7 +3,9 @@
 # Copyright (c) 2012 by David Meyer
 
 import Game
+import Npc
 import pygame
+import Vec
 import World
 
 class Menu:
@@ -96,11 +98,15 @@ class Menu:
 		"""Generates a new game by creating a World linked to start.wld and"""
 		""" changing the game mode."""
 
+		# BB (davidm) totally placeholder...need to have a way to define NPCs
+		#  in the world files, or something, so that there's stuff around to
+		#  fight in reasonable places...
+
 		world = World.World('worlds/start.wld')
 
-		# TODO: add an npc here once we have one we can fight
-		# npc = Npc.X()
-		# Game.game.AddNpc(npc)
+		npc = Npc.Goon()
+		npc.SetPos(Vec.Vec(100, 100))
+		Game.game.AddNpc(npc)
 
 		Game.game.SetMode(Game.Mode.WORLDMAP)
 

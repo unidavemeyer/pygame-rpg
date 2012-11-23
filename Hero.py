@@ -133,8 +133,7 @@ class Hero:
 			surfScreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
 		
 	def OnDamage(self, damage):
-		# BB (davidm) enqueue damage to be dealt with at update time
-		pass
+		self.hpCur += damage
 
 	def AddItem(self, item):
 		self.lItem.append(item)

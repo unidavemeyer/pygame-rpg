@@ -103,6 +103,8 @@ class Sword(Weapon):
 
 		self.surfOld = None
 
+		self.dHpAttack = -3		# HP damage deal with each successful attack
+
 	def OnUpdate(self):
 		if Game.game.Mode() != Game.Mode.COMBAT:
 			self.strProblem = None
@@ -114,7 +116,7 @@ class Sword(Weapon):
 			colorOld = Weapon.s_colorFail
 
 			if self.nUser == self.nAnswer:
-				# TODO: damage opponent
+				Game.game.NpcCombatant().OnDamage(self.dHpAttack)
 				colorOld = Weapon.s_colorPass
 
 			strOld = "%s = %d" % (self.strProblem, self.nUser)
