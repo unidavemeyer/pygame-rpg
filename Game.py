@@ -19,6 +19,21 @@ class Mode:
 
 
 
+class Font:
+	"""Holder for standard fonts used in the game.  Thin wrapper around"""
+	""" the native pygame fonts so that things are at least somewhat"""
+	""" consistent across all of the places that we render text."""
+
+	FONT20 = None
+	FONT25 = None
+
+	@staticmethod
+	def Init():
+		Font.FONT20 = pygame.font.Font('/usr/share/fonts/truetype/freefont/FreeSans.ttf', 20)
+		Font.FONT25 = pygame.font.Font('/usr/share/fonts/truetype/freefont/FreeSans.ttf', 25)
+
+
+
 class Game:
 	"""Glues together the whole game.  Runs the game loop and provides"""
 	""" services to register objects for update, event handling, and"""
@@ -119,6 +134,7 @@ class Game:
 
 		# Set up starter objects
 
+		Font.Init()
 		self.menu = Menu.Menu()
 		self.hero = Hero.Hero()
 

@@ -1,35 +1,24 @@
 Random thoughts:
 
-- need enemy object(s)
-	- updates based on player/clock/whatever data in map-mode
-	- updates damage to player in combat-mode
-	- updates health, stats in map-mode based on damage
-	- renders position in map-mode
-	- renders self, anims in combat-mode
-- need weapon object(s)
-	- updates combat-mode damage calculations, etc.
-	- renders self, maybe, in both modes?
-- need combat layout/display object
-	- renders combat display (borders, help, etc.)
 - need inventory screen
 	- handles examination of weapons, other items
 	- handles equiping items
 	- needs to render to display info
 	- needs to handle input when active
 	- needs its own mode...?  Maybe sub-mode of WORLDMAP?
+- Current list of TODO items, approximately sorted, can be found in Google Drive
 
 - math combat could be fast-as-you-can-go -- each right answer does damage
 - math combat could be answer as many in the time -- each right answer incs dmg
 - math combat could be chosen per weapon
+- math combat could be "get this combo of numbers as close to a target as possible"
+	- include operators, arbitrary ordering of the input numbers, etc.
+	- maybe modify experience and/or damage based on how close the number is
 - punchline for combat is that the weapon should be in charge of events
 
 - random events should always be bounded, and should have a computed/saved
   value for them so that the player could theoretically discover the timing
   of something interesting happening (think semi-rares from KoL)
-
-- level could be layout of index -> image mapping, with a map of indexes
-  showing the layout of the level.  Index could also map to passable,
-  impassable, damaging, encounter, etc.
 
 - enemies could be surprise or shown (lean towards latter, but may include
   former as well or instead)

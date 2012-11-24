@@ -33,11 +33,20 @@ class World:
 		return;
 
 	def OnRender(self, surfScreen):
+		if Game.game.Mode() == Game.Mode.COMBAT:
+			# BB (davidm) placeholder -- probably want to consider having an
+			#  Arena class or somesuch instead of having the world draw here
+
+			surfScreen.fill(pygame.Color(64, 64, 64))
+			surfCombat = Game.Font.FONT25.render("Combat!", False, pygame.Color(255, 64, 64))
+			surfScreen.blit(surfCombat, (50, 100))
+
 		if Game.game.Mode() != Game.Mode.WORLDMAP:
 			return;
 
 		# BB (dave) center the view based on where the player is?
 
+		surfScreen.fill(pygame.Color(0, 0, 0))
 		surfScreen.blit(self.surf, (10, 10))
 
 	def LoadFromFile(self, strPath):
@@ -49,6 +58,7 @@ class World:
 			Plan = 1
 
 		# BB (dave) do more dictionary-style parsing instead -- allow arbitrary keys, etc.
+		# BB (davidm) consider using YAML as the underlying format, perhaps
 
 		reColorSym = re.compile(r'^\s*(\S+):\s*color:\s*(\d+)\s*(\d+)\s*(\d+)')
 

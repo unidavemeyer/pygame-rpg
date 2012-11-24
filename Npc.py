@@ -99,9 +99,20 @@ class Goon(Npc):
 		# do the attack
 
 		self.ticks_last_attack = ticksCur
-		Game.game.Hero().OnDamage(self.dTAttack)
+		Game.game.Hero().OnDamage(self.dHpAttack)
 
 		# BB (davidm) animate?  notify to screen?
+
+	def OnRender(self, surfScreen):
+		Npc.OnRender(self, surfScreen)
+
+		if Game.game.Mode() == Game.Mode.COMBAT:
+			# BB (davidm) draw goon to screen
+
+			# draw HP
+
+			surfHp = Game.Font.FONT20.render("Goon HP: %d/%d" % (self.hpCur, self.hpMax), False, pygame.Color(255, 255, 255))
+			surfScreen.blit(surfHp, (200, 20))
 
 	def OnDamage(self, damage):
 		self.hpCur += damage

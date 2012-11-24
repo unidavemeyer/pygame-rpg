@@ -4,24 +4,28 @@
 
 import Game
 import pygame
+import random
+
+
 
 class Weapon:
 	"""Base class for anything the player uses to deal damage in combat."""
 	""" Responsible for rendering questions and handling input during"""
 	""" combat, and then determining damage to deal to the opponent."""
 
-	# BB (davidm) figure out where to really load this from...
-
-	s_font = pygame.font.Font('/usr/share/fonts/truetype/freefont/FreeMono.ttf', 20)
-
 	s_colorCur = pygame.Color(128, 128, 192)
 	s_colorPass = pygame.Color(128, 255, 128)
 	s_colorFail = pygame.Color(255, 128, 128)
 
 	def __init__(self):
-		Game.game.AddUpdate(self, 20)	# relatively early update
-		Game.game.AddRender(self, 90)	# relatively late render (more on top)
-		Game.game.AddHandler(self, 20)	# relatively early event handler
+		# BB (davidm) don't actually have these -- instead, the active weapon
+		#  should receive these calls as appropriate from the Hero class
+		#
+		# Game.game.AddUpdate(self, 20)	# relatively early update
+		# Game.game.AddRender(self, 90)	# relatively late render (more on top)
+		# Game.game.AddHandler(self, 20)	# relatively early event handler
+
+		pass
 
 	def OnUpdate(self):
 		if Game.game.Mode() != Game.Mode.COMBAT:
@@ -92,7 +96,7 @@ class Sword(Weapon):
 		# Current user entry
 
 		self.nUser = None
-		self.fSubmitAnser = False
+		self.fSubmitAnswer = False
 
 		# Current problem and answer
 
@@ -120,17 +124,18 @@ class Sword(Weapon):
 				colorOld = Weapon.s_colorPass
 
 			strOld = "%s = %d" % (self.strProblem, self.nUser)
-			self.surfOld = Weapon.s_font.render(strOld, False, colorOld)
+			self.surfOld = Game.Font.FONT20.render(strOld, False, colorOld)
 
 			self.strProblem = None
 			self.fSubmitAnswer = False
+			self.nUser = None
 
 		# if we need a problem, generate one
 
 		if not self.strProblem:
 			n1 = random.randint(0, 9)
 			n2 = random.randint(0, 9)
-			self.strProblem = "%d + %d"
+			self.strProblem = "%d + %d" % (n1, n2)
 			self.nAnswer = n1 + n2
 
 	def FHandleEvent(self, event):
@@ -160,7 +165,7 @@ class Sword(Weapon):
 
 		strDisplay = "%s = %s" % (self.strProblem, strUser)
 
-		surfDisplay = Weapon.s_font.render(strDisplay, False, Weapon.s_colorCur)
+		surfDisplay = Game.Font.FONT20.render(strDisplay, False, Weapon.s_colorCur)
 
 		surfScreen.blit(surfDisplay, (20, 425))
 

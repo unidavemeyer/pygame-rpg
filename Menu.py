@@ -17,8 +17,6 @@ class Menu:
 		Game.game.AddRender(self, 100)	# relatively late render (more on top)
 		Game.game.AddHandler(self, 10)	# relatively early event handler
 
-		font20 = pygame.font.Font('/usr/share/fonts/truetype/freefont/FreeSans.ttf', 20)
-		font25 = pygame.font.Font('/usr/share/fonts/truetype/freefont/FreeSans.ttf', 25)
 		colorUnsel = pygame.Color(128, 0, 0)
 		colorSel = pygame.Color(255, 128, 128)
 
@@ -26,8 +24,8 @@ class Menu:
 			def __init__(self, strTitle, fnExec):
 				self.m_strTitle = strTitle
 				self.m_fnExec = fnExec
-				self.m_surfUnsel = font20.render(strTitle, False, colorUnsel)
-				self.m_surfSel = font25.render(strTitle, False, colorSel)
+				self.m_surfUnsel = Game.Font.FONT20.render(strTitle, False, colorUnsel)
+				self.m_surfSel = Game.Font.FONT25.render(strTitle, False, colorSel)
 
 			def Exec(self):
 				self.m_fnExec()

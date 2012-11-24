@@ -5,6 +5,7 @@
 import Game
 import pygame
 import Vec
+import Weapon
 
 class Hero:
 	"""The game contains a single Hero instance, which handles input, rendering, and"""
@@ -25,6 +26,9 @@ class Hero:
 
 		class KeyState:
 			def __init__(self):
+				self.Clear()
+
+			def Clear(self):
 				self.tickUp = 0
 				self.tickDown = 0
 
@@ -59,12 +63,17 @@ class Hero:
 
 		self.gold = 0
 		self.lItem = []
-		self.weapon = None
+		self.weapon = Weapon.Sword()	# BB (davidm) placeholder for now
 
 	def OnUpdate(self):
 		if Game.game.Mode() == Game.Mode.COMBAT:
+
 			# BB (dave) Handle damge, etc.
-			pass
+
+			# Give our weapon a chance to update
+
+			if self.weapon:
+				self.weapon.OnUpdate()
 
 		elif Game.game.Mode() == Game.Mode.WORLDMAP:
 
@@ -109,6 +118,25 @@ class Hero:
 					break
 
 	def FHandleEvent(self, event):
+		if Game.game.Mode() == Game.Mode.COMBAT:
+
+			# Clear key state map so that when we re-enter worlmap mode
+			#  everything is cleaned up
+
+			# BB (davidm) suggests we want to be notified when the mode changes instead
+			#  so that we could do this just once on a boundary instead of every frame
+			#  during combat mode...
+
+			for ks in self.mpKeyState.values():
+				ks.Clear()
+
+			# Give current weapon a chance to handle the event
+
+			if self.weapon:
+				return self.weapon.FHandleEvent(event)
+
+			return False
+
 		if Game.game.Mode() != Game.Mode.WORLDMAP:
 			return False
 
@@ -131,6 +159,19 @@ class Hero:
 		if Game.game.Mode() == Game.Mode.WORLDMAP:
 			# BB (dave) very basic positioning here -- can flow off sides, no collision, etc.
 			surfScreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
+
+		elif Game.game.Mode() == Game.Mode.COMBAT:
+			# BB (davidm) draw the hero
+
+			# draw current hp
+
+			surfHp = Game.Font.FONT20.render("HP: %d/%d" % (self.hpCur, self.hpMax), False, pygame.Color(255, 255, 255))
+			surfScreen.blit(surfHp, (20, 20))
+
+			# Give our weapon a chance to render
+
+			if self.weapon:
+				self.weapon.OnRender(surfScreen)
 		
 	def OnDamage(self, damage):
 		self.hpCur += damage
