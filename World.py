@@ -5,6 +5,7 @@
 import Game
 import pygame
 import re
+import yaml
 
 class World:
 	"""Provides a world, which is a contiguous set of tiles/spaces"""
@@ -15,8 +16,10 @@ class World:
 		Game.game.AddUpdate(self, 90)	# relatively late update
 		Game.game.AddRender(self, 10)	# relatively early render (more on bottom)
 
-		# BB (dave) should also have a list of doors (rectangles and links to places)
+		# BB (dave) should also have a list of gates (rectangles and links to places)
 		# BB (dave) should also have a list of walls (impassible rectangles)
+		# BB (dave) should also have a list of spawners (areas for NPCs to appear)
+		# BB (dave) should also have a start point, maybe?  (where hero appears initially)
 
 		self.surf = None
 		self.LoadFromFile(strPath)
@@ -25,12 +28,12 @@ class World:
 		if Game.game.Mode() != Game.Mode.WORLDMAP:
 			return;
 
-		# BB (dave) check if the player has hit one of the doors; if so,
-		#  warp them to the associated world
-
-		# BB (dave) if the player has hit a wall, push them back
-
 		return;
+
+	def ColifoFromRect(self, rect):
+		# BB (davidm) return collision information for the given rectangle
+
+		return None
 
 	def OnRender(self, surfScreen):
 		if Game.game.Mode() == Game.Mode.COMBAT:
@@ -53,50 +56,61 @@ class World:
 		"""Loads data from the given path and constructs the surface"""
 		""" for the world."""
 
-		class STATE:
-			Table = 0
-			Plan = 1
+		# Load the file via YAML into a dictionary
 
-		# BB (dave) do more dictionary-style parsing instead -- allow arbitrary keys, etc.
-		# BB (davidm) consider using YAML as the underlying format, perhaps
-
-		reColorSym = re.compile(r'^\s*(\S+):\s*color:\s*(\d+)\s*(\d+)\s*(\d+)')
-
-		dSTile = 32
-		state = STATE.Table
-		mpSymSurf = {}
-		llSym = []
-
-		# Load symbol table and 2d array of symbols from the file
+		# Example world file
+		#
+		# tiles:
+		#	a:
+		#		color: [127, 127, 127]
+		#		wall: true
+		#	b:
+		#		image: path/to/image.png
+		# plan:
+		#	- aaaaaa
+		#	- abbbba
+		#	- aaaaaa
 
 		fileIn = open(strPath, 'r')
-		for line in fileIn:
-			if state == STATE.Table:
-				match = reColorSym.search(line)
-				if match:
-					sym = match.group(1)
-					mpSymSurf[sym] = pygame.Surface((dSTile, dSTile))
-					mpSymSurf[sym].fill(pygame.Color(
-												int(match.group(2)),
-												int(match.group(3)),
-												int(match.group(4))))
-				elif line.strip().lower() == 'plan:':
-					state = STATE.Plan
-				else:
-					print "invalid input '%s' found reading symbol table from '%s'" % (line.strip(), strPath)
-			else:
-				llSym.append(line.strip())
+		mpSecData = yaml.load(fileIn)
 		fileIn.close()
-			
+
+		# Add surfaces for each symbol as appropriate
+
+		dSTile = 32
+
+		for sym, mpSymData in mpSecData['tiles'].items():
+			if mpSymData.get('color'):
+				mpSymData['surf'] = pygame.Surface((dSTile, dSTile))
+				mpSymData['surf'].fill(pygame.Color(*mpSymData['color']))
+			elif mpSymData.get('image'):
+				mpSymData['surf'] = pygame.image.load(mpSymData['image'])
+			else:
+				print "Warning:  symbol '%s' had no surface property" % sym
+
+		# Validate floorplan
+
+		llSym = mpSecData['plan']
 		cRow = len(llSym)
 		cCol = len(llSym[0])
 
-		# Construct world surface from contained symbols
+		for iRow, lSym in enumerate(llSym):
+			if len(lSym) != cCol:
+				print "Warning:  invalid plan; row %d has %d values instead of %d" % (iRow + 1, len(lSym), cCol)
+
+		# Convert dictionary data into a renderable surface
 
 		# BB (dave) could have the symbols be ordered, and draw each symbol
 		#  to its places here rather than just going through each tile...
 
+		rectSize = pygame.Rect(0, 0, dSTile, dSTile)
 		self.surf = pygame.Surface((cCol * dSTile, cRow * dSTile))
 		for iRow, lSym in enumerate(llSym):
 			for iCol, sym in enumerate(lSym):
-				self.surf.blit(mpSymSurf[sym], (iCol * dSTile, iRow * dSTile))
+				self.surf.blit(mpSecData['tiles'][sym]['surf'], (iCol * dSTile, iRow * dSTile), rectSize)
+
+		# TODO: Extract wall tile locations from dictionary
+
+		# TODO: Extract spawner tile locations from dictionary
+
+		# TODO: Extract gate tile locations from dictionary
