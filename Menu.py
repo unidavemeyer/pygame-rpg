@@ -101,6 +101,7 @@ class Menu:
 		#  fight in reasonable places...
 
 		world = World.World('worlds/start.wld')
+		world.MakeActive()
 
 		npc = Npc.Goon()
 		npc.SetPos(Vec.Vec(100, 100))

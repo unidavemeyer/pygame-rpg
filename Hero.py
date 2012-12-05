@@ -51,7 +51,7 @@ class Hero:
 		# position, velocity, etc.
 
 		self.v = Vec.Vec(0, 0)
-		self.pos = Vec.Vec(0, 0)
+		self.pos = Vec.Vec(50, 50)
 
 		# player statistics
 
@@ -104,7 +104,40 @@ class Hero:
 
 			self.pos += dT * self.v
 
-			# TODO: collide with the world
+			# Check for collisions with the world
+
+			rectHero = pygame.Rect(int(self.pos.x), int(self.pos.y), 32, 32)	# BB (davidm) don't hardcode size!
+			colinfo = Game.game.World().ColinfoFromRect(rectHero)
+
+			if colinfo:
+				# BB (davidm) collision/velocity stuff should probably move to Colinfo class
+
+				dX = 0.0
+				dY = 0.0
+				for rectWall in colinfo.lRect:
+					rectIntersect = rectWall.clip(rectHero)
+
+					if rectIntersect.width > rectIntersect.height:
+						# collision in y direction
+
+						if rectWall.centery > rectHero.centery:
+							dY = min(-rectIntersect.height, dY)
+						else:
+							dY = max(rectIntersect.height, dY)
+					else:
+						# collision in x direction (left or right)
+
+						if rectWall.centerx > rectHero.centerx:
+							dX = min(-rectIntersect.width, dX)
+						else:
+							dX = max(rectIntersect.width, dX)
+
+				# Resolve collision -- adjust position and velocity
+
+				dPos = Vec.Vec(dX, dY)
+				self.pos += dPos
+				dV = (1.0 / dT) * dPos
+				self.v += dV
 
 			# Interact with an NPC if we should
 

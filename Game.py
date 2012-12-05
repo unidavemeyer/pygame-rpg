@@ -7,6 +7,7 @@ import sys
 
 import Hero
 import Menu
+import World
 
 class Mode:
 	"""Enum-type class tracking various game modes."""
@@ -46,6 +47,7 @@ class Game:
 		self.lNpc = []				# (unsorted) list of NPCs currently in the world
 		self.hero = None			# current hero object
 		self.menu = None			# current menu object
+		self.world = None			# current world object
 		self.npcCombatant = None	# current npc the hero is fighting (if any)
 
 		self.fpsClock = None
@@ -122,6 +124,12 @@ class Game:
 
 	def Hero(self):
 		return self.hero
+
+	def SetWorld(self, world):
+		self.world = world
+
+	def World(self):
+		return self.world
 
 	def Run(self):
 
