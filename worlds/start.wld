@@ -3,7 +3,7 @@ tiles:
     color: [128, 128, 128]
     wall: true
   f:
-    color: [255, 128, 128]
+    image: worlds/kira-wall.png
   d:
     color: [192, 192, 64]
 plan:
