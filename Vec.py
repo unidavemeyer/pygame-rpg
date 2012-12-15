@@ -67,3 +67,17 @@ def VecLimitLen(vec, sMax):
 		return vec
 	else:
 		return sMax * vec.Normal()
+
+def SDistPos(pos0, pos1):
+	"""Returns the distance between the two given points."""
+
+	dPos = pos0 - pos1
+	return dPos.Len()
+
+def VecCircle(radAngle, sLength):
+	"""Returns a vector representing the given angle and then given length."""
+
+	x = math.cos(radAngle) * sLength
+	y = math.sin(radAngle) * sLength
+	return Vec(x, y)
+

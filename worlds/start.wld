@@ -6,11 +6,16 @@ tiles:
     image: worlds/kira-wall.png
   d:
     color: [192, 192, 64]
+  s:
+    image: worlds/kira-wall.png
+    spawner: true
+    npc_type: goon
+    simultaneous_npcs: 2
 plan:
-  - wwwwdwwww
-  - wfffffffw
-  - wfffffffw
-  - dfffffffd
-  - wfffffffw
-  - wfffffffw
-  - wwdwwwwww
+  - wwwwdwwwwwwww
+  - wfffffffwfffw
+  - wfffffffwfffw
+  - dfffffffffffw
+  - wffffsffwfffw
+  - wfffffffwfffw
+  - wwdwwwwwwwdww

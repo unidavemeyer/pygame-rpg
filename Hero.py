@@ -106,7 +106,7 @@ class Hero:
 
 			# Check for collisions with the world
 
-			rectHero = pygame.Rect(int(self.pos.x), int(self.pos.y), 32, 32)	# BB (davidm) don't hardcode size!
+			rectHero = self.Rect()
 			colinfo = Game.game.World().ColinfoFromRect(rectHero)
 
 			if colinfo:
@@ -146,7 +146,7 @@ class Hero:
 			#  list.  Might consider doing something that involves priority here as well...
 
 			for npc in Game.game.LNpc():
-				if npc.FShouldInteract(self.pos):
+				if npc.FShouldInteract(rectHero):
 					npc.OnInteract()
 					break
 
@@ -217,6 +217,12 @@ class Hero:
 
 	def AddXp(self, dXp):
 		self.xp += dXp
+
+	def Pos(self):
+		return self.pos
+
+	def Rect(self):
+		return pygame.Rect(int(self.pos.x), int(self.pos.y), 32, 32)
 
 	def VTargetCompute(self):
 		"""Uses current keyboard input to determine target velocity."""

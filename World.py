@@ -2,9 +2,13 @@
 #
 # Copyright (c) 2012 by David Meyer
 
+import Npc
 import Game
+import math
 import pygame
+import random
 import re
+import Vec
 import yaml
 
 class World:
@@ -14,11 +18,11 @@ class World:
 
 	def __init__(self, strPath):
 		# BB (dave) should also have a list of gates (rectangles and links to places)
-		# BB (dave) should also have a list of spawners (areas for NPCs to appear)
 		# BB (dave) should also have a start point, maybe?  (where hero appears initially)
 
 		self.surf = None				# surface to render to the screen
 		self.lRectWall = []				# rectangles that are impassable
+		self.lSpawner = []				# spawners in this world
 
 		self.LoadFromFile(strPath)
 		
@@ -35,9 +39,14 @@ class World:
 
 	def OnUpdate(self):
 		if Game.game.Mode() != Game.Mode.WORLDMAP:
-			return;
+			return
 
-		return;
+		# Let spawners we control do their things
+
+		for spawner in self.lSpawner:
+			spawner.OnUpdate()
+
+		return
 
 	def ColinfoFromRect(self, rect):
 		liRectCollide = rect.collidelistall(self.lRectWall)
@@ -112,7 +121,7 @@ class World:
 			if len(lSym) != cCol:
 				print "Warning:  invalid plan; row %d has %d values instead of %d" % (iRow + 1, len(lSym), cCol)
 
-		# Convert dictionary data into a renderable surface and a list of wall rectangles
+		# Generate renderable surface, wall rectangles, and spawn locations
 
 		# BB (dave) could have the symbols be ordered, and draw each symbol
 		#  to its places here rather than just going through each tile...
@@ -125,12 +134,16 @@ class World:
 
 				if mpSecData['tiles'][sym].get('wall', False):
 					self.lRectWall.append(pygame.Rect(iCol * dSTile, iRow * dSTile, dSTile, dSTile))
+				
+				if mpSecData['tiles'][sym].get('spawner', False):
+					self.lSpawner.append(Spawner(
+											mpSecData['tiles'][sym],
+											iRow * dSTile + 0.5 * dSTile,
+											iCol * dSTile + 0.5 * dSTile))
 
 		# BB (davidm) post-process self.lRectWall to combine adjoining rectangles into
 		#  larger contiguous chunks -- would speed collision checking, etc., but requires
 		#  a clever/careful algorithm to expand things reasonably
-
-		# TODO: Extract spawner tile locations from dictionary
 
 		# TODO: Extract gate tile locations from dictionary
 
@@ -142,3 +155,87 @@ class Colinfo:
 
 	def __init__(self, lRect):
 		self.lRect = lRect
+
+
+
+class Spawner:
+	"""Spawns NPCs based on various guidelines when its world is active."""
+
+	def __init__(self, mpVarValue, x, y):
+		self.pos = Vec.Vec(x, y)
+
+		self.npcType = mpVarValue['npc_type']
+		self.cNpcMaxLifetime = mpVarValue.get('max_npcs', 0)
+		self.cNpcMaxSimultaneous = mpVarValue.get('simultaneous_npcs', 0)
+		self.sRadius = mpVarValue.get('spawn_radius', 64)
+
+		self.lNpcCur = []
+		self.cNpcLifetime = 0
+
+	def FIsWithinLimits(self):
+		if self.cNpcMaxLifetime > 0 and self.cNpcLifetime >= self.cNpcMaxLifetime:
+			return False
+
+		if self.cNpcMaxSimultaneous > 0 and len(self.lNpcCur) >= self.cNpcMaxSimultaneous:
+			return False
+
+		return True
+
+	def OnUpdate(self):
+
+		# Clear dead NPCs from our list of current NPCs
+
+		setNpcGame = set(Game.game.LNpc())
+		lNpcNew = [npc for npc in self.lNpcCur if npc in setNpcGame]
+		self.lNpcCur = lNpcNew
+
+		# Early exit if we couldn't spawn anything
+
+		if not self.FIsWithinLimits():
+			return
+
+		# Early exit if the hero is too close by
+
+		if Vec.SDistPos(Game.game.Hero().Pos(), self.pos) < self.sRadius + 50:
+			return
+
+		# Generate NPCs up to our simultaneous & max lifetime limits
+
+		cAttempt = 0
+
+		while self.FIsWithinLimits() and cAttempt < 10:
+			cAttempt += 1
+
+			# Generate a location
+
+			dPos = Vec.VecCircle(random.uniform(0, 2 * math.pi), random.uniform(0, self.sRadius))
+			posCenter = self.pos + dPos
+			posNpc = Vec.Vec(int(posCenter.x) - 16, int(posCenter.y) - 16)
+
+			rectNpc = pygame.Rect(posNpc.x, posNpc.y, 32, 32)
+
+			# Check vs. walls, other npcs
+
+			if Game.game.World().ColinfoFromRect(rectNpc):
+				continue
+
+			fHitNpc = False
+
+			for npc in Game.game.LNpc():
+				if npc.Rect().colliderect(rectNpc):
+					fHitNpc = True
+					break
+
+			if fHitNpc:
+				continue
+
+			self.NpcSpawn(posNpc)
+
+	def NpcSpawn(self, pos):
+		npc = Npc.Goon()	# BB (davidm) use self.npcType
+		npc.SetPos(pos)
+		Game.game.AddNpc(npc)
+
+		self.lNpcCur.append(npc)
+		self.cNpcLifetime += 1
+

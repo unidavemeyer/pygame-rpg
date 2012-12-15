@@ -17,7 +17,6 @@ class Npc:
 		Game.game.AddRender(self, 80)	# relatively late render (more on top)
 
 		self.pos = Vec.Vec(0,0)			# location in the world
-		self.radius = 20				# range at which hero will interact
 		self.surf = None				# surface to render onto the screen
 
 	def OnUpdate(self):
@@ -34,14 +33,16 @@ class Npc:
 
 		pass
 
-	def FShouldInteract(self, pos):
+	def Rect(self):
+		"""Returns the rectangle that the NPC occupies in the world"""
+
+		return pygame.Rect(int(self.pos.x), int(self.pos.y), 32, 32)
+
+	def FShouldInteract(self, rectOther):
 		"""Return true if this NPC should interact with something at the"""
-		""" given position (generally the Hero)."""
+		""" given rectangle (generally the Hero)."""
 
-		dPos = self.pos - pos
-		dS = dPos.Len()
-
-		return dS <= self.radius
+		return self.Rect().colliderect(rectOther)
 
 	def OnInteract(self):
 		"""Begin interaction.  Assumed that this will change the game mode"""
@@ -78,6 +79,11 @@ class Goon(Npc):
 		if Game.game.Mode() != Game.Mode.COMBAT:
 			return
 
+		# Don't update if we're not in combat
+
+		if Game.game.NpcCombatant() != self:
+			return
+
 		# Leave combat if we've been killed
 
 		# BB (davidm) reward experience?  gold?  other?  use an end-of-combat mode?
@@ -106,13 +112,18 @@ class Goon(Npc):
 	def OnRender(self, surfScreen):
 		Npc.OnRender(self, surfScreen)
 
-		if Game.game.Mode() == Game.Mode.COMBAT:
-			# BB (davidm) draw goon to screen
+		if Game.game.Mode() != Game.Mode.COMBAT:
+			return
 
-			# draw HP
+		if Game.game.NpcCombatant() != self:
+			return
 
-			surfHp = Game.Font.FONT20.render("Goon HP: %d/%d" % (self.hpCur, self.hpMax), False, pygame.Color(255, 255, 255))
-			surfScreen.blit(surfHp, (200, 20))
+		# BB (davidm) draw goon to screen
+
+		# draw HP
+
+		surfHp = Game.Font.FONT20.render("Goon HP: %d/%d" % (self.hpCur, self.hpMax), False, pygame.Color(255, 255, 255))
+		surfScreen.blit(surfHp, (200, 20))
 
 	def OnDamage(self, damage):
 		self.hpCur += damage
@@ -121,3 +132,4 @@ class Goon(Npc):
 		Game.game.SetNpcCombatant(self)
 		Game.game.SetMode(Game.Mode.COMBAT)
 		self.ticks_last_attack = pygame.time.get_ticks()
+
