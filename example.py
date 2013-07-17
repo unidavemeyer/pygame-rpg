@@ -52,12 +52,24 @@ font16 = pygame.font.Font('/usr/share/fonts/truetype/freefont/FreeMono.ttf', 16)
 
 surfScreen.fill(lColor[0])
 
+# Do some joystick handling
+
+pygame.joystick.init()		# required to start joystick support
+
+print "%d joysticks found" % pygame.joystick.get_count()
+
+lJoy = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]	# joystick(x) makes a joystick
+for joy in lJoy:
+	print "Joy %d: <%s>" % (joy.get_id(), joy.get_name())
+	joy.init()		# required to start *using* the joystick
+
 # run an event loop
 
 while True:
 	
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
+			pygame.joystick.quit()
 			pygame.quit()
 			sys.exit(0)
 
