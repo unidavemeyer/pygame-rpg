@@ -62,6 +62,17 @@ lJoy = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
 for joy in lJoy:
 	print "Joy %d: <%s>" % (joy.get_id(), joy.get_name())
 	joy.init()		# required to start *using* the joystick
+	print "  num axes: %d" % joy.get_numaxes()
+	print "  num btns: %d" % joy.get_numbuttons()
+	# print "  num hats: %d" % joy.get_numhats()
+
+class CJoy:
+	def __init__(self, joy):
+		self.joy = joy
+		self.lAxis = [0 for x in range(joy.get_numaxes())]
+		self.lBtn = [0 for x in range(joy.get_numbuttons())]
+
+joyMem = CJoy(lJoy[0])
 
 # run an event loop
 
@@ -95,6 +106,74 @@ while True:
 
 		elif event.type == pygame.MOUSEMOTION:
 			posStars = event.pos
+
+		elif event.type == pygame.JOYAXISMOTION:
+			joyid = event.joy
+			joyaxis = event.axis
+			joyvalue = event.value
+
+			joyMem.lAxis[joyaxis] = joyvalue
+
+			# axis 0 = left stick, side-to-side, -1 = left, 1.0 = right
+			# axis 1 = left stick, up-and-down, -1 = up, 1.0 = down
+			# axis 2 = right stick, side-to-side, -1 = left, 1.0 = right
+			# axis 3 = right stick, up-and-down, -1 = up, 1.0 = down
+			# axis 4 = no data
+			# axis 5 = no data
+			# axis 6 = no data
+			# axis 7 = no data
+			# axis 8 = dpad up, analog pressure, -1 = up, 1 = down
+			# axis 9 = dpad left, analog pressure, -1 = up, 1 = down
+			# axis 10 = dpad down, analog pressure, -1 = up, 1 = down
+			# axis 11 = no data
+			# axis 12 = l2, analog pressure, -1 = up, 1 = down
+			# axis 13 = r2, analog pressure, -1 = up, 1 = down
+			# axis 14 = l1, analog pressure, -1 = up, 1 = down
+			# axis 15 = r1, analog pressure, -1 = up, 1 = down
+			# axis 16 = triangle, analog pressure, -1 = up, 1 = down
+			# axis 17 = circle, analog pressure, -1 = up, 1 = down
+			# axis 18 = x, analog pressure, -1 = up, 1 = down
+			# axis 19 = square, analog pressure, -1 = up, 1 = down
+			# axis 20 = no data
+			# axis 21 = no data
+			# axis 22 = no data
+			# axis 23 = left/right accel, neg = right down, pos = left down
+			# axis 24 = fore/back accel, neg = fore down, pos = back down
+			# axis 25 = up/down accel, neg = down down, pos = up down
+			# axis 26 = no data
+
+		elif event.type == pygame.JOYBUTTONDOWN:
+			joyid = event.joy
+			joybutton = event.button
+
+			joyMem.lBtn[joybutton] = 1
+
+			# 0 = select
+			# 1 = left stick
+			# 2 = right stick
+			# 3 = start
+			# 4 = dpad up
+			# 5 = dpad right
+			# 6 = dpad down
+			# 7 = dpad left
+			# 8 = l2 (?)
+			# 9 = r2 (?)
+			# 10 = l1 (?)
+			# 11 = r1 (?)
+			# 12 = triangle
+			# 13 = circle
+			# 14 = x
+			# 15 = square
+			# 16 = ps
+
+		elif event.type == pygame.JOYBUTTONUP:
+			joyid = event.joy
+			joybutton = event.button
+			joyMem.lBtn[joybutton] = 0
+
+		lStrJoy = ["%2d: %10f" % (x, joyMem.lAxis[x]) for x in [0, 1, 2, 3]]
+		lStrJoy.extend(["%1d" % joyMem.lBtn[x] for x in [12, 13, 14, 15, 16]])
+		print " ".join(lStrJoy)
 
 	# redraw the things we want drawn
 
