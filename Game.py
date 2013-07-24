@@ -8,6 +8,7 @@ import sys
 import Hero
 import Menu
 import World
+import Joystick
 
 class Mode:
 	"""Enum-type class tracking various game modes."""
@@ -52,6 +53,7 @@ class Game:
 
 		self.fpsClock = None
 		self.surfScreen = None
+		self.lJoy = []
 
 		self.m_mode = Mode.MENU
 
@@ -131,14 +133,34 @@ class Game:
 	def World(self):
 		return self.world
 
+	def AddJoysticks(self):
+		"""Make sure that self.lJoy is consistent with the number of"""
+		""" joysticks reported by pygame"""
+
+		pygame.joystick.init()
+		for id in range(pygame.joystick.get_count()):
+			self.lJoy.append(Joystick.Joystick(id))
+
+	def Joy(self, iJoy):
+		if iJoystick < 0:
+			return None
+
+		if iJoystick > len(self.lJoy):
+			return None
+
+		return self.lJoy[iJoy]
+
 	def Run(self):
 
 		# Set up pygame
 
 		pygame.init()
+		pygame.joystick.init()
 		self.fpsClock = pygame.time.Clock()
 		self.surfScreen = pygame.display.set_mode((640,480))
 		pygame.display.set_caption('Arithmancer')
+
+		self.AddJoysticks()
 
 		# Set up starter objects
 
