@@ -4,6 +4,18 @@
 
 import pygame
 
+# Names for various button types
+
+# BB (davidm) could do this on class definitions instead, theoretically,
+#  and that would be immutable
+
+BTN_NavUp = 0
+BTN_NavDown = 1
+BTN_NavLeft = 2
+BTN_NavRight = 3
+BTN_Ok = 4
+BTN_Cancel = 5
+
 class Joystick:
 	"""Represents a single joystick device connected to the system; provies an"""
 	""" abstract and cooked representation of the underlying pygame joystick data."""
@@ -20,6 +32,10 @@ class Joystick:
 		self.lBtn = [0 for x in range(self.joy.get_numbuttons())]
 
 		# BB (davidm) assumes ps3 controller
+
+		# NOTE (davidm) here is experimentally-derived data from using a
+		#  ps3 controller and examining what happened with various input
+		#  channels:
 
 		# axis 0 = left stick, side-to-side, -1 = left, 1.0 = right
 		# axis 1 = left stick, up-and-down, -1 = up, 1.0 = down
@@ -68,17 +84,21 @@ class Joystick:
 		# 16 = ps
 
 	def ThumbLeftLR(self):
-		"""-1.0 to 1.0 value for the left/right setting of the left stick"""
-		pass
+		"""-1.0 (left) to 1.0 (right) value for the position of the left stick"""
+
+		return self.lAxis[0]
 
 	def ThumbLeftUD(self):
-		"""-1.0 to 1.0 value for the up/down setting of the left stick"""
-		pass
+		"""-1.0 (up) to 1.0 (down) value for the position of the left stick"""
+
+		return self.lAxis[1]
 
 	def ThumbRightLR(self):
-		"""-1.0 to 1.0 value for the left/right setting of the right stick"""
-		pass
+		"""-1.0 (left) to 1.0 (right) value for the position of the right stick"""
+
+		return self.lAxis[2]
 
 	def ThumbRightUD(self):
-		"""-1.0 to 1.0 value for the up/down setting of the right stick"""
-		pass
+		"""-1.0 (up) to 1.0 (down) value for the position of the right stick"""
+
+		return self.lAxis[3]
