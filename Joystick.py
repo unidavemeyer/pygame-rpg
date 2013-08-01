@@ -75,38 +75,62 @@ class Joystick:
 		self.name = self.joy.get_name()
 		self.lAxis = [0 for x in range(self.joy.get_numaxes())]
 		self.lBtn = [0 for x in range(self.joy.get_numbuttons())]
+		self.lBtnRead = [0 for x in range(self.joy.get_numbuttons())]
 
 		# BB (davidm) pick a different set of mappings for non-ps3 controllers
 
+		self.mpBtnIbtn = [
+				Joystick.PIB_PAD_U,	# BTN_NavUp (= pad up)
+				Joystick.PIB_PAD_D,	# BTN_NavDown (= pad down)
+				Joystick.PIB_PAD_L,	# BTN_NavLeft (= pad left)
+				Joystick.PIB_PAD_R,	# BTN_NavRight (= pad right)
+				Joystick.PIB_X,		# BTN_Ok (= x)
+				Joystick.PIB_CIR,	# BTN_Cancel = 5
+			]
+
+
+	def ConsumeEvent(self, event):
+		assert(event.joy == self.id)
+
+		if event.type == pygame.JOYAXISMOTION:
+			self.lAxis[event.axis] = event.value
+		elif event.type == pygame.JOYBUTTONDOWN:
+			# BB (davidm) add some notion of repeat delay?
+			if self.lBtn[event.button] == 0:
+				self.lBtn[event.button] = 1
+				self.lBtnRead[event.button] = 0
+		elif event.type == pygame.JOYBUTTONUP:
+			self.lBtn[event.button] = 0
 
 	def ThumbLeftLR(self):
 		"""-1.0 (left) to 1.0 (right) value for the position of the left stick"""
 
-		return self.lAxis[PIA_L_LR]
+		return self.lAxis[Joystick.PIA_L_LR]
 
 	def ThumbLeftUD(self):
 		"""-1.0 (up) to 1.0 (down) value for the position of the left stick"""
 
-		return self.lAxis[PIA_L_UD]
+		return self.lAxis[Joystick.PIA_L_UD]
 
 	def ThumbRightLR(self):
 		"""-1.0 (left) to 1.0 (right) value for the position of the right stick"""
 
-		return self.lAxis[PIA_R_LR]
+		return self.lAxis[Joystick.PIA_R_LR]
 
 	def ThumbRightUD(self):
 		"""-1.0 (up) to 1.0 (down) value for the position of the right stick"""
 
-		return self.lAxis[PIA_R_UD]
+		return self.lAxis[Joystick.PIA_R_UD]
 
 	def FIsBtnDown(self, btn):
-		mpBtnIbtn = [
-				PIB_PAD_U,	# BTN_NavUp (= pad up)
-				PIB_PAD_D,	# BTN_NavDown (= pad down)
-				PIB_PAD_L,	# BTN_NavLeft (= pad left)
-				PIB_PAD_R,	# BTN_NavRight (= pad right)
-				PIB_X,		# BTN_Ok (= x)
-				PIB_CIR,	# BTN_Cancel = 5
-			]
+		return self.lBtn[self.mpBtnIbtn[btn]]
 
-		return self.lBtn[mpBtnIbtn[btn]]
+	def FWasBtnPressed(self, btn):
+		"""Return true if this is the first time this joy has been queried"""
+		""" about the button being pressed since it became pressed."""
+
+		fIsDown = self.FIsBtnDown(btn)
+		fWasRead = self.lBtnRead[self.mpBtnIbtn[btn]]
+		self.lBtnRead[self.mpBtnIbtn[btn]] = 1
+
+		return fIsDown and not fWasRead

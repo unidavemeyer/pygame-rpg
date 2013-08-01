@@ -142,10 +142,10 @@ class Game:
 			self.lJoy.append(Joystick.Joystick(id))
 
 	def Joy(self, iJoy):
-		if iJoystick < 0:
+		if iJoy < 0:
 			return None
 
-		if iJoystick > len(self.lJoy):
+		if iJoy > len(self.lJoy):
 			return None
 
 		return self.lJoy[iJoy]
@@ -180,14 +180,19 @@ class Game:
 					sys.exit(0)
 					return
 
-				fHandled = False
-				for pri in sorted(self.mpPriHandler.keys()):
-					for obj in self.mpPriHandler[pri]:
-						if obj.FHandleEvent(event):
-							fHandled = True
+				elif event.type in (pygame.KEYDOWN, pygame.KEYUP):
+					fHandled = False
+					for pri in sorted(self.mpPriHandler.keys()):
+						for obj in self.mpPriHandler[pri]:
+							if obj.FHandleEvent(event):
+								fHandled = True
+								break
+						if fHandled:
 							break
-					if fHandled:
-						break
+
+				elif event.type in (pygame.JOYAXISMOTION, pygame.JOYBUTTONDOWN, pygame.JOYBUTTONUP):
+					iJoy = event.joy
+					self.lJoy[iJoy].ConsumeEvent(event)
 
 			# Give objects a chance to update
 

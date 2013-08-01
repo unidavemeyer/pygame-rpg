@@ -3,6 +3,7 @@
 # Copyright (c) 2012 by David Meyer
 
 import Game
+import Joystick
 import Npc
 import pygame
 import Vec
@@ -42,11 +43,22 @@ class Menu:
 		self.m_iEntry = 0
 
 	def OnUpdate(self):
+		# BB (davidm) consider handling a "menu escape" button press here, even
+		#  while not in menu mode
+
 		if Game.game.Mode() != Game.Mode.MENU:
 			return
 		
-		# BB (dave) do we even need to be an updater?
-		#  maybe if we want to pulse the text or something...
+		joy = Game.game.Joy(0)
+		if joy:
+			# handle nav button presses
+
+			if joy.FWasBtnPressed(Joystick.BTN_NavUp):
+				self.OnNavUp()
+			elif joy.FWasBtnPressed(Joystick.BTN_NavDown):
+				self.OnNavDown()
+			elif joy.FWasBtnPressed(Joystick.BTN_Ok):
+				self.OnNavOk()
 
 		return
 
@@ -62,11 +74,11 @@ class Menu:
 			return False
 
 		if event.key == pygame.K_UP:
-			self.m_iEntry = (self.m_iEntry + len(self.m_lEntry) - 1) % len(self.m_lEntry)
+			self.OnNavUp()
 		elif event.key == pygame.K_DOWN:
-			self.m_iEntry = (self.m_iEntry + 1) % len(self.m_lEntry)
+			self.OnNavDown()
 		elif event.key == pygame.K_RETURN or event.key == pygame.K_KP_ENTER:
-			self.m_lEntry[self.m_iEntry].Exec()
+			self.OnNavOk()
 
 		return True
 
@@ -88,6 +100,15 @@ class Menu:
 
 			surfScreen.blit(surfText, (xEntry, yEntry))
 			yEntry += 30
+
+	def OnNavUp(self):
+		self.m_iEntry = (self.m_iEntry + len(self.m_lEntry) - 1) % len(self.m_lEntry)
+
+	def OnNavDown(self):
+		self.m_iEntry = (self.m_iEntry + 1) % len(self.m_lEntry)
+
+	def OnNavOk(self):
+		self.m_lEntry[self.m_iEntry].Exec()
 
 	def OnResume(self):
 		print "Resume not yet implemented"
