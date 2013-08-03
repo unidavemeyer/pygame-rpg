@@ -104,8 +104,12 @@ class Goon(Npc):
 
 		# do the attack
 
+		# BB (davidm) not particularly suited to a multi-hero setup; should have
+		#  a target hero instead, or should drop this notion entirely
+
 		self.ticks_last_attack = ticksCur
-		Game.game.Hero().OnDamage(self.dHpAttack)
+		for hero in Game.game.LHero():
+			hero.OnDamage(self.dHpAttack)
 
 		# BB (davidm) animate?  notify to screen?
 

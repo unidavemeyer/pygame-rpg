@@ -12,15 +12,14 @@ class Hero:
 	""" positioning in worldmap mode.  It also handles inventory functions, hit points,"""
 	""" and other features of the character for worldmap and combat modes."""
 
-	def __init__(self):
+	def __init__(self, joy):
 		Game.game.AddUpdate(self, 20)	# relatively early update
 		Game.game.AddRender(self, 90)	# relatively late render (more on top)
 		Game.game.AddHandler(self, 20)	# relatively early event handler
 
-		# BB (dave) placeholder surface until we have a reasonable graphic
+		# Joystick tracking
 
-		self.surf = pygame.Surface((32, 32))
-		self.surf.fill(pygame.Color(128, 128, 192))
+		self.joy = joy
 
 		# Tracking for key events
 
@@ -47,6 +46,15 @@ class Hero:
 				pygame.K_LEFT: KeyState(),
 				pygame.K_RIGHT: KeyState(),
 			}
+
+		# BB (dave) placeholder surface until we have a reasonable graphic
+
+		self.surf = pygame.Surface((32, 32))
+
+		if self.joy.id == 0:
+			self.surf.fill(pygame.Color(192, 128, 192))		# violet-ish
+		else:
+			self.surf.fill(pygame.Color(192, 128, 128))		# pink-ish
 
 		# position, velocity, etc.
 
@@ -225,6 +233,54 @@ class Hero:
 		return pygame.Rect(int(self.pos.x), int(self.pos.y), 32, 32)
 
 	def VTargetCompute(self):
+		"""Uses current keyboard and/or joystick input to determine target velocity; uses"""
+		""" the maximum amplitude input for each axis from the keyboard or the joystick,"""
+		""" which probably does weird things if you try to use both at the same time."""
+
+		vKey = self.VTargetComputeKeyboard()
+		vJoy = self.VTargetComputeJoy()
+
+		vX = vJoy.x
+
+		if abs(vKey.x) > abs(vJoy.x):
+			vX = vKey.x
+
+		vY = vJoy.y
+
+		if abs(vKey.y) > abs(vJoy.y):
+			vY = vKey.y
+
+		return Vec.Vec(vX, vY)
+
+	def VTargetComputeJoy(self):
+		"""Uses current joystick input to determine target velocity."""
+
+		vMax = 180.0
+
+		# compute -1 to 1 values for left thumb stick deflection, putting a dead
+		#  zone at 0.1 for each stick
+
+		uUdRaw = self.joy.ThumbLeftUD()
+		uLrRaw = self.joy.ThumbLeftLR()
+
+		fUdNeg = uUdRaw < 0.0
+		fLrNeg = uLrRaw < 0.0
+
+		uUd = min(max(abs(uUdRaw) - 0.1, 0.0), 0.9) / 0.9
+		uLr = min(max(abs(uLrRaw) - 0.1, 0.0), 0.9) / 0.9
+
+		if fUdNeg:
+			uUd *= -1.0
+
+		if fLrNeg:
+			uLr *= -1.0
+
+		vX = vMax * uLr
+		vY = vMax * uUd
+
+		return Vec.Vec(vX, vY)
+
+	def VTargetComputeKeyboard(self):
 		"""Uses current keyboard input to determine target velocity."""
 
 		vMax = 180.0

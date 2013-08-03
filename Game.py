@@ -124,6 +124,9 @@ class Game:
 	def Menu(self):
 		return self.menu
 
+	def LHero(self):
+		return self.lHero
+
 	def Hero(self, iHero):
 		return self.lHero[iHero]
 
@@ -163,20 +166,18 @@ class Game:
 		self.AddJoysticks()
 
 		if len(self.lJoy) < 2:
-			print "Error:  Must have two joysticks connected"
-			pygame.quit()
-			sys.exit(0)
-			return
+			print "Warning:  Should have two joysticks connected"
 
 		# Set up starter objects
 
 		Font.Init()
 		self.menu = Menu.Menu()
 
-		self.lHero = [
-				Hero.Hero(self.lJoy[0]),
-				Hero.Hero(self.lJoy[1])
-			]
+		# Generate one hero for each joystick
+
+		# BB (davidm) probably only want two, and always two...
+
+		self.lHero = [ Hero.Hero(j) for j in self.lJoy ]
 
 		# Run the main loop
 

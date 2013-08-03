@@ -194,10 +194,11 @@ class Spawner:
 		if not self.FIsWithinLimits():
 			return
 
-		# Early exit if the hero is too close by
+		# Early exit if any hero is too close by
 
-		if Vec.SDistPos(Game.game.Hero().Pos(), self.pos) < self.sRadius + 50:
-			return
+		for hero in Game.game.LHero():
+			if Vec.SDistPos(hero.Pos(), self.pos) < self.sRadius + 50:
+				return
 
 		# Generate NPCs up to our simultaneous & max lifetime limits
 
