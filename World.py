@@ -17,12 +17,12 @@ class World:
 	""" to have "doors" that transport the hero/player to another world."""
 
 	def __init__(self, strPath):
-		# BB (dave) should also have a list of gates (rectangles and links to places)
 		# BB (dave) should also have a start point, maybe?  (where hero appears initially)
 
 		self.surf = None				# surface to render to the screen
 		self.lRectWall = []				# rectangles that are impassable
 		self.lSpawner = []				# spawners in this world
+		self.lGate = []					# gates in the world
 
 		self.LoadFromFile(strPath)
 		
@@ -30,6 +30,10 @@ class World:
 		Game.game.SetWorld(self)
 		Game.game.AddUpdate(self, 90)	# relatively late update
 		Game.game.AddRender(self, 10)	# relatively early render (more on bottom)
+
+		for hero in Game.game.LHero():
+			posStart = Vec.Vec(50, 50)	# BB (davidm) compute/set real start point
+			hero.SetPos(posStart)
 
 	def MakeInactive(self):
 		if Game.game.World() == self:
@@ -45,6 +49,18 @@ class World:
 
 		for spawner in self.lSpawner:
 			spawner.OnUpdate()
+
+		# Check for hero collisions with gates
+
+		# BB (davidm) what do we do if we want multiple linked gates to have collisions
+		#  simultaneously?  maybe provide some means by which to link gates together
+		#  so they have required collisions on both?
+
+		for hero in Game.game.LHero():
+			rectHero = hero.Rect()
+			for gate in self.lGate:
+				if rectHero.colliderect(gate.rect):
+					Game.game.SetNextWorld(gate.worldTarget)
 
 		return
 
@@ -141,11 +157,27 @@ class World:
 											iRow * dSTile + 0.5 * dSTile,
 											iCol * dSTile + 0.5 * dSTile))
 
+				if mpSecData['tiles'][sym].get('gate', False):
+					self.lGate.append(Gate(
+										mpSecData['tiles'][sym],
+											iCol * dSTile,
+											iRow * dSTile,
+											dSTile,
+											dSTile))
+
 		# BB (davidm) post-process self.lRectWall to combine adjoining rectangles into
 		#  larger contiguous chunks -- would speed collision checking, etc., but requires
 		#  a clever/careful algorithm to expand things reasonably
 
-		# TODO: Extract gate tile locations from dictionary
+
+
+class Gate:
+	"""Gate class represents connection from one world to another.  When the player"""
+	""" walks into a gate, they get warped to the start location of the linked world."""
+
+	def __init__(self, mpVarValue, x, y, w, h):
+		self.rect = pygame.Rect(x, y, w, h)
+		self.worldTarget = mpVarValue['target']
 
 
 

@@ -6,6 +6,8 @@ tiles:
     image: worlds/kira-wall.png
   d:
     color: [192, 192, 64]
+    gate: true
+    target: second.wld
 plan:
   - wwwwdwwwwwwww
   - wfffffffwfffw

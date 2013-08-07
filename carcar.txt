@@ -1,0 +1,9 @@
+Plan for carcar changes, etc.
+
+- Need to have working gates
+- Need to have working start positions for world maps
+- Need to set up basic puzzle mechanic
+	- hot zones that both need to be active in order to unlock a door
+- Need to define a few world setups, not just one
+- Need to decide if we want side scroll from spot to spot or not
+- Collectible animals

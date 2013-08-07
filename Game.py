@@ -49,6 +49,7 @@ class Game:
 		self.hero = None			# current hero object
 		self.menu = None			# current menu object
 		self.world = None			# current world object
+		self.worldNext = None		# next world object (pending warp)
 		self.npcCombatant = None	# current npc the hero is fighting (if any)
 
 		self.fpsClock = None
@@ -136,6 +137,9 @@ class Game:
 	def World(self):
 		return self.world
 
+	def SetNextWorld(self, strWorld):
+		self.worldNext = World.World('worlds/%s' % strWorld)
+
 	def AddJoysticks(self):
 		"""Make sure that self.lJoy is consistent with the number of"""
 		""" joysticks reported by pygame"""
@@ -182,6 +186,13 @@ class Game:
 		# Run the main loop
 
 		while True:
+
+			# Handle any pending warps
+
+			if self.worldNext:
+				self.world.MakeInactive()
+				self.worldNext.MakeActive()
+				self.worldNext = None
 
 			# Give objects a chance to handle input
 

@@ -229,6 +229,10 @@ class Hero:
 	def Pos(self):
 		return self.pos
 
+	def SetPos(self, pos):
+		self.pos = pos
+		self.v = Vec.Vec(0, 0)
+
 	def Rect(self):
 		return pygame.Rect(int(self.pos.x), int(self.pos.y), 32, 32)
 
