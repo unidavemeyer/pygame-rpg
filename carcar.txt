@@ -1,10 +1,7 @@
 Plan for carcar changes, etc.
 
-- Need to have working start positions for world maps
-	- first pass should just have startable locations (allow multiple)
-	- second pass could have gate specific options, although that's not
-	  strictly necessary to begin with
 - Joystick start button should count as escape key (e.g., bring up menu)
+- Need to fix double new game bug that puts invisible gates in second.wld
 - Need to set up basic puzzle mechanic
 	- hot zones that both need to be active in order to unlock a door
 	- hot zones that can be activated in sequence (with and without reset)
@@ -16,3 +13,8 @@ Plan for carcar changes, etc.
 	- much easier without so skipping for now
 - Collectible animals
 	- perhaps as collected they can replace current hero avatar?  cycle key?
+
+Future work:
+
+	- start pos could have gate specific options, although that's not
+	  strictly necessary to begin with

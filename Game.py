@@ -157,6 +157,9 @@ class Game:
 
 		return self.lJoy[iJoy]
 
+	def LJoy(self):
+		return self.lJoy
+
 	def Run(self):
 
 		# Set up pygame
@@ -182,6 +185,9 @@ class Game:
 		# BB (davidm) probably only want two, and always two...
 
 		self.lHero = [ Hero.Hero(j) for j in self.lJoy ]
+
+		if not self.lHero:
+			self.lHero = [ Hero.Hero(None) ]
 
 		# Run the main loop
 

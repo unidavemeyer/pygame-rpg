@@ -4,6 +4,9 @@ tiles:
     wall: true
   f:
     image: worlds/kira-wall.png
+  s:
+    image: worlds/kira-wall.png
+    start: true
   d:
     color: [192, 192, 64]
     gate: true
@@ -13,7 +16,7 @@ plan:
   - wfffffffwfffffw
   - wfffffffwfffffw
   - wfffffffffffffw
-  - wfffffffffffffw
+  - wfffsffffffsffw
   - wfffffffwfffffw
   - wfffffffwfffffw
   - wwwwwwwwwwdwwww

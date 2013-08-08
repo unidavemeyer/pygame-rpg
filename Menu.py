@@ -49,8 +49,7 @@ class Menu:
 		if Game.game.Mode() != Game.Mode.MENU:
 			return
 		
-		joy = Game.game.Joy(0)
-		if joy:
+		for joy in Game.game.LJoy():
 			# handle nav button presses
 
 			if joy.FWasBtnPressed(Joystick.BTN_NavUp):

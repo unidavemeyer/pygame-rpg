@@ -23,6 +23,7 @@ class World:
 		self.lRectWall = []				# rectangles that are impassable
 		self.lSpawner = []				# spawners in this world
 		self.lGate = []					# gates in the world
+		self.lPosStart = []				# start positions for hero characters
 
 		self.LoadFromFile(strPath)
 		
@@ -31,8 +32,19 @@ class World:
 		Game.game.AddUpdate(self, 90)	# relatively late update
 		Game.game.AddRender(self, 10)	# relatively early render (more on bottom)
 
-		for hero in Game.game.LHero():
-			posStart = Vec.Vec(50, 50)	# BB (davidm) compute/set real start point
+		# Chose randomized starting locations for the heroes
+
+		liPosStart = range(len(self.lPosStart))
+		random.shuffle(liPosStart)
+
+		# Ensure we have enough start indices for everyone
+
+		lHero = Game.game.LHero()
+		while len(liPosStart) < len(lHero):
+			liPosStart.append(liPosStart[0])
+
+		for iHero, hero in enumerate(Game.game.LHero()):
+			posStart = self.lPosStart[liPosStart[iHero]]
 			hero.SetPos(posStart)
 
 	def MakeInactive(self):
@@ -144,6 +156,7 @@ class World:
 
 		rectSize = pygame.Rect(0, 0, dSTile, dSTile)
 		self.surf = pygame.Surface((cCol * dSTile, cRow * dSTile))
+
 		for iRow, lSym in enumerate(llSym):
 			for iCol, sym in enumerate(lSym):
 				self.surf.blit(mpSecData['tiles'][sym]['surf'], (iCol * dSTile, iRow * dSTile), rectSize)
@@ -154,8 +167,8 @@ class World:
 				if mpSecData['tiles'][sym].get('spawner', False):
 					self.lSpawner.append(Spawner(
 											mpSecData['tiles'][sym],
-											iRow * dSTile + 0.5 * dSTile,
-											iCol * dSTile + 0.5 * dSTile))
+											iCol * dSTile + 0.5 * dSTile,
+											iRow * dSTile + 0.5 * dSTile))
 
 				if mpSecData['tiles'][sym].get('gate', False):
 					self.lGate.append(Gate(
@@ -164,6 +177,14 @@ class World:
 											iRow * dSTile,
 											dSTile,
 											dSTile))
+
+				if mpSecData['tiles'][sym].get('start', False):
+					self.lPosStart.append(Vec.Vec(iCol * dSTile, iRow * dSTile))
+
+		# Ensure we have a reasonable start position list (at least *some* start position)
+
+		if not self.lPosStart:
+			self.lPosStart.append(Vec.Vec(50, 50))
 
 		# BB (davidm) post-process self.lRectWall to combine adjoining rectangles into
 		#  larger contiguous chunks -- would speed collision checking, etc., but requires

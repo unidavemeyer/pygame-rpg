@@ -51,7 +51,7 @@ class Hero:
 
 		self.surf = pygame.Surface((32, 32))
 
-		if self.joy.id == 0:
+		if self.joy and self.joy.id == 0:
 			self.surf.fill(pygame.Color(192, 128, 192))		# violet-ish
 		else:
 			self.surf.fill(pygame.Color(192, 128, 128))		# pink-ish
@@ -258,6 +258,9 @@ class Hero:
 
 	def VTargetComputeJoy(self):
 		"""Uses current joystick input to determine target velocity."""
+
+		if not self.joy:
+			return Vec.Vec(0, 0)
 
 		vMax = 180.0
 
