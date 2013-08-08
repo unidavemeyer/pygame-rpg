@@ -15,6 +15,7 @@ BTN_NavLeft = 2
 BTN_NavRight = 3
 BTN_Ok = 4
 BTN_Cancel = 5
+BTN_Menu = 6
 
 class Joystick:
 	"""Represents a single joystick device connected to the system; provies an"""
@@ -85,7 +86,8 @@ class Joystick:
 				Joystick.PIB_PAD_L,	# BTN_NavLeft (= pad left)
 				Joystick.PIB_PAD_R,	# BTN_NavRight (= pad right)
 				Joystick.PIB_X,		# BTN_Ok (= x)
-				Joystick.PIB_CIR,	# BTN_Cancel = 5
+				Joystick.PIB_CIR,	# BTN_Cancel (= circle)
+				Joystick.PIB_STR,	# BTN_Menu (= start)
 			]
 
 

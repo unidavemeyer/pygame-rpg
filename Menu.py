@@ -43,8 +43,15 @@ class Menu:
 		self.m_iEntry = 0
 
 	def OnUpdate(self):
-		# BB (davidm) consider handling a "menu escape" button press here, even
-		#  while not in menu mode
+
+		# BB (davidm) unfortunate to have some menu actions happen in FHandleEvent
+		#  and other actions happen in OnUpdate.  Maybe we should have a keyboard
+		#  class that tracks input events there, just like we have for the joystick?
+
+		for joy in Game.game.LJoy():
+			if joy.FWasBtnPressed(Joystick.BTN_Menu):
+				Game.game.SetMode(Game.Mode.MENU)
+				return
 
 		if Game.game.Mode() != Game.Mode.MENU:
 			return

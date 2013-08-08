@@ -1,13 +1,14 @@
 Plan for carcar changes, etc.
 
-- Joystick start button should count as escape key (e.g., bring up menu)
-- Need to fix double new game bug that puts invisible gates in second.wld
 - Need to set up basic puzzle mechanic
 	- hot zones that both need to be active in order to unlock a door
 	- hot zones that can be activated in sequence (with and without reset)
 	- hot zones that need to be activated based on timing
 	- notion of hot zone state
 	- notion of door or lock state
+- Need to fix double new game bug that puts invisible gates in second.wld
+- Need to allow Resume menu option to operate
+- Need to allow esc, start to quit menu mode (act just like resume)
 - Need to define a few world setups, not just one
 - Need to decide if we want side scroll from spot to spot or not
 	- much easier without so skipping for now
