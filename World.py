@@ -13,17 +13,16 @@ import yaml
 
 class World:
 	"""Provides a world, which is a contiguous set of tiles/spaces"""
-	""" where the player can navigate the hero.  Includes the ability"""
-	""" to have "doors" that transport the hero/player to another world."""
+	""" where the player can navigate the hero."""
 
 	def __init__(self, strPath):
-		# BB (dave) should also have a start point, maybe?  (where hero appears initially)
-
 		self.surf = None				# surface to render to the screen
 		self.lRectWall = []				# rectangles that are impassable
-		self.lSpawner = []				# spawners in this world
-		self.lGate = []					# gates in the world
+		self.lSpawner = []				# spawners
+		self.lGate = []					# gates (go to other worlds)
 		self.lPosStart = []				# start positions for hero characters
+		self.lKey = []					# keys, which interact with locks or other keys
+		self.lLock = []					# locks, which act as walls until unlocked
 
 		self.LoadFromFile(strPath)
 		
@@ -74,17 +73,24 @@ class World:
 				if rectHero.colliderect(gate.rect):
 					Game.game.SetNextWorld(gate.worldTarget)
 
-		return
+		# Update key states
 
-	def ColinfoFromRect(self, rect):
-		liRectCollide = rect.collidelistall(self.lRectWall)
-		if not liRectCollide:
-			return None
+		for key in self.lKey:
+			key.OnUpdate()
 
-		# Generate collision info summing up which rectangles were
-		#  hit in the collision
+	def ColinfoFromRect(self, rectCheck):
+		liRectCollide = []
+		liRectCollide.extend(rectCheck.collidelistall(self.lRectWall))
+		lRectCollide = [rect for iRect, rect in enumerate(self.lRectWall) if iRect in liRectCollide]
+		
+		for lock in self.lLock:
+			if lock.FIsActive():
+				continue
 
-		return Colinfo([rect for iRect, rect in enumerate(self.lRectWall) if iRect in liRectCollide])
+			if lock.rect.colliderect(rectCheck):
+				lRectCollide.append(lock.rect)
+
+		return Colinfo(lRectCollide)
 
 	def OnRender(self, surfScreen):
 		if Game.game.Mode() == Game.Mode.COMBAT:
@@ -102,6 +108,16 @@ class World:
 
 		surfScreen.fill(pygame.Color(0, 0, 0))
 		surfScreen.blit(self.surf, (0, 0))
+
+		# Render keys
+
+		for key in self.lKey:
+			key.OnRender(surfScreen)
+
+		# Render locks
+
+		for lock in self.lLock:
+			lock.OnRender(surfScreen)
 
 	def LoadFromFile(self, strPath):
 		"""Loads data from the given path and constructs the surface"""
@@ -181,6 +197,22 @@ class World:
 				if mpSecData['tiles'][sym].get('start', False):
 					self.lPosStart.append(Vec.Vec(iCol * dSTile, iRow * dSTile))
 
+				if mpSecData['tiles'][sym].get('key', False):
+					self.lKey.append(Key(
+										mpSecData['tiles'][sym],
+										iCol * dSTile,
+										iRow * dSTile,
+										dSTile,
+										dSTile))
+
+				if mpSecData['tiles'][sym].get('lock', False):
+					self.lLock.append(Lock(
+										mpSecData['tiles'][sym],
+										iCol * dSTile,
+										iRow * dSTile,
+										dSTile,
+										dSTile))
+
 		# Ensure we have a reasonable start position list (at least *some* start position)
 
 		if not self.lPosStart:
@@ -189,6 +221,11 @@ class World:
 		# BB (davidm) post-process self.lRectWall to combine adjoining rectangles into
 		#  larger contiguous chunks -- would speed collision checking, etc., but requires
 		#  a clever/careful algorithm to expand things reasonably
+
+		# Configure the keys (allow them to resolve their names to objects)
+
+		for key in self.lKey:
+			key.Configure(self.lKey, self.lLock)
 
 
 
@@ -293,3 +330,164 @@ class Spawner:
 		self.lNpcCur.append(npc)
 		self.cNpcLifetime += 1
 
+
+
+class Key:
+	"""Keys are picked up or activated when Heroes touch them.  They can"""
+	""" be used to modify the state of Locks or other Keys."""
+
+	def __init__(self, mpVarValue, x, y, w, h):
+		self.rect = pygame.Rect(x, y, w, h)
+
+		# track what groups we activate (required)
+
+		self.setStrGroupActivate = set(mpVarValue['activate_groups'])
+
+		# track images for held/unheld states (required)
+
+		# BB (davidm) for sticky keys, may make sense to not require a held
+		#  image -- it could effectively be empty...
+
+		self.surfHeld = pygame.image.load(mpVarValue['held_image'])
+		self.surfUnheld = pygame.image.load(mpVarValue['unheld_image'])
+
+		# track what group we are in (other keys, simultaneous activate)
+
+		self.strGroup = mpVarValue.get('group', None)
+
+		# track if we remain active after the player leaves
+
+		self.fIsHoldSticky = mpVarValue.get('sticky', False)
+
+		# track if we're initially active or not
+
+		self.fIsActive = mpVarValue.get('active', True)
+
+		# initialize other state
+
+		self.fIsHeld = False
+		self.fIsHeldByHero = False
+		self.lObjActivate = []
+		self.lKeyGroup = []
+
+	def StrGroup(self):
+		return self.strGroup
+
+	def Configure(self, lKey, lLock):
+		"""Converts string values into real objects after everything has been properly"""
+		""" initialized."""
+
+		# pull keys into activate & key groups
+
+		for key in lKey:
+			if key == self:
+				continue
+
+			if key.StrGroup() in self.setStrGroupActivate:
+				self.lObjActivate.append(key)
+
+			if self.strGroup != None and key.StrGroup() == self.strGroup:
+				self.lKeyGroup.append(key)
+
+		# pull locks into activate group
+
+		for lock in lLock:
+			if lock.StrGroup() in self.setStrGroupActivate:
+				self.lObjActivate.append(lock)
+
+	def FIsActive(self):
+		return self.fIsActive
+
+	def SetIsActive(self, fIsActive):
+		self.fIsActive = fIsActive
+
+	def SetIsHeld(self, fIsHeld):
+		if self.fIsHeld == fIsHeld:
+			return
+
+		self.fIsHeld = fIsHeld
+
+		# toggle activation state for anything involved, if all keys in the group
+		#  are held
+
+		# BB (davidm) logic here is funky
+
+		fIsGroupHeld = fIsHeld
+
+		for key in self.lKeyGroup:
+			if not key.FIsHeld():
+				fIsGroupHeld = False
+				break
+
+		if fIsGroupHeld:
+			for obj in self.lObjActivate:
+				obj.SetIsActive(fIsHeld)
+
+	def FIsHeld(self):
+		return self.fIsHeld
+
+	def SetHeldByHero(self, fIsHeldByHero):
+		if self.fIsHeldByHero == fIsHeldByHero:
+			return
+
+		self.fIsHeldByHero = fIsHeldByHero
+
+		if fIsHeldByHero:
+			self.SetIsHeld(True)
+		elif not self.fIsHoldSticky:
+			self.SetIsHeld(False)
+
+	def OnUpdate(self):
+		"""Check to see if any hero is currently on our space; adjust our hold state"""
+		""" as appropriate."""
+
+		if not self.FIsActive():
+			return
+
+		for hero in Game.game.LHero():
+			self.SetHeldByHero(hero.Rect().colliderect(self.rect))
+
+	def OnRender(self, surfScreen):
+		if self.FIsActive():
+			if self.FIsHeld():
+				surfScreen.blit(self.surfHeld, (self.rect.x, self.rect.y))
+			else:
+				surfScreen.blit(self.surfUnheld, (self.rect.x, self.rect.y))
+
+
+
+class Lock:
+	"""Locks can be in open or closed states.  When open, they are passable"""
+	""" and when closed, they act as walls.  Lock states are typically modified"""
+	""" by Keys."""
+
+	def __init__(self, mpVarValue, x, y, w, h):
+		self.rect = pygame.Rect(x, y, w, h)
+
+		# track what group we are in (keys activate groups) (required)
+
+		self.strGroup = mpVarValue['group']
+
+		# track active and inactive images (required)
+
+		self.surfActive = pygame.image.load(mpVarValue['active_image'])
+		self.surfInactive = pygame.image.load(mpVarValue['inactive_image'])
+
+		# track if we're initially active or not
+
+		self.fIsActive = mpVarValue.get('active', False)
+
+	def StrGroup(self):
+		return self.strGroup
+
+	def FIsActive(self):
+		return self.fIsActive
+
+	def SetIsActive(self, fIsActive):
+		self.fIsActive = fIsActive
+
+	def OnRender(self, surfScreen):
+		if self.FIsActive():
+			surfScreen.blit(self.surfActive, (self.rect.x, self.rect.y))
+		else:
+			surfScreen.blit(self.surfInactive, (self.rect.x, self.rect.y))

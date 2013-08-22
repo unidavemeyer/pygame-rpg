@@ -1,11 +1,12 @@
 Plan for carcar changes, etc.
 
 - Need to set up basic puzzle mechanic
-	- hot zones that both need to be active in order to unlock a door
-	- hot zones that can be activated in sequence (with and without reset)
-	- hot zones that need to be activated based on timing
-	- notion of hot zone state
-	- notion of door or lock state
+	- add images for keys
+	- add images for locks
+	- add generic overlay image(s)
+	- add collision for inactive locks
+	- finish rigging examples into second.wld
+	- test and call the feature done
 - Need to fix double new game bug that puts invisible gates in second.wld
 - Need to allow Resume menu option to operate
 - Need to allow esc, start to quit menu mode (act just like resume)
@@ -19,3 +20,5 @@ Future work:
 
 	- start pos could have gate specific options, although that's not
 	  strictly necessary to begin with
+	- keys that can be activated in sequence (with and without reset)
+	- keys that need to be activated based on timing
