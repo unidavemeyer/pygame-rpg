@@ -73,6 +73,11 @@ class Hero:
 		self.lItem = []
 		self.weapon = Weapon.Sword()	# BB (davidm) placeholder for now
 
+	def Kill(self):
+		Game.game.RemoveUpdate(self, 20)
+		Game.game.RemoveRender(self, 90)
+		Game.game.RemoveHandler(self, 20)
+
 	def OnUpdate(self):
 		if Game.game.Mode() == Game.Mode.COMBAT:
 

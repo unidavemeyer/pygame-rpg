@@ -26,6 +26,9 @@ class World:
 
 		self.LoadFromFile(strPath)
 		
+	def Kill(self):
+		self.MakeInactive()
+
 	def MakeActive(self):
 		Game.game.SetWorld(self)
 		Game.game.AddUpdate(self, 90)	# relatively late update

@@ -46,15 +46,15 @@ class Game:
 		self.mpPriRender = {}		# priority based list of render objects
 		self.mpPriHandler = {}		# priority based list of handler objects
 		self.lNpc = []				# (unsorted) list of NPCs currently in the world
-		self.hero = None			# current hero object
+		self.lHero = []				# current hero objects
 		self.menu = None			# current menu object
 		self.world = None			# current world object
 		self.worldNext = None		# next world object (pending warp)
 		self.npcCombatant = None	# current npc the hero is fighting (if any)
 
-		self.fpsClock = None
-		self.surfScreen = None
-		self.lJoy = []
+		self.fpsClock = None		# rate limiter for performance
+		self.surfScreen = None		# area where everything is drawn
+		self.lJoy = []				# joysticks we've found
 
 		self.m_mode = Mode.MENU
 
@@ -160,6 +160,50 @@ class Game:
 	def LJoy(self):
 		return self.lJoy
 
+	def OnNewGame(self):
+		"""Clears objects and internal state and makes a new game start at the world map"""
+
+		# Kill npcs
+
+		for npc in self.lNpc:
+			npc.Kill()
+
+		self.lNpc = []
+		self.npcCombatant = None
+
+		# Kill heroes
+
+		for hero in self.lHero:
+			hero.Kill()
+
+		self.lHero = []
+
+		# Kill worlds
+
+		if self.world:
+			self.world.Kill()
+			self.world = None
+
+		if self.worldNext:
+			self.worldNext.Kill()
+			self.worldNext = None
+
+		# Generate one hero for each joystick
+
+		# BB (davidm) probably only want two, and always two...
+
+		self.lHero = [ Hero.Hero(j) for j in self.lJoy ]
+
+		if not self.lHero:
+			self.lHero = [ Hero.Hero(None) ]
+
+		# BB (davidm) totally placeholder
+
+		world = World.World('worlds/start.wld')
+		world.MakeActive()
+
+		self.SetMode(Mode.WORLDMAP)
+
 	def Run(self):
 
 		# Set up pygame
@@ -179,15 +223,6 @@ class Game:
 
 		Font.Init()
 		self.menu = Menu.Menu()
-
-		# Generate one hero for each joystick
-
-		# BB (davidm) probably only want two, and always two...
-
-		self.lHero = [ Hero.Hero(j) for j in self.lJoy ]
-
-		if not self.lHero:
-			self.lHero = [ Hero.Hero(None) ]
 
 		# Run the main loop
 

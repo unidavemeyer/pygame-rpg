@@ -33,7 +33,7 @@ class Menu:
 
 		self.m_lEntry = [
 			MenuEntry("Resume", self.OnResume),
-			MenuEntry("New Game", self.OnNewGame),
+			MenuEntry("New Game", Game.game.OnNewGame),
 			MenuEntry("Save Game", self.OnSaveGame),
 			MenuEntry("Load Game", self.OnLoadGame),
 			MenuEntry("Options", self.OnOptions),
@@ -118,17 +118,6 @@ class Menu:
 
 	def OnResume(self):
 		print "Resume not yet implemented"
-
-	def OnNewGame(self):
-		"""Generates a new game by creating a World linked to start.wld and"""
-		""" changing the game mode."""
-
-		# BB (davidm) totally placeholder
-
-		world = World.World('worlds/start.wld')
-		world.MakeActive()
-
-		Game.game.SetMode(Game.Mode.WORLDMAP)
 
 	def OnSaveGame(self):
 		print "Save game not yet implemented"

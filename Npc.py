@@ -19,6 +19,10 @@ class Npc:
 		self.pos = Vec.Vec(0,0)			# location in the world
 		self.surf = None				# surface to render onto the screen
 
+	def Kill(self):
+		Game.game.RemoveUpdate(self, 30)
+		Game.game.RemoveRender(self, 80)
+
 	def OnUpdate(self):
 		# NOTE (davidm) no default behavior here
 
