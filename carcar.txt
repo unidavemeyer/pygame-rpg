@@ -1,10 +1,6 @@
 Plan for carcar changes, etc.
 
-- Need to allow Resume menu option to operate
-- Need to allow esc, start to quit menu mode (act just like resume)
 - Need to define a few world setups, not just one
-- Need to decide if we want side scroll from spot to spot or not
-	- much easier without so skipping for now
 - Collectible animals
 	- perhaps as collected they can replace current hero avatar?  cycle key?
 
@@ -14,3 +10,4 @@ Future work:
 	  strictly necessary to begin with
 	- keys that can be activated in sequence (with and without reset)
 	- keys that need to be activated based on timing
+	- side scroll from spot to spot

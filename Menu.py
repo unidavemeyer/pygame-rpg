@@ -41,6 +41,7 @@ class Menu:
 		]
 
 		self.m_iEntry = 0
+		self.modeResume = None
 
 	def OnUpdate(self):
 
@@ -50,7 +51,11 @@ class Menu:
 
 		for joy in Game.game.LJoy():
 			if joy.FWasBtnPressed(Joystick.BTN_Menu):
-				Game.game.SetMode(Game.Mode.MENU)
+				if Game.game.Mode() == Game.Mode.MENU:
+					self.OnResume()
+				else:
+					self.modeResume = Game.game.Mode()
+					Game.game.SetMode(Game.Mode.MENU)
 				return
 
 		if Game.game.Mode() != Game.Mode.MENU:
@@ -73,7 +78,11 @@ class Menu:
 			return False
 
 		if event.key == pygame.K_ESCAPE:
-			Game.game.SetMode(Game.Mode.MENU)
+			if Game.game.Mode() == Game.Mode.MENU:
+				self.OnResume()
+			else:
+				self.modeResume = Game.game.Mode()
+				Game.game.SetMode(Game.Mode.MENU)
 			return True
 
 		if Game.game.Mode() != Game.Mode.MENU:
@@ -117,7 +126,9 @@ class Menu:
 		self.m_lEntry[self.m_iEntry].Exec()
 
 	def OnResume(self):
-		print "Resume not yet implemented"
+		if self.modeResume:
+			Game.game.SetMode(self.modeResume)
+			self.modeResume = None
 
 	def OnSaveGame(self):
 		print "Save game not yet implemented"
