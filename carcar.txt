@@ -1,24 +1,22 @@
 Plan for carcar changes, etc.
 
 - Collectible animals
-	- stand in place initially
-	- happy and sad states (happy when rescuable, sad when locked up)
-	- need to be collecible when the hero touches them
-	- probably spawner generated locations to be quasi-random
+	- need to be collectible when the hero touches them
+	- support movement based on simple patterns in config file
 	- may wish to have one to three configurable colors in the image
+- Need to define a few world setups, not just one
+	- consider making a "city" layout with "houses" to go into
+	- consider making a few "houses" with one to three rooms of keys to get through
 - Need to make closer-to-real example art
 	- wall sections
 	- doors
 	- floors
 	- player characters
 	- animals
-- Replacable hero/player character images
+- Replaceable hero/player character images
 	- track animals collected
 	- add cycle key to switch how the view looks
 	- maybe need controllable background color
-- Need to define a few world setups, not just one
-	- consider making a "city" layout with "houses" to go into
-	- consider making a few "houses" with one to three rooms of keys to get through
 
 Future work:
 

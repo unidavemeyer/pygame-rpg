@@ -160,7 +160,7 @@ class Hero:
 
 			for npc in Game.game.LNpc():
 				if npc.FShouldInteract(rectHero):
-					npc.OnInteract()
+					npc.OnInteract(self)
 					break
 
 	def FHandleEvent(self, event):

@@ -48,9 +48,8 @@ class Npc:
 
 		return self.Rect().colliderect(rectOther)
 
-	def OnInteract(self):
-		"""Begin interaction.  Assumed that this will change the game mode"""
-		""" and presumes that interaction is to be with the Hero."""
+	def OnInteract(self, hero):
+		"""Begin interaction with the given hero."""
 
 		# NOTE (davidm) no default behavior here
 
@@ -64,7 +63,7 @@ class Goon(Npc):
 	"""Basic goon opponent.  Attacks on a regular schedule doing minor damage"""
 	""" that never misses."""
 
-	def __init__(self):
+	def __init__(self, world, mpVarValue):
 		Npc.__init__(self)
 
 		self.hpCur = 20			# current hitpoints
@@ -73,6 +72,8 @@ class Goon(Npc):
 		self.dHpAttack = -1		# hp damage dealt by each attack
 
 		# override the default surface
+
+		# BB (davidm) load goon-specific settings from mpVarValue
 
 		self.surf = pygame.Surface((32, 32))
 		self.surf.fill(pygame.Color(255, 0, 0))
@@ -136,8 +137,69 @@ class Goon(Npc):
 	def OnDamage(self, damage):
 		self.hpCur += damage
 
-	def OnInteract(self):
+	def OnInteract(self, hero):
 		Game.game.SetNpcCombatant(self)
 		Game.game.SetMode(Game.Mode.COMBAT)
 		self.ticks_last_attack = pygame.time.get_ticks()
 
+
+
+class Animal(Npc):
+	"""Animals are the rescuable characters that are out in carcar.  They get"""
+	""" their configuration data from the spawner that makes them, can be"""
+	""" rescued by a hero, have happy and sad states, etc."""
+
+	def __init__(self, world, mpVarValue):
+		Npc.__init__(self)
+
+		self.surfHappy = None
+		pathHappy = mpVarValue.get('happy_image')
+		if pathHappy:
+			self.surfHappy = pygame.image.load(pathHappy)
+
+		self.surfSad = None
+		pathSad = mpVarValue.get('sad_image')
+		if pathSad:
+			self.surfSad = pygame.image.load(pathSad)
+
+		self.strGroup = mpVarValue.get('group', None)
+
+		if self.strGroup:
+			world.AddGroupMember(self.strGroup, self)
+
+		fShouldBeActive = mpVarValue.get('active', False)
+		self.fIsActive = 'uninit'
+		self.SetIsActive(fShouldBeActive)
+
+		# TODO: make a little move pattern list: (vx, vy, dt), ... to allow the animals to wander
+		#  around a little bit to make them seem more alive
+
+		self.lPatMove = mpVarValue.get('move_pattern', [])
+
+	def OnUpdate(self):
+		# TODO: move around, if we're configured to do so
+
+		pass
+
+	def OnInteract(self, hero):
+		# TODO: mark that the given hero collected us, and then Kill ourselves so we're
+		#  out of the running lists of objects
+
+		pass
+
+	def StrGroup(self):
+		return self.strGroup
+
+	def FIsActive(self):
+		return self.fIsActive
+
+	def SetIsActive(self, fIsActive):
+		if self.fIsActive == fIsActive:
+			return
+
+		self.fIsActive = fIsActive
+
+		if fIsActive:
+			self.surf = self.surfHappy
+		else:
+			self.surf = self.surfSad

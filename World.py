@@ -23,6 +23,7 @@ class World:
 		self.lPosStart = []				# start positions for hero characters
 		self.lKey = []					# keys, which interact with locks or other keys
 		self.lLock = []					# locks, which act as walls until unlocked
+		self.mpGroupMembers = {}		# mapping from group names to member lists
 
 		self.LoadFromFile(strPath)
 		
@@ -93,7 +94,16 @@ class World:
 			if lock.rect.colliderect(rectCheck):
 				lRectCollide.append(lock.rect)
 
+		if not lRectCollide:
+			return None
+
 		return Colinfo(lRectCollide)
+
+	def AddGroupMember(self, strGroup, member):
+		self.mpGroupMembers.setdefault(strGroup, []).append(member)
+
+	def LMemberFromGroup(self, strGroup):
+		return self.mpGroupMembers.get(strGroup, [])
 
 	def OnRender(self, surfScreen):
 		if Game.game.Mode() == Game.Mode.COMBAT:
@@ -145,9 +155,12 @@ class World:
 		mpSecData = yaml.load(fileIn)
 		fileIn.close()
 
-		# Add surfaces for each symbol as appropriate
+		# Add surfaces for each symbol as appropriate and ensure we have string
+		#  forms of all of the symbols (in case someone uses a number as a symbol)
 
 		dSTile = 32
+
+		mpSecDataTilesExtra = {}
 
 		for sym, mpSymData in mpSecData['tiles'].items():
 			if mpSymData.get('color'):
@@ -157,6 +170,12 @@ class World:
 				mpSymData['surf'] = pygame.image.load(mpSymData['image'])
 			else:
 				print "Warning:  symbol '%s' had no surface property" % sym
+
+			if not mpSecData['tiles'].has_key(str(sym)):
+				mpSecDataTilesExtra[str(sym)] = mpSymData
+		
+		for sym, mpSymData in mpSecDataTilesExtra.items():
+			mpSecData['tiles'][sym] = mpSymData
 
 		# Validate floorplan
 
@@ -185,12 +204,14 @@ class World:
 				
 				if mpSecData['tiles'][sym].get('spawner', False):
 					self.lSpawner.append(Spawner(
+											self,
 											mpSecData['tiles'][sym],
 											iCol * dSTile + 0.5 * dSTile,
 											iRow * dSTile + 0.5 * dSTile))
 
 				if mpSecData['tiles'][sym].get('gate', False):
 					self.lGate.append(Gate(
+										self,
 										mpSecData['tiles'][sym],
 											iCol * dSTile,
 											iRow * dSTile,
@@ -202,6 +223,7 @@ class World:
 
 				if mpSecData['tiles'][sym].get('key', False):
 					self.lKey.append(Key(
+										self,
 										mpSecData['tiles'][sym],
 										iCol * dSTile,
 										iRow * dSTile,
@@ -210,6 +232,7 @@ class World:
 
 				if mpSecData['tiles'][sym].get('lock', False):
 					self.lLock.append(Lock(
+										self,
 										mpSecData['tiles'][sym],
 										iCol * dSTile,
 										iRow * dSTile,
@@ -225,18 +248,13 @@ class World:
 		#  larger contiguous chunks -- would speed collision checking, etc., but requires
 		#  a clever/careful algorithm to expand things reasonably
 
-		# Configure the keys (allow them to resolve their names to objects)
-
-		for key in self.lKey:
-			key.Configure(self.lKey, self.lLock)
-
 
 
 class Gate:
 	"""Gate class represents connection from one world to another.  When the player"""
 	""" walks into a gate, they get warped to the start location of the linked world."""
 
-	def __init__(self, mpVarValue, x, y, w, h):
+	def __init__(self, world, mpVarValue, x, y, w, h):
 		self.rect = pygame.Rect(x, y, w, h)
 		self.worldTarget = mpVarValue['target']
 
@@ -254,16 +272,18 @@ class Colinfo:
 class Spawner:
 	"""Spawns NPCs based on various guidelines when its world is active."""
 
-	def __init__(self, mpVarValue, x, y):
+	def __init__(self, world, mpVarValue, x, y):
 		self.pos = Vec.Vec(x, y)
 
 		self.npcType = mpVarValue['npc_type']
 		self.cNpcMaxLifetime = mpVarValue.get('max_npcs', 0)
 		self.cNpcMaxSimultaneous = mpVarValue.get('simultaneous_npcs', 0)
 		self.sRadius = mpVarValue.get('spawn_radius', 64)
+		self.npcSettings = mpVarValue.get('npc_settings')
 
 		self.lNpcCur = []
 		self.cNpcLifetime = 0
+		self.world = world
 
 	def FIsWithinLimits(self):
 		if self.cNpcMaxLifetime > 0 and self.cNpcLifetime >= self.cNpcMaxLifetime:
@@ -326,7 +346,18 @@ class Spawner:
 			self.NpcSpawn(posNpc)
 
 	def NpcSpawn(self, pos):
-		npc = Npc.Goon()	# BB (davidm) use self.npcType
+		mpTypeFn = {
+				'goon' : Npc.Goon,
+				'animal' : Npc.Animal,
+			}
+
+		fn = mpTypeFn.get(self.npcType)
+		if not fn:
+			raise Exception("Unknown type '%s'" % self.npcType)
+
+		print "Generated npc '%s' at %s" % (self.npcType, pos)
+
+		npc = fn(self.world, self.npcSettings)
 		npc.SetPos(pos)
 		Game.game.AddNpc(npc)
 
@@ -339,7 +370,7 @@ class Key:
 	"""Keys are picked up or activated when Heroes touch them.  They can"""
 	""" be used to modify the state of Locks or other Keys."""
 
-	def __init__(self, mpVarValue, x, y, w, h):
+	def __init__(self, world, mpVarValue, x, y, w, h):
 		self.rect = pygame.Rect(x, y, w, h)
 
 		# track what groups we activate (required)
@@ -358,6 +389,9 @@ class Key:
 
 		self.strGroup = mpVarValue.get('group', None)
 
+		if self.strGroup:
+			world.AddGroupMember(self.strGroup, self)
+
 		# track if we remain active after the player leaves
 
 		self.fIsHoldSticky = mpVarValue.get('sticky', False)
@@ -370,33 +404,10 @@ class Key:
 
 		self.fIsHeld = False
 		self.fIsHeldByHero = False
-		self.lObjActivate = []
-		self.lKeyGroup = []
+		self.world = world
 
 	def StrGroup(self):
 		return self.strGroup
-
-	def Configure(self, lKey, lLock):
-		"""Converts string values into real objects after everything has been properly"""
-		""" initialized."""
-
-		# pull keys into activate & key groups
-
-		for key in lKey:
-			if key == self:
-				continue
-
-			if key.StrGroup() in self.setStrGroupActivate:
-				self.lObjActivate.append(key)
-
-			if self.strGroup != None and key.StrGroup() == self.strGroup:
-				self.lKeyGroup.append(key)
-
-		# pull locks into activate group
-
-		for lock in lLock:
-			if lock.StrGroup() in self.setStrGroupActivate:
-				self.lObjActivate.append(lock)
 
 	def FIsActive(self):
 		return self.fIsActive
@@ -417,14 +428,15 @@ class Key:
 
 		fIsGroupHeld = fIsHeld
 
-		for key in self.lKeyGroup:
+		for key in self.world.LMemberFromGroup(self.strGroup):
 			if not key.FIsHeld():
 				fIsGroupHeld = False
 				break
 
 		if fIsGroupHeld:
-			for obj in self.lObjActivate:
-				obj.SetIsActive(fIsHeld)
+			for strGroup in self.setStrGroupActivate:
+				for obj in self.world.LMemberFromGroup(strGroup):
+					obj.SetIsActive(fIsHeld)
 
 	def FIsHeld(self):
 		return self.fIsHeld
@@ -464,12 +476,15 @@ class Lock:
 	""" and when closed, they act as walls.  Lock states are typically modified"""
 	""" by Keys."""
 
-	def __init__(self, mpVarValue, x, y, w, h):
+	def __init__(self, world, mpVarValue, x, y, w, h):
 		self.rect = pygame.Rect(x, y, w, h)
 
 		# track what group we are in (keys activate groups) (required)
 
 		self.strGroup = mpVarValue['group']
+
+		if self.strGroup:
+			world.AddGroupMember(self.strGroup, self)
 
 		# track active and inactive images (required)
 
