@@ -152,7 +152,7 @@ class World:
 		#	- aaaaaa
 
 		fileIn = open(strPath, 'r')
-		mpSecData = yaml.load(fileIn)
+		mpSecData = yaml.safe_load(fileIn)
 		fileIn.close()
 
 		# Add surfaces for each symbol as appropriate and ensure we have string

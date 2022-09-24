@@ -21,6 +21,7 @@ class Npc:
 		self.surf = None				# surface to render onto the screen
 
 	def Kill(self):
+		Game.game.RemoveNpc(self)
 		Game.game.RemoveUpdate(self, 30)
 		Game.game.RemoveRender(self, 80)
 
@@ -95,10 +96,8 @@ class Goon(Npc):
 		# BB (davidm) reward experience?  gold?  other?  use an end-of-combat mode?
 
 		if self.hpCur <= 0:
-			Game.game.RemoveNpc(self)
 			Game.game.SetNpcCombatant(None)
-			Game.game.RemoveUpdate(self, 30)	# BB (davidm) fragile coupling
-			Game.game.RemoveRender(self, 80)	#  ...
+			self.Kill() # BB (davidm) may be fragile coupling here (old comment?)
 			Game.game.SetMode(Game.Mode.WORLDMAP)
 			return
 

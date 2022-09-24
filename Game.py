@@ -4,6 +4,7 @@
 
 import pygame
 import sys
+import traceback
 
 import Hero
 import Menu
@@ -68,7 +69,13 @@ class Game:
 	def RemoveUpdate(self, obj, priority):
 		"""Remove obj from the priority list of update objects."""
 
-		self.mpPriUpdate[priority].remove(obj)
+		# BB (davidm) sometimes we can try to double remove, apparently?
+
+		print(f"Removing {obj} from {priority} update")
+		traceback.print_stack()
+
+		if obj in self.mpPriUpdate[priority]:
+			self.mpPriUpdate[priority].remove(obj)
 
 	def AddRender(self, obj, priority):
 		"""Add obj to the priority list of objects to render.  obj is expected"""
@@ -80,6 +87,11 @@ class Game:
 
 	def RemoveRender(self, obj, priority):
 		"""Remove obj from the priority list of render objects."""
+
+		# BB (davidm) double remove?
+
+		print(f"Removing {obj} from {priority} render")
+		traceback.print_stack()
 
 		self.mpPriRender[priority].remove(obj)
 
