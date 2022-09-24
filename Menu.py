@@ -131,13 +131,13 @@ class Menu:
 			self.modeResume = None
 
 	def OnSaveGame(self):
-		print "Save game not yet implemented"
+		print("Save game not yet implemented")
 
 	def OnLoadGame(self):
-		print "Load game not yet implemented"
+		print("Load game not yet implemented")
 
 	def OnOptions(self):
-		print "Options not yet implemented"
+		print("Options not yet implemented")
 
 	def OnQuit(self):
 		pygame.event.post(pygame.event.Event(pygame.QUIT))

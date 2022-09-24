@@ -31,7 +31,7 @@ class Weapon:
 		if Game.game.Mode() != Game.Mode.COMBAT:
 			return
 
-		print "Base weapon update"
+		print("Base weapon update")
 
 	def FHandleEvent(self, event):
 		if Game.game.Mode() != Game.Mode.COMBAT:

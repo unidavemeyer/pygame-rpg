@@ -217,7 +217,7 @@ class Game:
 		self.AddJoysticks()
 
 		if len(self.lJoy) < 2:
-			print "Warning:  Should have two joysticks connected"
+			print("Warning:  Should have two joysticks connected")
 
 		# Set up starter objects
 

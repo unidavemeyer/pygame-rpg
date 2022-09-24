@@ -110,8 +110,8 @@ class Hero:
 				self.v = vTarget
 
 			if "DEBUG" == 0:
-				print "vCur: %s vTarget: %s dV: %s vNext %s" % \
-					(vCur, vTarget, dV, self.v)
+				print("vCur: %s vTarget: %s dV: %s vNext %s" % \
+					(vCur, vTarget, dV, self.v))
 
 			# Compute new position
 
@@ -173,7 +173,7 @@ class Hero:
 			#  so that we could do this just once on a boundary instead of every frame
 			#  during combat mode...
 
-			for ks in self.mpKeyState.values():
+			for ks in list(self.mpKeyState.values()):
 				ks.Clear()
 
 			# Give current weapon a chance to handle the event

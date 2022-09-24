@@ -56,14 +56,14 @@ surfScreen.fill(lColor[0])
 
 pygame.joystick.init()		# required to start joystick support
 
-print "%d joysticks found" % pygame.joystick.get_count()
+print("%d joysticks found" % pygame.joystick.get_count())
 
 lJoy = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]	# joystick(x) makes a joystick
 for joy in lJoy:
-	print "Joy %d: <%s>" % (joy.get_id(), joy.get_name())
+	print("Joy %d: <%s>" % (joy.get_id(), joy.get_name()))
 	joy.init()		# required to start *using* the joystick
-	print "  num axes: %d" % joy.get_numaxes()
-	print "  num btns: %d" % joy.get_numbuttons()
+	print("  num axes: %d" % joy.get_numaxes())
+	print("  num btns: %d" % joy.get_numbuttons())
 	# print "  num hats: %d" % joy.get_numhats()
 
 class CJoy:
@@ -173,7 +173,7 @@ while True:
 
 		lStrJoy = ["%2d: %10f" % (x, joyMem.lAxis[x]) for x in [0, 1, 2, 3]]
 		lStrJoy.extend(["%1d" % joyMem.lBtn[x] for x in [12, 13, 14, 15, 16]])
-		print " ".join(lStrJoy)
+		print(" ".join(lStrJoy))
 
 	# redraw the things we want drawn
 

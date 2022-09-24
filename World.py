@@ -37,7 +37,7 @@ class World:
 
 		# Chose randomized starting locations for the heroes
 
-		liPosStart = range(len(self.lPosStart))
+		liPosStart = list(range(len(self.lPosStart)))
 		random.shuffle(liPosStart)
 
 		# Ensure we have enough start indices for everyone
@@ -162,19 +162,19 @@ class World:
 
 		mpSecDataTilesExtra = {}
 
-		for sym, mpSymData in mpSecData['tiles'].items():
+		for sym, mpSymData in list(mpSecData['tiles'].items()):
 			if mpSymData.get('color'):
 				mpSymData['surf'] = pygame.Surface((dSTile, dSTile))
 				mpSymData['surf'].fill(pygame.Color(*mpSymData['color']))
 			elif mpSymData.get('image'):
 				mpSymData['surf'] = pygame.image.load(mpSymData['image'])
 			else:
-				print "Warning:  symbol '%s' had no surface property" % sym
+				print("Warning:  symbol '%s' had no surface property" % sym)
 
-			if not mpSecData['tiles'].has_key(str(sym)):
+			if str(sym) not in mpSecData['tiles']:
 				mpSecDataTilesExtra[str(sym)] = mpSymData
 		
-		for sym, mpSymData in mpSecDataTilesExtra.items():
+		for sym, mpSymData in list(mpSecDataTilesExtra.items()):
 			mpSecData['tiles'][sym] = mpSymData
 
 		# Validate floorplan
@@ -185,7 +185,7 @@ class World:
 
 		for iRow, lSym in enumerate(llSym):
 			if len(lSym) != cCol:
-				print "Warning:  invalid plan; row %d has %d values instead of %d" % (iRow + 1, len(lSym), cCol)
+				print("Warning:  invalid plan; row %d has %d values instead of %d" % (iRow + 1, len(lSym), cCol))
 
 		# Generate renderable surface, wall rectangles, and spawn locations
 
@@ -355,7 +355,7 @@ class Spawner:
 		if not fn:
 			raise Exception("Unknown type '%s'" % self.npcType)
 
-		print "Generated npc '%s' at %s" % (self.npcType, pos)
+		print("Generated npc '%s' at %s" % (self.npcType, pos))
 
 		npc = fn(self.world, self.npcSettings)
 		npc.SetPos(pos)
