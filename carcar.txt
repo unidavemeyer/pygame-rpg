@@ -1,7 +1,7 @@
 Plan for carcar changes, etc.
 
 - Collectible animals
-	- need to be collectible when the hero touches them
+	- need to stub out Item interface and make Stamp that derives from it (non-stub comes at hero image swap)
 	- support movement based on simple patterns in config file
 	- may wish to have one to three configurable colors in the image
 - Need to define a few world setups, not just one

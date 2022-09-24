@@ -3,6 +3,7 @@
 # Copyright (c) 2012 by David Meyer
 
 import Game
+import Item
 import pygame
 import Vec
 
@@ -182,10 +183,16 @@ class Animal(Npc):
 		pass
 
 	def OnInteract(self, hero):
+		"""Causes the interacting hero to collect this animal."""
+
 		# TODO: mark that the given hero collected us, and then Kill ourselves so we're
 		#  out of the running lists of objects
 
-		pass
+		hero.AddItem(self.ItemStamp())
+
+		# Done updating, etc., so go away
+
+		self.Kill()
 
 	def StrGroup(self):
 		return self.strGroup
@@ -203,3 +210,9 @@ class Animal(Npc):
 			self.surf = self.surfHappy
 		else:
 			self.surf = self.surfSad
+
+	def ItemStamp(self):
+		"""Returns a "stamp" object that represents the collectible"""
+		""" form of this animal."""
+
+		return None
