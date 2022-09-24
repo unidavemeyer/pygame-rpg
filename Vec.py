@@ -27,7 +27,7 @@ class Vec:
 		sInv = 1.0 / s
 		return sInv * self
 
-	def __radd__(self, other):
+	def __add__(self, other):
 		"""Adds this to the other operand and returns the result (Vec only)."""
 
 		if not isinstance(other, Vec):
@@ -35,21 +35,24 @@ class Vec:
 
 		return Vec(other.x + self.x, other.y + self.y)
 
-	def __rsub__(self, other):
-		"""Subtracts this vector from the other operand and returns the result (Vec only)."""
+	def __sub__(self, other):
+		"""Subtracts the other vector from this and returns the result (Vec only)."""
 
 		if not isinstance(other, Vec):
 			return NotImplemented
 
-		return Vec(other.x - self.x, other.y - self.y)
+		return Vec(self.x - other.x, self.y - other.y)
 
-	def __rmul__(self, other):
+	def __mul__(self, other):
 		"""Multiplies the other operand by this vector and returns the result (Numeric only)."""
 
 		if not isinstance(other, numbers.Number):
 			return NotImplemented
 
 		return Vec(other * self.x, other * self.y)
+
+	def __rmul__(self, other):
+		return self.__mul__(other)
 
 	def __repr__(self):
 		"""Prints out a version of this vector."""
