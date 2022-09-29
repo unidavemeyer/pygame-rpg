@@ -37,3 +37,7 @@ Daily Plan 2022-09-28
      * Bonus: see if you can find reasonable alternatives (particularly for fonts)
    * What are the main functional pieces that make up the primary game loop?
    * What keys on the keyboard actually do anything? And, what do they do? Where is that code found?
+ * Come up with a firmer set of goals for the internship
+   * Example: Set up a hero character with actual art which can do realtime melee combat
+   * Example: Set up NPC characters that can actually move and attack in interesting ways
+   * Will want to discuss what we legitimately think can be done and how that aligns with interests
