@@ -91,11 +91,8 @@ Daily Plan 2022-10-06
      * Could make a new subclasses that weren't turn-based, and use them to be bound to keys for the hero
      * Should be fairly easy to make radius-based weapons with cooldowns, especially if we ignore walls, etc.
    * Item - stub class, nothing in here yet
-
- * Me: Set up a bootstrap thingy ala what we used previously
-   * actually, should just write a simple run-in-python thing instead -- will catch *everything* that happens
- * Me: Look at any unix paths and see if we can come up with decent alternatives
-   * consider setting up a file with resource locations?
- * Me: Look at replacing yaml with json since we don't have a lib yet
-   * May not get here today, will have to see
- * See if there are other points that we need to cover
+ * See if we can get the game to run
+   * may cheat and get yaml library ourselves, unpack, and put in there - process may work from prior internship
+ * Look at a couple .wld files (start.wld is a good one to start with, for example)
+   * consider changing an exit and build your own .wld file to see if you can make it work!
+ * If we have goals set up, maybe start working on something in that area

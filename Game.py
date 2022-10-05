@@ -2,6 +2,7 @@
 #
 # Copyright 2012 by David Meyer
 
+import os
 import pygame
 import sys
 import traceback
@@ -32,8 +33,24 @@ class Font:
 
 	@staticmethod
 	def Init():
-		Font.FONT20 = pygame.font.Font('/usr/share/fonts/truetype/freefont/FreeSans.ttf', 20)
-		Font.FONT25 = pygame.font.Font('/usr/share/fonts/truetype/freefont/FreeSans.ttf', 25)
+		# BB (davidm) come up with a better way to locate fonts
+
+		s_aPath = [
+			'/usr/share/fonts/truetype/freefont/FreeSans.ttf',
+			r'c:\windows\boot\fonts\segoe_slboot.ttf',
+		]
+
+		pathUse = None
+		for pathCheck in s_aPath:
+			if os.path.exists(pathCheck):
+				pathUse = pathCheck
+				break
+		
+		if not pathUse:
+			raise Exception("Ack! No font found, update Game.py with one from your system!")
+
+		Font.FONT20 = pygame.font.Font(pathUse, 20)
+		Font.FONT25 = pygame.font.Font(pathUse, 25)
 
 
 
