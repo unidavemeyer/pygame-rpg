@@ -8,8 +8,8 @@ import Vec
 import Weapon
 
 class Hero:
-	"""The game contains one or more Hero instances, which handlesinput, rendering, and"""
-	""" positioning in worldmap mode.  They also handles inventory functions, hit points,"""
+	"""The game contains one or more Hero instances, which handles input, rendering, and"""
+	""" positioning in worldmap mode.  They also handle inventory functions, hit points,"""
 	""" and other features of the character for worldmap and combat modes."""
 
 	def __init__(self, joy):

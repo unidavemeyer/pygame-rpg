@@ -261,7 +261,7 @@ class Game:
 			# Give objects a chance to update
 
 			# BB (dave) should we copy this list here so that we can
-			#  modify the running copy?  or is python ok with dynamic
+			#  modify the running copy? or is python ok with dynamic
 			#  changes to the list while it's being iterated over?
 
 			for pri in sorted(self.mpPriUpdate.keys()):
