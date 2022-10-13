@@ -56,8 +56,8 @@ Daily Plan 2022-10-06
    * Possibility: Add basic flipbook animation model for hero, enemies
    * Possibility: Add upgrade menu and ability upgrades for hero (stronger attack, more health, etc.)
  * Discuss basic game loop and features
-   * Python uses "duck typing" - update, render follow this model
-   * Game - outer loop, does same thing over and over, handles, updates, then renders. Run is main entry point.
+   * ~Python uses "duck typing" - update, render follow this model~
+   * ~Game - outer loop, does same thing over and over, handles, updates, then renders. Run is main entry point.~
      * Priority order is used to sort things to happen in the right relative order at each phase
      * Lower numbers go first, higher numbers go last
      * For event handling (responding to keys) lower numbers win over higher numbers
@@ -96,3 +96,33 @@ Daily Plan 2022-10-06
  * Look at a couple .wld files (start.wld is a good one to start with, for example)
    * consider changing an exit and build your own .wld file to see if you can make it work!
  * If we have goals set up, maybe start working on something in that area
+
+Daily Plan 2022-10-13
+---------------------
+ * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
+ * Get the game running
+   * Get PyYaml installed via school installer
+   * Get fonts figured out (if necessary)
+ * Brief introduction to .wld files
+   * yaml format (= text that is readable by humans *and* good for programs to understand)
+   * tiles section defines what the "tiles" that make up the level are
+   * plan section defines the "picture" or "map" for the level, using the tiles
+   * tiles can include instructional information in addition to image/color
+     * walls
+     * spawners (to make NPCs) - note that you can put settings in here too
+     * start locations (for where hero begins when entering the level)
+     * gates to go to other worlds
+ * Discuss project goals
+   * Possibility: Add simple AI behaviors to make interesting enemies (fixed path, heat seeking, random path, etc.)
+   * Possibility: Add magic attack to hero to auto target and strike enemies (easier than melee)
+   * Possibility: Add melee attack to hero to fight enemies at close range (more math involved)
+   * Possibility: Add collectible coins as items
+   * Possibility: Add hero inventory slots
+   * Possibility: Add hero inventory menu/screen
+   * Possibility: Add basic flipbook animation model for hero, enemies
+   * Possibility: Add upgrade menu and ability upgrades for hero (stronger attack, more health, etc.)
+ * Start working on something
+   * Could make/modify a wld file to set up your own thing
+   * Could try to adjust how fast the hero runs
+   * Could try to add an NPC that moves in a fixed shape
+   * Could try to add an NPC that moves toward the hero
