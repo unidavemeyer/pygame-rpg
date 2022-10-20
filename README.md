@@ -14,7 +14,8 @@ BP Internship Fall 2022
 
 Mentor Work Item Backlog
 ------------------------
- * Investigate why spawning isn't working consistently
+ * ~Investigate why spawning isn't working consistently~
+   * Found a possible issue (hero nearby) which has been adjusted, and added tracing to help track other issues
  * Do we want to add graphical health bars to hero, NPCs?
  * Consider a "freeze" or "slow" attack/aura for NPCs - reduce hero movement speed
  * Do we have any balance considerations?
@@ -121,7 +122,7 @@ Daily Plan 2022-10-13
      * spawners (to make NPCs) - note that you can put settings in here too
      * start locations (for where hero begins when entering the level)
      * gates to go to other worlds
- * Discuss project goals
+ * ~Discuss project goals~
    * Possibility: Add simple AI behaviors to make interesting enemies (fixed path, heat seeking, random path, etc.)
    * Possibility: Add magic attack to hero to auto target and strike enemies (easier than melee)
    * Possibility: Add melee attack to hero to fight enemies at close range (more math involved)
@@ -131,12 +132,12 @@ Daily Plan 2022-10-13
    * Possibility: Add basic flipbook animation model for hero, enemies
    * Possibility: Add upgrade menu and ability upgrades for hero (stronger attack, more health, etc.)
  * Start working on something
-   * Could make/modify a wld file to set up your own thing
+   * ~Could make/modify a wld file to set up your own thing~
    * Could try to adjust how fast the hero runs
    * Could try to add an NPC that moves in a fixed shape
    * Could try to add an NPC that moves toward the hero
 
-Daily Plan 2022-10-13
+Daily Plan 2022-10-20
 ---------------------
  * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
    * Note funny schedule - may need to cut short morning call
@@ -165,4 +166,3 @@ Daily Plan 2022-10-13
    * Effectively back-to-back images, pick which to show at any given time
    * Could change based on motion, could change based on time, or a mix of the two
    * Bonus: image interpolation to get "smooth frame" behavior?
-
