@@ -1,6 +1,6 @@
 tiles:
   w:
-    color: [128, 255, 128]
+    color: [255, 255, 128]
     wall: true
   f:
     image: worlds/kira-wall.png
@@ -40,9 +40,9 @@ tiles:
 plan:
   - wwwwwwwwwwwwwwwww
   - wfffffffwfffffffw
-  - wfafffafwfffffffw
+  - wfafffafwffwffffw
   - wffffffflfff$fffw
-  - wfffsffflfffffffw
-  - wfffffffwfffffffw
+  - wfffswfflffsffwww
+  - wfffffffwffffwffw
   - wfffffffwfffffffw
   - wwwwwwwwwwdwwwwww

@@ -16,7 +16,7 @@ class Hero:
 		Game.game.AddUpdate(self, 20)	# relatively early update
 		Game.game.AddRender(self, 90)	# relatively late render (more on top)
 		Game.game.AddHandler(self, 20)	# relatively early event handler
-
+		self.Hellobro = False
 		# Joystick tracking
 
 		self.joy = joy
@@ -45,6 +45,7 @@ class Hero:
 				pygame.K_DOWN: KeyState(),
 				pygame.K_LEFT: KeyState(),
 				pygame.K_RIGHT: KeyState(),
+				pygame.K_e: KeyState(),
 			}
 
 		# BB (dave) placeholder surface until we have a reasonable graphic
@@ -162,7 +163,9 @@ class Hero:
 				if npc.FShouldInteract(rectHero):
 					npc.OnInteract(self)
 					break
-
+			
+		self.AttackMajic()
+			
 	def FHandleEvent(self, event):
 		if Game.game.Mode() == Game.Mode.COMBAT:
 
@@ -187,7 +190,7 @@ class Hero:
 			return False
 
 		# BB (dave) handle 'i' key to go to inventory
-
+        
 		if event.type == pygame.KEYDOWN:
 			keystate = self.mpKeyState.get(event.key)
 			if keystate:
@@ -291,7 +294,18 @@ class Hero:
 		vY = vMax * uUd
 
 		return Vec.Vec(vX, vY)
-
+        
+	def AttackMajic(self):
+		
+		Majica = self.mpKeyState.get(pygame.K_e)
+		if Majica.FIsPressed() and not self.Hellobro:
+			print("bro") # Game.game.lnpc is all of the npc 
+			self.Hellobro = True
+			
+		if not Majica.FIsPressed() and self.Hellobro:
+			self.Hellobro = False
+           
+    
 	def VTargetComputeKeyboard(self):
 		"""Uses current keyboard input to determine target velocity."""
 

@@ -87,7 +87,7 @@ class Menu:
 
 		if Game.game.Mode() != Game.Mode.MENU:
 			return False
-
+     
 		if event.key == pygame.K_UP:
 			self.OnNavUp()
 		elif event.key == pygame.K_DOWN:

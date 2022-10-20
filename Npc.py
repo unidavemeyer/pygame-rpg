@@ -26,7 +26,7 @@ class Npc:
 		Game.game.RemoveRender(self, 80)
 
 	def OnUpdate(self):
-		# NOTE (davidm) no default behavior here
+		# NOTE (davidm) xno default behavior here
 
 		pass
 

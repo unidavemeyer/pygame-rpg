@@ -34,7 +34,7 @@ class Font:
 	@staticmethod
 	def Init():
 		# BB (davidm) come up with a better way to locate fonts
-
+        #finds fonts
 		s_aPath = [
 			'/usr/share/fonts/truetype/freefont/FreeSans.ttf',
 			r'c:\windows\boot\fonts\segoe_slboot.ttf',
@@ -63,7 +63,7 @@ class Game:
 		self.mpPriUpdate = {}		# priority based list of update objects
 		self.mpPriRender = {}		# priority based list of render objects
 		self.mpPriHandler = {}		# priority based list of handler objects
-		self.lNpc = []				# (unsorted) list of NPCs currently in the world
+		self.lNpc = []		       		# (unsorted) list of NPCs currently in the world
 		self.lHero = []				# current hero objects
 		self.menu = None			# current menu object
 		self.world = None			# current world object
@@ -80,7 +80,7 @@ class Game:
 		"""Add obj to the priority list of objects to update.  obj is expected"""
 		""" to have an OnUpdate() method, which will be called to do the update."""
 		""" Priorities are run each frame from least to greatest."""
-
+ 
 		self.mpPriUpdate.setdefault(priority, []).append(obj)
 
 	def RemoveUpdate(self, obj, priority):
@@ -157,6 +157,7 @@ class Game:
 
 	def SetNextWorld(self, strWorld):
 		self.worldNext = World.World('worlds/%s' % strWorld)
+        #makes more worlds 
 
 	def AddJoysticks(self):
 		"""Make sure that self.lJoy is consistent with the number of"""
@@ -180,7 +181,7 @@ class Game:
 
 	def OnNewGame(self):
 		"""Clears objects and internal state and makes a new game start at the world map"""
-
+         # calls function on new game. gets rid of all the npc(s) and heros. Resets everything like a refreash button
 		# Kill npcs
 
 		for npc in self.lNpc:
@@ -209,7 +210,7 @@ class Game:
 		# Generate one hero for each joystick
 
 		# BB (davidm) probably only want two, and always two...
-
+        # BB = bug
 		self.lHero = [ Hero.Hero(j) for j in self.lJoy ]
 
 		if not self.lHero:
@@ -221,6 +222,7 @@ class Game:
 		world.MakeActive()
 
 		self.SetMode(Mode.WORLDMAP)
+        # exit out of the menu and set it were the player is in control and can walk around
 
 	def Run(self):
 
@@ -263,11 +265,11 @@ class Game:
 
 				elif event.type in (pygame.KEYDOWN, pygame.KEYUP):
 					fHandled = False
-					for pri in sorted(self.mpPriHandler.keys()):
+					for pri in sorted(self.mpPriHandler.keys()): #Mp mean map
 						for obj in self.mpPriHandler[pri]:
 							if obj.FHandleEvent(event):
-								fHandled = True
-								break
+								fHandled = True # f means flag
+								break # a way to get out of a loop(early)
 						if fHandled:
 							break
 

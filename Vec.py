@@ -1,7 +1,7 @@
 # Vec.py
 #
 # Copyright (c) 2012 by David Meyer
-
+#what does this script do for the game?
 import math
 import numbers
 
