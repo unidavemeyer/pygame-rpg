@@ -12,6 +12,16 @@ progress that have happened over time.
 BP Internship Fall 2022
 =======================
 
+Mentor Work Item Backlog
+------------------------
+ * ~Investigate why spawning isn't working consistently~
+   * Found a possible issue (hero nearby) which has been adjusted, and added tracing to help track other issues
+ * Do we want to add graphical health bars to hero, NPCs?
+ * Consider a "freeze" or "slow" attack/aura for NPCs - reduce hero movement speed
+ * Do we have any balance considerations?
+ * Should we consider making a boss NPC of some kind?
+ * Do we want inventory and inventory management?
+
 Daily Plan 2022-09-28
 ---------------------
  * Prepare python environment
@@ -56,8 +66,8 @@ Daily Plan 2022-10-06
    * Possibility: Add basic flipbook animation model for hero, enemies
    * Possibility: Add upgrade menu and ability upgrades for hero (stronger attack, more health, etc.)
  * Discuss basic game loop and features
-   * Python uses "duck typing" - update, render follow this model
-   * Game - outer loop, does same thing over and over, handles, updates, then renders. Run is main entry point.
+   * ~Python uses "duck typing" - update, render follow this model~
+   * ~Game - outer loop, does same thing over and over, handles, updates, then renders. Run is main entry point.~
      * Priority order is used to sort things to happen in the right relative order at each phase
      * Lower numbers go first, higher numbers go last
      * For event handling (responding to keys) lower numbers win over higher numbers
@@ -96,3 +106,63 @@ Daily Plan 2022-10-06
  * Look at a couple .wld files (start.wld is a good one to start with, for example)
    * consider changing an exit and build your own .wld file to see if you can make it work!
  * If we have goals set up, maybe start working on something in that area
+
+Daily Plan 2022-10-13
+---------------------
+ * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
+ * ~Get the game running~
+   * Get PyYaml installed via school installer
+   * Get fonts figured out (if necessary)
+ * ~Brief introduction to .wld files~
+   * yaml format (= text that is readable by humans *and* good for programs to understand)
+   * tiles section defines what the "tiles" that make up the level are
+   * plan section defines the "picture" or "map" for the level, using the tiles
+   * tiles can include instructional information in addition to image/color
+     * walls
+     * spawners (to make NPCs) - note that you can put settings in here too
+     * start locations (for where hero begins when entering the level)
+     * gates to go to other worlds
+ * ~Discuss project goals~
+   * Possibility: Add simple AI behaviors to make interesting enemies (fixed path, heat seeking, random path, etc.)
+   * Possibility: Add magic attack to hero to auto target and strike enemies (easier than melee)
+   * Possibility: Add melee attack to hero to fight enemies at close range (more math involved)
+   * Possibility: Add collectible coins as items
+   * Possibility: Add hero inventory slots
+   * Possibility: Add hero inventory menu/screen
+   * Possibility: Add basic flipbook animation model for hero, enemies
+   * Possibility: Add upgrade menu and ability upgrades for hero (stronger attack, more health, etc.)
+ * Start working on something
+   * ~Could make/modify a wld file to set up your own thing~
+   * Could try to adjust how fast the hero runs
+   * Could try to add an NPC that moves in a fixed shape
+   * Could try to add an NPC that moves toward the hero
+
+Daily Plan 2022-10-20
+---------------------
+ * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
+   * Note funny schedule - may need to cut short morning call
+ * Reminder on overall project goals
+   * Add hero magic attack(s) to damage NPCs
+   * Add two or more types of NPCs which move and damage the hero
+   * Replace current "box art" characters with images
+   * Add flipbook animations for moving and maybe attacking characters (hero, npc)
+ * Add initial hero magic attack
+   * Add appropriate "cooldowns" so that attack doesn't run back-to-back constantly
+   * Find and apply damage to NPCs
+   * Determine behavior for long press: allow auto attack or require re-press by player?
+   * Bonus: Add some kind of basic graphical display for the attack happening
+ * Add a heat seeking NPC
+   * Consider range - how close is the hero before this activates?
+   * Consider velocity target based approach - discuss with mentor to get the basic idea there
+   * Consider how NPC attacking works - contact? short range "stomp"? other?
+ * Add a "fixed path" NPC
+   * How is the path to follow defined?
+   * Does NPC ever deviate, say for close range hero?
+ * Add a "rebound" NPC
+   * How does impact & bounce calculation work?
+   * What about initial setup for motion, how is that specified?
+ * Replace hero an NPC(s) with images
+ * Consider how flipbook animation would work
+   * Effectively back-to-back images, pick which to show at any given time
+   * Could change based on motion, could change based on time, or a mix of the two
+   * Bonus: image interpolation to get "smooth frame" behavior?

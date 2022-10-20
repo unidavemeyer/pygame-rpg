@@ -11,6 +11,17 @@ import re
 import Vec
 import yaml
 
+# NOTE (davidm) set True to get debug info printed from world operations
+
+g_fDebug = True
+
+def DebugPrint(strOut):
+	global g_fDebug
+	if g_fDebug:
+		print(strOut)
+
+
+
 class World:
 	"""Provides a world, which is a contiguous set of tiles/spaces"""
 	""" where the player can navigate the hero."""
@@ -279,11 +290,17 @@ class Spawner:
 		self.cNpcMaxLifetime = mpVarValue.get('max_npcs', 0)
 		self.cNpcMaxSimultaneous = mpVarValue.get('simultaneous_npcs', 0)
 		self.sRadius = mpVarValue.get('spawn_radius', 64)
+		self.sRadiusHero = mpVarValue.get('hero_nospawn_radius', -1)
 		self.npcSettings = mpVarValue.get('npc_settings')
 
 		self.lNpcCur = []
 		self.cNpcLifetime = 0
 		self.world = world
+
+		# Debugging helpers
+
+		self.fReportedDead = False
+		self.fIsHeroNear = False
 
 	def FIsWithinLimits(self):
 		if self.cNpcMaxLifetime > 0 and self.cNpcLifetime >= self.cNpcMaxLifetime:
@@ -300,24 +317,46 @@ class Spawner:
 
 		setNpcGame = set(Game.game.LNpc())
 		lNpcNew = [npc for npc in self.lNpcCur if npc in setNpcGame]
+
+		if len(self.lNpcCur) != len(lNpcNew):
+			DebugPrint(f"Spawner for {self.npcType} now has {len(lNpcNew)} NPCs spawned")
+
 		self.lNpcCur = lNpcNew
 
 		# Early exit if we couldn't spawn anything
 
 		if not self.FIsWithinLimits():
+			if not self.fReportedDead:
+				DebugPrint(f"Spawner for {self.npcType} now disabled")
+				self.fReportedDead = True
 			return
 
-		# Early exit if any hero is too close by
+		# Early exit if any hero is too close by for hero nospawn restrictions
 
-		for hero in Game.game.LHero():
-			if Vec.SDistPos(hero.Pos(), self.pos) < self.sRadius + 50:
-				return
+		if self.sRadiusHero > 0:
+			for hero in Game.game.LHero():
+				if Vec.SDistPos(hero.Pos(), self.pos) < self.sRadiusHero:
+					if not self.fIsHeroNear:
+						DebugPrint(f"Spawner for {self.npcType} cannot spawn - hero nearby")
+						self.fIsHeroNear = True
+					return
+				elif self.fIsHeroNear:
+					DebugPrint(f"Spawner for {self.npcType} now enabled - hero distant")
+					self.fIsHeroNear = False
 
 		# Generate NPCs up to our simultaneous & max lifetime limits
 
-		cAttempt = 0
+		# BB (davidm) this model is lacking -- it is actually quite easy to go through our
+		#  maximum attempt number and not generate anything, which is far from ideal
 
-		while self.FIsWithinLimits() and cAttempt < 10:
+		# BB (davidm) should we instead generate a grid of possible positions around the spawn location
+		#  and effectively shuffle the list and then walk until we find a working spot? may be better for
+		#  a grid-based game, which this effectively is, even though we support rather arbitrary positioning
+
+		cAttempt = 0
+		s_cAttemptMax = 20
+
+		while self.FIsWithinLimits() and cAttempt < s_cAttemptMax:
 			cAttempt += 1
 
 			# Generate a location
@@ -344,6 +383,10 @@ class Spawner:
 				continue
 
 			self.NpcSpawn(posNpc)
+			DebugPrint(f"Spawner for {self.npcType} spawned NPC")
+
+		if self.FIsWithinLimits():
+			DebugPrint(f"Spawner for {self.npcType} unable to spawn all desired NPCs")
 
 	def NpcSpawn(self, pos):
 		mpTypeFn = {
