@@ -16,7 +16,7 @@ Mentor Work Item Backlog
 ------------------------
  * ~Investigate why spawning isn't working consistently~
    * Found a possible issue (hero nearby) which has been adjusted, and added tracing to help track other issues
- * Fix bug with NPCs living past world load boundaries
+ * ~Fix bug with NPCs living past world load boundaries~
  * Find/prepare a good basic vector math introduction
    * Maybe compare to single variable operations/expectations to show how the math Just Works (TM)
  * Consider how we want to do code reviews in this virtual model
@@ -24,6 +24,9 @@ Mentor Work Item Backlog
    * Determine reasonable model for comparing current changes to origin (that's the review, effectively)
    * Consider instruction and use of git branches
    * What issues (if any!) exist for copyright, contribution, attribution, etc., for minors?
+     * Basic reading on the topic suggests copyright can be held by minors
+     * Could be swirl with guardians, so should check on that front
+     * E.g., could leave everything copyright by me, or could attribute; both have advantages
  * Do we want to add graphical health bars to hero, NPCs?
  * Consider a "freeze" or "slow" attack/aura for NPCs - reduce hero movement speed
  * Do we have any balance considerations?

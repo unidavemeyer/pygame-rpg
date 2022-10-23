@@ -39,6 +39,12 @@ class Npc:
 
 		pass
 
+	def OnLeaveWorld(self, world):
+		"""Gives NPCs the option to handle world changes. Default behavior is for NPCs to kill themselves
+		on world change, since that's typically what we want."""
+
+		self.Kill()
+
 	def Rect(self):
 		"""Returns the rectangle that the NPC occupies in the world"""
 

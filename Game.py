@@ -249,6 +249,14 @@ class Game:
 			# Handle any pending warps
 
 			if self.worldNext:
+				# notify NPCs that the world is changing; use a copy in case they modify self.lNpc
+
+				lNpcNotify = list(self.lNpc)
+				for npc in lNpcNotify:
+					npc.OnLeaveWorld(self.world)
+
+				# swap worlds
+
 				self.world.MakeInactive()
 				self.worldNext.MakeActive()
 				self.worldNext = None
