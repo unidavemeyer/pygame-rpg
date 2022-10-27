@@ -228,10 +228,10 @@ class Globster(Npc):
 		self.Gattack = 5
 		self.Ghealth = 50
 
-		self.surf = pygame.image.load(r"Boogermonster.png")
+		self.surf = pygame.image.load(r"Amazoncrime.png")
 	def OnUpdate(self):
 		self.Gmove()
-		if self.Ghealth == 0:
+		if self.Ghealth <= 0:
 			self.Kill()
 		
 	def Gmove(self):

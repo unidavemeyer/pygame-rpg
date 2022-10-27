@@ -50,7 +50,7 @@ class Hero:
 
 		# BB (dave) placeholder surface until we have a reasonable graphic
 
-		self.surf = pygame.image.load(r"heroguy.png")
+		self.surf = pygame.image.load(r"Oxygen.png")
 
 
 		# position, velocity, etc.
@@ -294,14 +294,17 @@ class Hero:
 	def AttackMajic(self):
 		
 		Majica = self.mpKeyState.get(pygame.K_e)
-		if Majica.FIsPressed() and not self.Hellobro:
-			Npc.Ghealth -= 10 
-			print("it worked")
-			self.Hellobro = True
+		
 			
+		if Majica.FIsPressed() and not self.Hellobro:
+			for npc in Game.game.LNpc():
+				npc.Ghealth -= 10 
+				print("it worked")
+			self.Hellobro = True
+				
 		if not Majica.FIsPressed() and self.Hellobro:
 			self.Hellobro = False
-			 
+				 
            
     
 	def VTargetComputeKeyboard(self):
