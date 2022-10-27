@@ -16,6 +16,17 @@ Mentor Work Item Backlog
 ------------------------
  * ~Investigate why spawning isn't working consistently~
    * Found a possible issue (hero nearby) which has been adjusted, and added tracing to help track other issues
+ * ~Fix bug with NPCs living past world load boundaries~
+ * Find/prepare a good basic vector math introduction
+   * Maybe compare to single variable operations/expectations to show how the math Just Works (TM)
+ * Consider how we want to do code reviews in this virtual model
+   * Investigate how to add contributors to github project, consider doing so for interns
+   * Determine reasonable model for comparing current changes to origin (that's the review, effectively)
+   * Consider instruction and use of git branches
+   * What issues (if any!) exist for copyright, contribution, attribution, etc., for minors?
+     * Basic reading on the topic suggests copyright can be held by minors
+     * Could be swirl with guardians, so should check on that front
+     * E.g., could leave everything copyright by me, or could attribute; both have advantages
  * Do we want to add graphical health bars to hero, NPCs?
  * Consider a "freeze" or "slow" attack/aura for NPCs - reduce hero movement speed
  * Do we have any balance considerations?
@@ -151,7 +162,9 @@ Daily Plan 2022-10-20
    * Find and apply damage to NPCs
    * Determine behavior for long press: allow auto attack or require re-press by player?
    * Bonus: Add some kind of basic graphical display for the attack happening
- * Add a heat seeking NPC
+ * ~Add a heat seeking NPC~
+   * NOTE: most considerations below here haven't happened - good to discuss, etc.
+   * NOTE: should see about getting current state reviewed and updated and such
    * Consider range - how close is the hero before this activates?
    * Consider velocity target based approach - discuss with mentor to get the basic idea there
    * Consider how NPC attacking works - contact? short range "stomp"? other?
@@ -161,7 +174,43 @@ Daily Plan 2022-10-20
  * Add a "rebound" NPC
    * How does impact & bounce calculation work?
    * What about initial setup for motion, how is that specified?
- * Replace hero an NPC(s) with images
+ * ~Replace hero and NPC(s) with images~
+ * Consider how flipbook animation would work
+   * Effectively back-to-back images, pick which to show at any given time
+   * Could change based on motion, could change based on time, or a mix of the two
+   * Bonus: image interpolation to get "smooth frame" behavior?
+
+Daily Plan 2022-10-27
+---------------------
+ * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
+   * Note funny schedule - may need to cut short morning call
+ * Reminder on overall project goals
+   * Add hero magic attack(s) to damage NPCs
+   * Add two or more types of NPCs which move and damage the hero
+   * Replace current "box art" characters with images
+   * Add flipbook animations for moving and maybe attacking characters (hero, npc)
+ * Discuss review & commit plans
+   * Should effectively "wrap up" current work to get it ready for review
+   * Should do review, make adjustments, then see about getting committed to public repo
+ * Discuss image size constraints
+   * Code operates expecting 32x32
+   * Could scale images maybe
+   * Could adjust assumptions - but that would imply rebuilding doors, other grid cells, etc.
+ * Discuss further work on heat seeking NPC
+   * Consider range - how close is the hero before this activates?
+   * Consider velocity target based approach - discuss with mentor to get the basic idea there
+   * Consider how NPC attacking works - contact? short range "stomp"? other?
+ * Add initial hero magic attack
+   * Add appropriate "cooldowns" so that attack doesn't run back-to-back constantly
+   * Find and apply damage to NPCs
+   * Determine behavior for long press: allow auto attack or require re-press by player?
+   * Bonus: Add some kind of basic graphical display for the attack happening
+ * Add a "fixed path" NPC
+   * How is the path to follow defined?
+   * Does NPC ever deviate, say for close range hero?
+ * Add a "rebound" NPC
+   * How does impact & bounce calculation work?
+   * What about initial setup for motion, how is that specified?
  * Consider how flipbook animation would work
    * Effectively back-to-back images, pick which to show at any given time
    * Could change based on motion, could change based on time, or a mix of the two
