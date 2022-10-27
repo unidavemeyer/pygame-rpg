@@ -28,7 +28,7 @@ tiles:
   $:
     image: worlds/kira-wall.png
     spawner: true
-    npc_type: animal
+    npc_type: globster
     max_npcs: 2
     simultaneous_npcs: 2
     spawn_radius: 96
@@ -40,7 +40,7 @@ tiles:
 plan:
   - wwwwwwwwwwwwwwwww
   - wfffffffwfffffffw
-  - wfafffafwffwffffw
+  - wfafffafwffwfffw
   - wffffffflfff$fffw
   - wfffswfflffsffwww
   - wfffffffwffffwffw

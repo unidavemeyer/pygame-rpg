@@ -1,7 +1,7 @@
 # Hero.py
 #
 # Copyright (c) 2012 by David Meyer
-
+import Npc # imported the NPC code mah boi
 import Game
 import pygame
 import Vec
@@ -50,12 +50,8 @@ class Hero:
 
 		# BB (dave) placeholder surface until we have a reasonable graphic
 
-		self.surf = pygame.Surface((32, 32))
+		self.surf = pygame.image.load(r"heroguy.png")
 
-		if self.joy and self.joy.id == 0:
-			self.surf.fill(pygame.Color(192, 128, 192))		# violet-ish
-		else:
-			self.surf.fill(pygame.Color(192, 128, 128))		# pink-ish
 
 		# position, velocity, etc.
 
@@ -208,7 +204,7 @@ class Hero:
 		if Game.game.Mode() == Game.Mode.WORLDMAP:
 			# BB (dave) very basic positioning here -- can flow off sides, no collision, etc.
 			surfScreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
-
+			
 		elif Game.game.Mode() == Game.Mode.COMBAT:
 			# BB (davidm) draw the hero
 
@@ -299,11 +295,13 @@ class Hero:
 		
 		Majica = self.mpKeyState.get(pygame.K_e)
 		if Majica.FIsPressed() and not self.Hellobro:
-			print("bro") # Game.game.lnpc is all of the npc 
+			Npc.Ghealth -= 10 
+			print("it worked")
 			self.Hellobro = True
 			
 		if not Majica.FIsPressed() and self.Hellobro:
 			self.Hellobro = False
+			 
            
     
 	def VTargetComputeKeyboard(self):

@@ -1,11 +1,12 @@
 # Npc.py
 #
 # Copyright (c) 2012 by David Meyer
-
+import random 
 import Game
 import Item
 import pygame
 import Vec
+import math #uio
 
 class Npc:
 	"""An Npc is an entity in the world that interacts with the Hero in some"""
@@ -28,7 +29,7 @@ class Npc:
 	def OnUpdate(self):
 		# NOTE (davidm) xno default behavior here
 
-		pass
+		pass# a function that does not do anything
 
 	def OnRender(self, surfScreen):
 		if Game.game.Mode() == Game.Mode.WORLDMAP:
@@ -59,8 +60,8 @@ class Npc:
 
 	def SetPos(self, pos):
 		self.pos = pos
-
-
+# take heros position and substracted npcs pos. delying the follow////
+# make class, fill in an onupdate function and a ondamage function////
 class Goon(Npc):
 	"""Basic goon opponent.  Attacks on a regular schedule doing minor damage"""
 	""" that never misses."""
@@ -144,13 +145,13 @@ class Goon(Npc):
 
 
 
-class Animal(Npc):
+class Animal(Npc): 
 	"""Animals are the rescuable characters that are out in carcar.  They get"""
 	""" their configuration data from the spawner that makes them, can be"""
 	""" rescued by a hero, have happy and sad states, etc."""
 
 	def __init__(self, world, mpVarValue):
-		Npc.__init__(self)
+		Npc.__init__(self)#does npc class stuff
 
 		self.surfHappy = None
 		pathHappy = mpVarValue.get('happy_image')
@@ -215,3 +216,25 @@ class Animal(Npc):
 		""" form of this animal."""
 
 		return None
+class Globster(Npc):
+	def __init__(self, world, hero):
+		Npc.__init__(self)
+		self.Gattack = 5
+		self.Ghealth = 50
+
+		self.surf = pygame.image.load(r"Boogermonster.png")
+	def OnUpdate(self):
+		self.Gmove()
+		if self.Ghealth == 0:
+			self.Kill()
+		
+	def Gmove(self):
+		
+		hero = Game.game.LHero()[0] #
+		dpos = hero.pos - self.pos # self is WE Game.game
+		toadd = Vec.VecLimitLen(dpos, (random.randrange(1,6))) # boo idea
+		self.SetPos(self.pos + toadd)
+	
+	
+		
+			
