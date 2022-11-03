@@ -58,7 +58,7 @@ class Game:
 	"""Glues together the whole game.  Runs the game loop and provides"""
 	""" services to register objects for update, event handling, and"""
 	""" rendering."""
-
+#I need to fix game.py
 	def __init__(self):
 		self.mpPriUpdate = {}		# priority based list of update objects
 		self.mpPriRender = {}		# priority based list of render objects
@@ -80,7 +80,7 @@ class Game:
 		"""Add obj to the priority list of objects to update.  obj is expected"""
 		""" to have an OnUpdate() method, which will be called to do the update."""
 		""" Priorities are run each frame from least to greatest."""
- 
+
 		self.mpPriUpdate.setdefault(priority, []).append(obj)
 
 	def RemoveUpdate(self, obj, priority):
@@ -181,8 +181,7 @@ class Game:
 
 	def OnNewGame(self):
 		"""Clears objects and internal state and makes a new game start at the world map"""
-         # calls function on new game. gets rid of all the npc(s) and heros. Resets everything like a refreash button
-		# Kill npcs
+         
 
 		for npc in self.lNpc:
 			npc.Kill()
@@ -210,7 +209,6 @@ class Game:
 		# Generate one hero for each joystick
 
 		# BB (davidm) probably only want two, and always two...
-        # BB = bug
 		self.lHero = [ Hero.Hero(j) for j in self.lJoy ]
 
 		if not self.lHero:
@@ -273,11 +271,11 @@ class Game:
 
 				elif event.type in (pygame.KEYDOWN, pygame.KEYUP):
 					fHandled = False
-					for pri in sorted(self.mpPriHandler.keys()): #Mp mean map
+					for pri in sorted(self.mpPriHandler.keys()):
 						for obj in self.mpPriHandler[pri]:
 							if obj.FHandleEvent(event):
 								fHandled = True # f means flag
-								break # a way to get out of a loop(early)
+								break
 						if fHandled:
 							break
 
