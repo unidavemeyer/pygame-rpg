@@ -247,12 +247,21 @@ class Petrol(Npc):
 	#vec.vec notes
 		Npc.__init__(self)
 		self.Vhealth = 999
-		self.Pointr = Vec.Vec(5,0)
+		self.Pointr = Vec.Vec(120,120)
 		self.surf = pygame.image.load(r"broaintnoway.png")
 	def OnUpdate(self):
 		self.RightandLeft()
 	def RightandLeft(self):
-		Rpos = self.Pointr - self.pos
-		togo = Vec.VecLimitLen(Rpos, 10) # limit len makes sure that they dont teleport
-		if self.pos.x == 5: # self.pos.X looks at the x
-			print("now they will go left")
+		Rpos = self.Pointr - self.pos  #Rpos = self.Pointr + self.pos
+		togo = Vec.VecLimitLen(Rpos, 5)		# limit len makes sure that they dont teleport
+		self.SetPos(self.pos + togo)
+		if self.pos.y == 80:
+			self.Pointr = Vec.Vec(80,0)
+		if self.pos.y == 0:
+			self.Pointr = Vec.Vec(0,7)
+
+	
+		
+		
+		#if self.pos.x == 5: # self.pos.X looks at the x
+			#print("now they will go left")
