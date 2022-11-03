@@ -7,6 +7,7 @@ import Item
 import pygame
 import Vec
 import math #uio
+import time #time.sleep() mah boy 
 
 class Npc:
 	"""An Npc is an entity in the world that interacts with the Hero in some"""
@@ -241,6 +242,17 @@ class Globster(Npc):
 		toadd = Vec.VecLimitLen(dpos, (random.randrange(1,6))) # boo idea
 		self.SetPos(self.pos + toadd)
 	
-	
-		
-			
+class Petrol(Npc):
+	def __init__(self, world, hero):
+	#vec.vec notes
+		Npc.__init__(self)
+		self.Vhealth = 999
+		self.Pointr = Vec.Vec(5,0)
+		self.surf = pygame.image.load(r"broaintnoway.png")
+	def OnUpdate(self):
+		self.RightandLeft()
+	def RightandLeft(self):
+		Rpos = self.Pointr - self.pos
+		togo = Vec.VecLimitLen(Rpos, 10) # limit len makes sure that they dont teleport
+		if self.pos.x == 5: # self.pos.X looks at the x
+			print("now they will go left")

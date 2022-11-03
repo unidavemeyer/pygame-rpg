@@ -393,6 +393,7 @@ class Spawner:
 				'goon' : Npc.Goon,
 				'animal' : Npc.Animal,
 				'globster' : Npc.Globster,
+				'petrol' : Npc.Petrol,
 			}
 
 		fn = mpTypeFn.get(self.npcType)
