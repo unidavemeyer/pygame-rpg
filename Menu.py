@@ -190,6 +190,8 @@ class Menu:
 
 		# Pop child menus if we have them
 
+		# BB (davidm) this doesn't clear sub-menu rendering, unfortunately...
+
 		if len(self.m_lMd) > 1:
 			del self.m_lMd[-1]
 			return

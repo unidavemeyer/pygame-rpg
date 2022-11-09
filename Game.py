@@ -156,6 +156,10 @@ class Game:
 		return self.world
 
 	def SetNextWorld(self, strWorld):
+		# BB (davidm) strange to force this path here -- we do everything else relative to
+		#  the project root, so it may make more sense here to just do the same for world
+		#  links inside the .wld files
+
 		self.worldNext = World.World('worlds/%s' % strWorld)
 
 	def AddJoysticks(self):
