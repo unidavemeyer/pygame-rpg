@@ -272,6 +272,7 @@ Daily Plan 2022-11-10
 ---------------------
  * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
    * Can do additional checks in the day if necessary
+   * Do we have updates on dates for work on the project for planning?
  * Reminder on overall project goals
    * Add hero magic attack(s) to damage NPCs
    * Add two or more types of NPCs which move and damage the hero
