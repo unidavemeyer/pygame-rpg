@@ -178,7 +178,7 @@ class Game:
 	def LJoy(self):
 		return self.lJoy
 
-	def OnNewGame(self):
+	def OnNewGame(self, strWorld):
 		"""Clears objects and internal state and makes a new game start at the world map"""
 
 		# Kill npcs
@@ -215,9 +215,7 @@ class Game:
 		if not self.lHero:
 			self.lHero = [ Hero.Hero(None) ]
 
-		# BB (davidm) totally placeholder
-
-		world = World.World('worlds/start.wld')
+		world = World.World(strWorld)
 		world.MakeActive()
 
 		self.SetMode(Mode.WORLDMAP)
