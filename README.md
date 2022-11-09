@@ -23,11 +23,11 @@ Mentor Work Item Backlog
    * How do we get a git diff against the thing?
      * probably best model I've found: make a new branch, push that, then compare that branch to main
      * workflow then would be to do corrections on the branch until we're satisfied, and then merge it to main
-   * Investigate how to add contributors to github project, consider doing so for interns
+   * ~Investigate how to add contributors to github project, consider doing so for interns~
      * This looks like it's pretty straightforward, and is a reasonable model to make this work
      * Alternative: Have people clone directly to their own github account, and then issue pull requests from said project
      * I *think* for the learning model I want, we'd prefer to be collaborators on the same project
-   * Consider instruction and use of git branches
+   * ~Consider instruction and use of git branches~
      * Already did a little bit of this, which is great
    * ~What issues (if any!) exist for copyright, contribution, attribution, etc., for minors?~
      * Basic reading on the topic suggests copyright can be held by minors
@@ -37,6 +37,8 @@ Mentor Work Item Backlog
  * Consider making whole own world chain for new npcs and such
    * would be a good end-of-project goal, clean out stuff that's not necessary, etc.
    * other opportunity to make own art for the fun of it as well -- walls, floor, doorways (if desired)
+   * Mentor to provide "episode" support on the menu so that this work can be slotted in
+     * May be a good opportunity to allow code review the other direction
  * Do we want to add graphical health bars to hero, NPCs?
  * Consider a "freeze" or "slow" attack/aura for NPCs - reduce hero movement speed
  * Do we have any balance considerations?
@@ -228,7 +230,7 @@ Daily Plan 2022-10-27
 
 Daily Plan 2022-11-03
 ---------------------
- * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
+ * ~Video call with Mentor in the morning to start up and again in the afternoon to wrap up~
    * Can do additional checks in the day if necessary
    * Morning call may be a bit longer today - want to get review process going (if possible!)
  * Reminder on overall project goals
@@ -237,10 +239,10 @@ Daily Plan 2022-11-03
    * Replace current "box art" characters with images
    * Add flipbook animations for moving and maybe attacking characters (hero, npc)
    * Create end-to-end world as example to show entirely own work
- * Start on review process for current work
-   * Create a new branch
-   * Push the branch to the public repository
-   * Compare that branch to the main branch via /compare URL (and links therein on the github website)
+ * ~Start on review process for current work~
+   * ~Create a new branch~
+   * ~Push the branch to the public repository~
+   * ~Compare that branch to the main branch via /compare URL (and links therein on the github website)~
    * Iterate on changes to the new branch until review work is satisfied
      * Remember to test changes as you go, and commit working pieces to the branch!
    * Finally, merge branch into main branch, and then can remove old branch (if desired -- may leave in place)
@@ -265,3 +267,40 @@ Daily Plan 2022-11-03
  * Consider improvements to hero magic attack
    * Experiment with "held key" behavior -- repeated attack with cooldown?
    * Possibility: Add some kind of basic graphical display for the attack happening
+
+Daily Plan 2022-11-10
+---------------------
+ * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
+   * Can do additional checks in the day if necessary
+ * Reminder on overall project goals
+   * Add hero magic attack(s) to damage NPCs
+   * Add two or more types of NPCs which move and damage the hero
+   * Replace current "box art" characters with images
+   * Add flipbook animations for moving and maybe attacking characters (hero, npc)
+   * Create end-to-end world as example to show entirely own work
+ * Continue review process
+   * Npc.py, World.py, and fifth.wld still need to be reviewed (probably not much on the last)
+   * Will want a re-review after all changes are made to the branch and pushed
+   * Should also do a review the "other way" for the episode work (good experience!)
+ * Add a "fixed path" NPC
+   * Continue learning more about Vector math from Khan Academy as needed to improve knowledge/skills here
+   * How is the path to follow defined?
+   * Does NPC ever deviate, say for close range hero?
+ * Start setting up separate episode to demonstrate full end-to-end behaviors
+   * See Menu.py for where to hook this up
+   * Consider some kind of interesting layout -- multiple rooms (Worlds) with different enemy types?
+   * Could make own art for walls, floors, etc., to go with characters - remember 32x32 image size
+ * Add some kind of "mini boss" NPC
+   * Need to discuss appropriate AI goals here
+ * Consider how flipbook animation would work
+   * Effectively back-to-back images, pick which to show at any given time
+   * Could change based on motion, could change based on time, or a mix of the two
+   * Bonus: image interpolation to get "smooth frame" behavior?
+ * Discuss further work on heat seeking NPC
+   * Consider range - how close is the hero before this activates?
+   * Consider velocity target based approach - discuss with mentor to get the basic idea there
+   * Consider how NPC attacking works - contact? short range "stomp"? other?
+ * Consider improvements to hero magic attack
+   * Experiment with "held key" behavior -- repeated attack with cooldown?
+   * Possibility: Add some kind of basic graphical display for the attack happening
+
