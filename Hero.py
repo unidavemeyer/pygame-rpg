@@ -159,7 +159,7 @@ class Hero:
 					npc.OnInteract(self)
 					break
 			
-		self.UpdateAttackMajic()
+		self.UpdateAttackMagic()
 			
 	def FHandleEvent(self, event):
 		if Game.game.Mode() == Game.Mode.COMBAT:
@@ -290,15 +290,15 @@ class Hero:
 
 		return Vec.Vec(vX, vY)
         
-	def UpdateAttackMajic(self):
+	def UpdateAttackMagic(self):
 		
-		KeyStateAttack = self.mpKeyState.get(pygame.K_e)
-		if KeyStateAttack.FIsPressed() and not self.fIsMajicAttackActive:
+		keyeyStateAttack = self.mpKeyState.get(pygame.K_e)
+		if KeyStateAttack.FIsPressed() and not self.fIsMagicAttackActive:
 			for npc in Game.game.LNpc():
-				npc.GhpCur -= 10  #BB Npc ondamage maybe? - Z.A.C.
-			self.fIsMajicAttackActive = True
-		if not KeyStateAttack.FIsPressed() and self.fIsMajicAttackActive:
-			self.fIsMajicAttackActive = False
+				npc.hpCur -= 10  #BB Npc ondamage maybe? - Z.A.C.
+			self.fIsMagicAttackActive = True
+		if not KeyStateAttack.FIsPressed() and self.fIsMagicAttackActive:
+			self.fIsMagicAttackActive = False
 
 	def VTargetComputeKeyboard(self):
 		"""Uses current keyboard input to determine target velocity."""

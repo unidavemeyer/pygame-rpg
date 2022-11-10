@@ -34,7 +34,6 @@ class Font:
 	@staticmethod
 	def Init():
 		# BB (davidm) come up with a better way to locate fonts
-        #finds fonts
 		s_aPath = [
 			'/usr/share/fonts/truetype/freefont/FreeSans.ttf',
 			r'c:\windows\boot\fonts\segoe_slboot.ttf',
@@ -58,7 +57,7 @@ class Game:
 	"""Glues together the whole game.  Runs the game loop and provides"""
 	""" services to register objects for update, event handling, and"""
 	""" rendering."""
-#I need to fix game.py
+
 	def __init__(self):
 		self.mpPriUpdate = {}		# priority based list of update objects
 		self.mpPriRender = {}		# priority based list of render objects
@@ -218,9 +217,9 @@ class Game:
 
 		world = World.World('worlds/start.wld')
 		world.MakeActive()
-
+		# exit out of the menu and set it were the player is in control and can walk around
 		self.SetMode(Mode.WORLDMAP)
-        # exit out of the menu and set it were the player is in control and can walk around
+		
 
 	def Run(self):
 
@@ -274,7 +273,7 @@ class Game:
 					for pri in sorted(self.mpPriHandler.keys()):
 						for obj in self.mpPriHandler[pri]:
 							if obj.FHandleEvent(event):
-								fHandled = True # f means flag
+								fHandled = True
 								break
 						if fHandled:
 							break

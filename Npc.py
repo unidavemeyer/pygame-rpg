@@ -26,16 +26,16 @@ class Npc:
 		Game.game.RemoveRender(self, 80)
 
 	def OnUpdate(self):
-		# NOTE (davidm) xno default behavior here
+		# NOTE (davidm) no default behavior here
 
-		pass# a function that does not do anything
+		pass
 
 	def OnRender(self, surfScreen):
 		if Game.game.Mode() == Game.Mode.WORLDMAP:
 			surfScreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
 
 	def OnDamage(self, damage):
-
+		# NOTE (davidm) no default behavior here
 
 		pass
 
@@ -226,8 +226,8 @@ class Animal(Npc):
 class HeroFinder(Npc):
 	def __init__(self, world, hero):
 		Npc.__init__(self)
-		self.GHpAttack = 5
-		self.GhpCur = 50
+		self.dHpAttack = 5
+		self.hpCur = 50
 		self.surf = pygame.image.load(r"Amazoncrime.png")
 
 	def OnUpdate(self):
@@ -236,7 +236,7 @@ class HeroFinder(Npc):
 			self.Kill()
 
 	def UpdateMove(self):
-
+		# BB what do we want to do with multiple heros bros? - ZAC
 		hero = Game.game.LHero()[0]
 		dPos = hero.pos - self.pos
 		dPosMove = Vec.VecLimitLen(dPos, random.randrange(1,6))
