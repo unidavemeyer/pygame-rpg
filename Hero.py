@@ -1,7 +1,6 @@
 # Hero.py
 #
 # Copyright (c) 2012 by David Meyer
-import Npc # imported the NPC code mah boi
 import Game
 import pygame
 import Vec
@@ -16,7 +15,8 @@ class Hero:
 		Game.game.AddUpdate(self, 20)	# relatively early update
 		Game.game.AddRender(self, 90)	# relatively late render (more on top)
 		Game.game.AddHandler(self, 20)	# relatively early event handler
-		self.Hellobro = False
+		self.fIsMajicAttackActive = False
+		
 		# Joystick tracking
 
 		self.joy = joy
@@ -48,7 +48,6 @@ class Hero:
 				pygame.K_e: KeyState(),
 			}
 
-		# BB (dave) placeholder surface until we have a reasonable graphic
 
 		self.surf = pygame.image.load(r"Oxygen.png")
 
@@ -160,7 +159,7 @@ class Hero:
 					npc.OnInteract(self)
 					break
 			
-		self.AttackMajic()
+		self.UpdateAttackMajic()
 			
 	def FHandleEvent(self, event):
 		if Game.game.Mode() == Game.Mode.COMBAT:
@@ -291,22 +290,16 @@ class Hero:
 
 		return Vec.Vec(vX, vY)
         
-	def AttackMajic(self):
+	def UpdateAttackMajic(self):
 		
-		Majica = self.mpKeyState.get(pygame.K_e)
-		
-			
-		if Majica.FIsPressed() and not self.Hellobro:
+		KeyStateAttack = self.mpKeyState.get(pygame.K_e)
+		if KeyStateAttack.FIsPressed() and not self.fIsMajicAttackActive:
 			for npc in Game.game.LNpc():
 				npc.Ghealth -= 10 
-				print("it worked")
-			self.Hellobro = True
-				
-		if not Majica.FIsPressed() and self.Hellobro:
-			self.Hellobro = False
-				 
-           
-    
+			self.fIsMajicAttackActive = True
+		if not KeyStateAttack.FIsPressed() and self.fIsMajicAttackActive:
+			self.fIsMajicAttackActive = False
+
 	def VTargetComputeKeyboard(self):
 		"""Uses current keyboard input to determine target velocity."""
 
