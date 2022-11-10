@@ -155,6 +155,10 @@ class Game:
 		return self.world
 
 	def SetNextWorld(self, strWorld):
+		# BB (davidm) strange to force this path here -- we do everything else relative to
+		#  the project root, so it may make more sense here to just do the same for world
+		#  links inside the .wld files
+
 		self.worldNext = World.World('worlds/%s' % strWorld)
         #makes more worlds 
 
@@ -178,7 +182,7 @@ class Game:
 	def LJoy(self):
 		return self.lJoy
 
-	def OnNewGame(self):
+	def OnNewGame(self, strWorld):
 		"""Clears objects and internal state and makes a new game start at the world map"""
          
 
@@ -213,9 +217,7 @@ class Game:
 		if not self.lHero:
 			self.lHero = [ Hero.Hero(None) ]
 
-		# BB (davidm) totally placeholder
-
-		world = World.World('worlds/start.wld')
+		world = World.World(strWorld)
 		world.MakeActive()
 		# exit out of the menu and set it were the player is in control and can walk around
 		self.SetMode(Mode.WORLDMAP)
