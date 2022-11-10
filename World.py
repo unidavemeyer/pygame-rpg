@@ -177,7 +177,7 @@ class World:
 			if mpSymData.get('color'):
 				mpSymData['surf'] = pygame.Surface((dSTile, dSTile))
 				mpSymData['surf'].fill(pygame.Color(*mpSymData['color']))
-			elif mpSymData.get('image'): # image loader
+			elif mpSymData.get('image'):
 				mpSymData['surf'] = pygame.image.load(mpSymData['image'])
 			else:
 				print("Warning:  symbol '%s' had no surface property" % sym)
@@ -392,7 +392,7 @@ class Spawner:
 		mpTypeFn = {
 				'goon' : Npc.Goon,
 				'animal' : Npc.Animal,
-				'globster' : Npc.Globster,
+				'globster' : Npc.HeroFinder,
 			}
 
 		fn = mpTypeFn.get(self.npcType)

@@ -6,7 +6,6 @@ import Game
 import Item
 import pygame
 import Vec
-import math #uio
 
 class Npc:
 	"""An Npc is an entity in the world that interacts with the Hero in some"""
@@ -36,7 +35,7 @@ class Npc:
 			surfScreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
 
 	def OnDamage(self, damage):
-		# NOTE (davidm) no default behavior here
+
 
 		pass
 
@@ -66,8 +65,7 @@ class Npc:
 
 	def SetPos(self, pos):
 		self.pos = pos
-# take heros position and substracted npcs pos. delying the follow////
-# make class, fill in an onupdate function and a ondamage function////
+
 class Goon(Npc):
 	"""Basic goon opponent.  Attacks on a regular schedule doing minor damage"""
 	""" that never misses."""
@@ -157,7 +155,7 @@ class Animal(Npc):
 	""" rescued by a hero, have happy and sad states, etc."""
 
 	def __init__(self, world, mpVarValue):
-		Npc.__init__(self)#does npc class stuff
+		Npc.__init__(self)
 
 		self.surfHappy = None
 		pathHappy = mpVarValue.get('happy_image')
@@ -222,25 +220,24 @@ class Animal(Npc):
 		""" form of this animal."""
 
 		return None
-class Globster(Npc):
+
+
+
+class HeroFinder(Npc):
 	def __init__(self, world, hero):
 		Npc.__init__(self)
-		self.Gattack = 5
-		self.Ghealth = 50
-
+		self.GHpAttack = 5
+		self.GhpCur = 50
 		self.surf = pygame.image.load(r"Amazoncrime.png")
+	
 	def OnUpdate(self):
-		self.Gmove()
+		self.UpdateMove()
 		if self.Ghealth <= 0:
 			self.Kill()
 		
-	def Gmove(self):
+	def UpdateMove(self):
 		
-		hero = Game.game.LHero()[0] #
-		dpos = hero.pos - self.pos # self is WE Game.game
-		toadd = Vec.VecLimitLen(dpos, (random.randrange(1,6))) # boo idea
-		self.SetPos(self.pos + toadd)
-	
-	
-		
-			
+		hero = Game.game.LHero()[0]
+		dPos = hero.pos - self.pos
+		dPosMove = Vec.VecLimitLen(dPos, random.randrange(1,6))
+		self.SetPos(self.pos + dPosMove)
