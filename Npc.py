@@ -229,14 +229,14 @@ class HeroFinder(Npc):
 		self.GHpAttack = 5
 		self.GhpCur = 50
 		self.surf = pygame.image.load(r"Amazoncrime.png")
-	
+
 	def OnUpdate(self):
 		self.UpdateMove()
-		if self.Ghealth <= 0:
+		if self.GhpCur <= 0:
 			self.Kill()
-		
+
 	def UpdateMove(self):
-		
+
 		hero = Game.game.LHero()[0]
 		dPos = hero.pos - self.pos
 		dPosMove = Vec.VecLimitLen(dPos, random.randrange(1,6))

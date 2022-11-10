@@ -392,7 +392,7 @@ class Spawner:
 		mpTypeFn = {
 				'goon' : Npc.Goon,
 				'animal' : Npc.Animal,
-				'globster' : Npc.HeroFinder,
+				'herofinder' : Npc.HeroFinder,
 			}
 
 		fn = mpTypeFn.get(self.npcType)

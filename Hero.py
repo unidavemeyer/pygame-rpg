@@ -295,7 +295,7 @@ class Hero:
 		KeyStateAttack = self.mpKeyState.get(pygame.K_e)
 		if KeyStateAttack.FIsPressed() and not self.fIsMajicAttackActive:
 			for npc in Game.game.LNpc():
-				npc.Ghealth -= 10  #BB Npc ondamage maybe? - Z.A.C.
+				npc.GhpCur -= 10  #BB Npc ondamage maybe? - Z.A.C.
 			self.fIsMajicAttackActive = True
 		if not KeyStateAttack.FIsPressed() and self.fIsMajicAttackActive:
 			self.fIsMajicAttackActive = False
