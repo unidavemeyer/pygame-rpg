@@ -1,7 +1,6 @@
 # Vec.py
 #
 # Copyright (c) 2012 by David Meyer
-
 import math
 import numbers
 

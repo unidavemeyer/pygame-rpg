@@ -34,7 +34,6 @@ class Font:
 	@staticmethod
 	def Init():
 		# BB (davidm) come up with a better way to locate fonts
-
 		s_aPath = [
 			'/usr/share/fonts/truetype/freefont/FreeSans.ttf',
 			r'c:\windows\boot\fonts\segoe_slboot.ttf',
@@ -63,7 +62,7 @@ class Game:
 		self.mpPriUpdate = {}		# priority based list of update objects
 		self.mpPriRender = {}		# priority based list of render objects
 		self.mpPriHandler = {}		# priority based list of handler objects
-		self.lNpc = []				# (unsorted) list of NPCs currently in the world
+		self.lNpc = []		       		# (unsorted) list of NPCs currently in the world
 		self.lHero = []				# current hero objects
 		self.menu = None			# current menu object
 		self.world = None			# current world object
@@ -157,6 +156,7 @@ class Game:
 
 	def SetNextWorld(self, strWorld):
 		self.worldNext = World.World('worlds/%s' % strWorld)
+        #makes more worlds 
 
 	def AddJoysticks(self):
 		"""Make sure that self.lJoy is consistent with the number of"""
@@ -180,8 +180,7 @@ class Game:
 
 	def OnNewGame(self):
 		"""Clears objects and internal state and makes a new game start at the world map"""
-
-		# Kill npcs
+         
 
 		for npc in self.lNpc:
 			npc.Kill()
@@ -209,7 +208,6 @@ class Game:
 		# Generate one hero for each joystick
 
 		# BB (davidm) probably only want two, and always two...
-
 		self.lHero = [ Hero.Hero(j) for j in self.lJoy ]
 
 		if not self.lHero:
@@ -219,8 +217,9 @@ class Game:
 
 		world = World.World('worlds/start.wld')
 		world.MakeActive()
-
+		# exit out of the menu and set it were the player is in control and can walk around
 		self.SetMode(Mode.WORLDMAP)
+		
 
 	def Run(self):
 

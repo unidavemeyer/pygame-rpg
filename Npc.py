@@ -1,7 +1,7 @@
 # Npc.py
 #
 # Copyright (c) 2012 by David Meyer
-
+import random 
 import Game
 import Item
 import pygame
@@ -65,7 +65,6 @@ class Npc:
 
 	def SetPos(self, pos):
 		self.pos = pos
-
 
 class Goon(Npc):
 	"""Basic goon opponent.  Attacks on a regular schedule doing minor damage"""
@@ -150,7 +149,7 @@ class Goon(Npc):
 
 
 
-class Animal(Npc):
+class Animal(Npc): 
 	"""Animals are the rescuable characters that are out in carcar.  They get"""
 	""" their configuration data from the spawner that makes them, can be"""
 	""" rescued by a hero, have happy and sad states, etc."""
@@ -221,3 +220,24 @@ class Animal(Npc):
 		""" form of this animal."""
 
 		return None
+
+
+
+class HeroFinder(Npc):
+	def __init__(self, world, hero):
+		Npc.__init__(self)
+		self.dHpAttack = 5
+		self.hpCur = 50
+		self.surf = pygame.image.load(r"Amazoncrime.png")
+
+	def OnUpdate(self):
+		self.UpdateMove()
+		if self.GhpCur <= 0:
+			self.Kill()
+
+	def UpdateMove(self):
+		# BB what do we want to do with multiple heros bros? - ZAC
+		hero = Game.game.LHero()[0]
+		dPos = hero.pos - self.pos
+		dPosMove = Vec.VecLimitLen(dPos, random.randrange(1,6))
+		self.SetPos(self.pos + dPosMove)

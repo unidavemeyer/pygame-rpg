@@ -1,7 +1,6 @@
 # Hero.py
 #
 # Copyright (c) 2012 by David Meyer
-
 import Game
 import pygame
 import Vec
@@ -16,7 +15,8 @@ class Hero:
 		Game.game.AddUpdate(self, 20)	# relatively early update
 		Game.game.AddRender(self, 90)	# relatively late render (more on top)
 		Game.game.AddHandler(self, 20)	# relatively early event handler
-
+		self.fIsMajicAttackActive = False
+		
 		# Joystick tracking
 
 		self.joy = joy
@@ -45,16 +45,12 @@ class Hero:
 				pygame.K_DOWN: KeyState(),
 				pygame.K_LEFT: KeyState(),
 				pygame.K_RIGHT: KeyState(),
+				pygame.K_e: KeyState(),
 			}
 
-		# BB (dave) placeholder surface until we have a reasonable graphic
 
-		self.surf = pygame.Surface((32, 32))
+		self.surf = pygame.image.load(r"Oxygen.png")
 
-		if self.joy and self.joy.id == 0:
-			self.surf.fill(pygame.Color(192, 128, 192))		# violet-ish
-		else:
-			self.surf.fill(pygame.Color(192, 128, 128))		# pink-ish
 
 		# position, velocity, etc.
 
@@ -162,7 +158,9 @@ class Hero:
 				if npc.FShouldInteract(rectHero):
 					npc.OnInteract(self)
 					break
-
+			
+		self.UpdateAttackMagic()
+			
 	def FHandleEvent(self, event):
 		if Game.game.Mode() == Game.Mode.COMBAT:
 
@@ -187,7 +185,7 @@ class Hero:
 			return False
 
 		# BB (dave) handle 'i' key to go to inventory
-
+        
 		if event.type == pygame.KEYDOWN:
 			keystate = self.mpKeyState.get(event.key)
 			if keystate:
@@ -205,7 +203,7 @@ class Hero:
 		if Game.game.Mode() == Game.Mode.WORLDMAP:
 			# BB (dave) very basic positioning here -- can flow off sides, no collision, etc.
 			surfScreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
-
+			
 		elif Game.game.Mode() == Game.Mode.COMBAT:
 			# BB (davidm) draw the hero
 
@@ -291,6 +289,16 @@ class Hero:
 		vY = vMax * uUd
 
 		return Vec.Vec(vX, vY)
+        
+	def UpdateAttackMagic(self):
+		
+		keyeyStateAttack = self.mpKeyState.get(pygame.K_e)
+		if KeyStateAttack.FIsPressed() and not self.fIsMagicAttackActive:
+			for npc in Game.game.LNpc():
+				npc.hpCur -= 10  #BB Npc ondamage maybe? - Z.A.C.
+			self.fIsMagicAttackActive = True
+		if not KeyStateAttack.FIsPressed() and self.fIsMagicAttackActive:
+			self.fIsMagicAttackActive = False
 
 	def VTargetComputeKeyboard(self):
 		"""Uses current keyboard input to determine target velocity."""
