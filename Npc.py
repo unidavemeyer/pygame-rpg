@@ -255,10 +255,10 @@ class Petrol(Npc):
 		Rpos = self.Pointr - self.pos  #Rpos = self.Pointr + self.pos
 		togo = Vec.VecLimitLen(Rpos, 5)		# limit len makes sure that they dont teleport
 		self.SetPos(self.pos + togo)
-		if self.pos.y == 160:
+		if self.pos.y >= 160:
 			self.Pointr = Vec.Vec(300,60)
 		elif self.pos.y == 60:
-			self.Pointr = Vec.Vec(300,160)
+			self.Pointr = Vec.Vec(300, random.randrange(160,170))
 
 	
 		
