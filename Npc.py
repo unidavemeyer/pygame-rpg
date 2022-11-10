@@ -247,7 +247,7 @@ class Petrol(Npc):
 	#vec.vec notes
 		Npc.__init__(self)
 		self.Vhealth = 999
-		self.Pointr = Vec.Vec(120,120)
+		self.Pointr = Vec.Vec(300,160)
 		self.surf = pygame.image.load(r"broaintnoway.png")
 	def OnUpdate(self):
 		self.RightandLeft()
@@ -255,10 +255,10 @@ class Petrol(Npc):
 		Rpos = self.Pointr - self.pos  #Rpos = self.Pointr + self.pos
 		togo = Vec.VecLimitLen(Rpos, 5)		# limit len makes sure that they dont teleport
 		self.SetPos(self.pos + togo)
-		if self.pos.y == 80:
-			self.Pointr = Vec.Vec(80,0)
-		if self.pos.y == 0:
-			self.Pointr = Vec.Vec(0,7)
+		if self.pos.y == 160:
+			self.Pointr = Vec.Vec(300,60)
+		elif self.pos.y == 60:
+			self.Pointr = Vec.Vec(300,160)
 
 	
 		

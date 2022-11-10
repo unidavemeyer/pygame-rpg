@@ -40,9 +40,9 @@ tiles:
 plan:
   - wwwwwwwwwwwwwwwww
   - wfffffffwfffffffw
-  - wfafffafwfffffffw
-  - wffffffflfff$fffw
-  - wfffsffflfffffffw
+  - wfffffffwfffffffw
+  - wfffffffwfff$fffw
+  - wfffsfffwfffffffw
   - wfffffffwfffffffw
   - wfffffffwfffffffw
   - wwwwwwwwwwdwwwwww
