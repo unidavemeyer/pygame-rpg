@@ -34,12 +34,16 @@ Mentor Work Item Backlog
      * Could be swirl with guardians, so should check on that front
      * E.g., could leave everything copyright by me, or could attribute; both have advantages
      * Current plan: direct/public credit and commits, etc.
- * Consider making whole own world chain for new npcs and such
+ * ~Consider making whole own world chain for new npcs and such~
    * would be a good end-of-project goal, clean out stuff that's not necessary, etc.
    * other opportunity to make own art for the fun of it as well -- walls, floor, doorways (if desired)
-   * Mentor to provide "episode" support on the menu so that this work can be slotted in
-     * May be a good opportunity to allow code review the other direction
+   * ~Mentor to provide "episode" support on the menu so that this work can be slotted in~
+     * ~May be a good opportunity to allow code review the other direction~
  * Do we want to add graphical health bars to hero, NPCs?
+   * Agreed that this was a good thing to add. Mentor to do this feature.
+ * Approximate end for current session: January 22, with 3 days removed for holidays
+   * Suggests that current items should be completed and polished, probably boss NPC is last "add"
+ * Open question for Mentor: Is there availability for following session?
  * Consider a "freeze" or "slow" attack/aura for NPCs - reduce hero movement speed
  * Do we have any balance considerations?
  * Should we consider making a boss NPC of some kind?
@@ -270,7 +274,7 @@ Daily Plan 2022-11-03
 
 Daily Plan 2022-11-10
 ---------------------
- * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
+ * ~Video call with Mentor in the morning to start up and again in the afternoon to wrap up~
    * Can do additional checks in the day if necessary
    * Do we have updates on dates for work on the project for planning?
  * Reminder on overall project goals
@@ -279,7 +283,7 @@ Daily Plan 2022-11-10
    * Replace current "box art" characters with images
    * Add flipbook animations for moving and maybe attacking characters (hero, npc)
    * Create end-to-end world as example to show entirely own work
- * Continue review process
+ * ~Continue review process~
    * Npc.py, World.py, and fifth.wld still need to be reviewed (probably not much on the last)
    * Will want a re-review after all changes are made to the branch and pushed
    * Should also do a review the "other way" for the episode work (good experience!)
@@ -294,6 +298,41 @@ Daily Plan 2022-11-10
  * Add some kind of "mini boss" NPC
    * Need to discuss appropriate AI goals here
  * Consider how flipbook animation would work
+   * Effectively back-to-back images, pick which to show at any given time
+   * Could change based on motion, could change based on time, or a mix of the two
+   * Bonus: image interpolation to get "smooth frame" behavior?
+ * Discuss further work on heat seeking NPC
+   * Consider range - how close is the hero before this activates?
+   * Consider velocity target based approach - discuss with mentor to get the basic idea there
+   * Consider how NPC attacking works - contact? short range "stomp"? other?
+ * Consider improvements to hero magic attack
+   * Experiment with "held key" behavior -- repeated attack with cooldown?
+   * Possibility: Add some kind of basic graphical display for the attack happening
+
+Daily Plan 2022-11-17
+---------------------
+ * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
+   * Can do additional checks in the day if necessary
+   * Mentor has meeting in the morning so there will be a specific period if unavailability
+ * Reminder on overall project goals
+   * Add two or more types of NPCs which move and damage the hero
+   * Create end-to-end world as example to show entirely own work
+   * Add flipbook animations for moving and maybe attacking characters (hero, npc)
+ * Do a merge to pull changes from the main branch in to the Patroller branch
+   * Mentor to assist in this process to explain how things work as necessary
+   * That will get said feature up and running with latest tech
+ * Continue developing a "fixed path" NPC
+   * Continue learning more about Vector math from Khan Academy as needed to improve knowledge/skills here
+   * How is the path to follow defined?
+   * Does NPC ever deviate, say for close range hero?
+ * Start setting up separate episode to demonstrate full end-to-end behaviors
+   * See Menu.py for where to hook this up
+   * Consider some kind of interesting layout -- multiple rooms (Worlds) with different enemy types?
+   * Could make own art for walls, floors, etc., to go with characters - remember 32x32 image size
+ * Add some kind of "mini boss" NPC
+   * Need to discuss appropriate AI goals here
+ * Consider how flipbook animation would work
+   * Do we wish to pursue this? Seems like world setup and AI work is more of interest...
    * Effectively back-to-back images, pick which to show at any given time
    * Could change based on motion, could change based on time, or a mix of the two
    * Bonus: image interpolation to get "smooth frame" behavior?
