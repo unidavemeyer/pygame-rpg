@@ -1,46 +1,12 @@
 # Hero.py
 #
 # Copyright (c) 2012 by David Meyer
+
 import Game
+import Lib
 import pygame
 import Vec
 import Weapon
-
-
-
-def RenderHpBar(surfScreen, pos, hpCur, hpMax):
-	"""Renders a hit point bar to the screen based on the position for an entity and its current/max hitpoint
-	values"""
-
-	# BB (davidm) seems like we can/should commonize this to be somewhere else, yes?
-
-	# Calculate fraction of full health that hpCur represents
-
-	uHp = min(max(hpCur / hpMax, 0.0), 1.0)
-	wHp = uHp * 32
-	wBack = 32 - wHp
-
-	# Calculate hp and background bar sizes
-
-	s_dYHpOffset = 33
-	s_dYHp = 3
-
-	yHpTop = pos.y + s_dYHpOffset
-
-	rectHp = pygame.Rect(pos.x, yHpTop, wHp, s_dYHp)
-	rectHpBack = pygame.Rect(pos.x + wHp, yHpTop, wBack, s_dYHp)
-
-	# Calculate color for hp bar
-
-	rgbHp = (128, 255, 128)	 # BB (davidm) make this interesting - interpolate based on uHp, green -> red
-	rgbHpBack = (0, 0, 0)
-
-	# Draw the bar (both parts, as necessary)
-
-	surfScreen.fill(rgbHp, rectHp)
-
-	if wBack > 0:
-		surfScreen.fill(rgbHpBack, rectHpBack)
 
 
 
@@ -242,7 +208,7 @@ class Hero:
 			# BB (dave) very basic positioning here -- can flow off sides, no collision, etc.
 			surfScreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
 
-			RenderHpBar(surfScreen, self.pos, self.hpCur, self.hpMax)
+			Lib.RenderHpBar(surfScreen, self.pos, self.hpCur, self.hpMax)
 			
 		elif Game.game.Mode() == Game.Mode.COMBAT:
 			# BB (davidm) draw the hero
