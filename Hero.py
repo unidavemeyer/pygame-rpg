@@ -1,10 +1,14 @@
 # Hero.py
 #
 # Copyright (c) 2012 by David Meyer
+
 import Game
+import Lib
 import pygame
 import Vec
 import Weapon
+
+
 
 class Hero:
 	"""The game contains one or more Hero instances, which handles input, rendering, and"""
@@ -15,7 +19,7 @@ class Hero:
 		Game.game.AddUpdate(self, 20)	# relatively early update
 		Game.game.AddRender(self, 90)	# relatively late render (more on top)
 		Game.game.AddHandler(self, 20)	# relatively early event handler
-		self.fIsMajicAttackActive = False
+		self.fIsMagicAttackActive = False
 		
 		# Joystick tracking
 
@@ -185,7 +189,7 @@ class Hero:
 			return False
 
 		# BB (dave) handle 'i' key to go to inventory
-        
+		
 		if event.type == pygame.KEYDOWN:
 			keystate = self.mpKeyState.get(event.key)
 			if keystate:
@@ -203,6 +207,8 @@ class Hero:
 		if Game.game.Mode() == Game.Mode.WORLDMAP:
 			# BB (dave) very basic positioning here -- can flow off sides, no collision, etc.
 			surfScreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
+
+			Lib.RenderHpBar(surfScreen, self.pos, self.hpCur, self.hpMax)
 			
 		elif Game.game.Mode() == Game.Mode.COMBAT:
 			# BB (davidm) draw the hero
@@ -289,15 +295,15 @@ class Hero:
 		vY = vMax * uUd
 
 		return Vec.Vec(vX, vY)
-        
+		
 	def UpdateAttackMagic(self):
 		
-		keyeyStateAttack = self.mpKeyState.get(pygame.K_e)
-		if KeyStateAttack.FIsPressed() and not self.fIsMagicAttackActive:
+		keyStateAttack = self.mpKeyState.get(pygame.K_e)
+		if keyStateAttack.FIsPressed() and not self.fIsMagicAttackActive:
 			for npc in Game.game.LNpc():
 				npc.hpCur -= 10  #BB Npc ondamage maybe? - Z.A.C.
 			self.fIsMagicAttackActive = True
-		if not KeyStateAttack.FIsPressed() and self.fIsMagicAttackActive:
+		if not keyStateAttack.FIsPressed() and self.fIsMagicAttackActive:
 			self.fIsMagicAttackActive = False
 
 	def VTargetComputeKeyboard(self):

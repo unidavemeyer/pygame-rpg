@@ -1,10 +1,12 @@
 # Npc.py
 #
 # Copyright (c) 2012 by David Meyer
-import random 
+
 import Game
+import Lib
 import Item
 import pygame
+import random 
 import Vec
 
 class Npc:
@@ -228,11 +230,19 @@ class HeroFinder(Npc):
 		Npc.__init__(self)
 		self.dHpAttack = 5
 		self.hpCur = 50
+		self.hpMax = 50
 		self.surf = pygame.image.load(r"Amazoncrime.png")
+
+	def OnRender(self, surfScreen):
+		Npc.OnRender(self, surfScreen)
+
+		# BB (davidm) feels like this should be base Npc class behavior, along with hpCur/hpMax
+
+		Lib.RenderHpBar(surfScreen, self.pos, self.hpCur, self.hpMax)
 
 	def OnUpdate(self):
 		self.UpdateMove()
-		if self.GhpCur <= 0:
+		if self.hpCur <= 0:
 			self.Kill()
 
 	def UpdateMove(self):

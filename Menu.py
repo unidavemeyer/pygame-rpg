@@ -43,11 +43,6 @@ class MenuData:
 	def OnNavOk(self):
 		self.m_lEntry[self.m_iEntry].Exec()
 
-def FnStartGame(strWorld):
-	"""Create function that will cause a new game to happen in the given world"""
-
-	return lambda: Game.game.OnNewGame(strWorld)
-
 class Menu:
 	"""Manages the menu for the game -- used when paused, when starting the"""
 	""" game, etc."""
@@ -64,8 +59,8 @@ class Menu:
 		# BB (davidm) would be nice to encapsulate these possiblities somewhere and autogen, maybe?
 
 		mdEpisode = MenuData()
-		mdEpisode.AddEntry("Test Episode", FnStartGame("worlds/start.wld"))
-		mdEpisode.AddEntry("Other Episode", FnStartGame("worlds/second.wld"))	# BB (davidm) replace with better title & target
+		mdEpisode.AddEntry("Test Episode", self.FnStartGame("worlds/start.wld"))
+		mdEpisode.AddEntry("Other Episode", self.FnStartGame("worlds/second.wld"))	# BB (davidm) replace with better title & target
 
 		# Main menu
 
@@ -88,8 +83,19 @@ class Menu:
 
 		return lambda: self.OnPushMenu(md)
 
+	def FnStartGame(self, strWorld):
+		"""Create function that will cause a new game to happen in the given world"""
+
+		return lambda: self.OnNewGame(strWorld)
+
 	def OnPushMenu(self, md):
 		self.m_lMd.append(md)
+
+	def OnNewGame(self, strWorld):
+		if len(self.m_lMd) > 1:
+			self.m_lMd[1:] = []
+
+		Game.game.OnNewGame(strWorld)
 
 	def OnUpdate(self):
 
