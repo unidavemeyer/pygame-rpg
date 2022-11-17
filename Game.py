@@ -34,7 +34,6 @@ class Font:
 	@staticmethod
 	def Init():
 		# BB (davidm) come up with a better way to locate fonts
-        #finds fonts
 		s_aPath = [
 			'/usr/share/fonts/truetype/freefont/FreeSans.ttf',
 			r'c:\windows\boot\fonts\segoe_slboot.ttf',
@@ -80,7 +79,7 @@ class Game:
 		"""Add obj to the priority list of objects to update.  obj is expected"""
 		""" to have an OnUpdate() method, which will be called to do the update."""
 		""" Priorities are run each frame from least to greatest."""
- 
+
 		self.mpPriUpdate.setdefault(priority, []).append(obj)
 
 	def RemoveUpdate(self, obj, priority):
@@ -156,6 +155,10 @@ class Game:
 		return self.world
 
 	def SetNextWorld(self, strWorld):
+		# BB (davidm) strange to force this path here -- we do everything else relative to
+		#  the project root, so it may make more sense here to just do the same for world
+		#  links inside the .wld files
+
 		self.worldNext = World.World('worlds/%s' % strWorld)
         #makes more worlds 
 
@@ -179,10 +182,9 @@ class Game:
 	def LJoy(self):
 		return self.lJoy
 
-	def OnNewGame(self):
+	def OnNewGame(self, strWorld):
 		"""Clears objects and internal state and makes a new game start at the world map"""
-         # calls function on new game. gets rid of all the npc(s) and heros. Resets everything like a refreash button
-		# Kill npcs
+         
 
 		for npc in self.lNpc:
 			npc.Kill()
@@ -210,19 +212,16 @@ class Game:
 		# Generate one hero for each joystick
 
 		# BB (davidm) probably only want two, and always two...
-        # BB = bug
 		self.lHero = [ Hero.Hero(j) for j in self.lJoy ]
 
 		if not self.lHero:
 			self.lHero = [ Hero.Hero(None) ]
 
-		# BB (davidm) totally placeholder
-
-		world = World.World('worlds/start.wld')
+		world = World.World(strWorld)
 		world.MakeActive()
-
+		# exit out of the menu and set it were the player is in control and can walk around
 		self.SetMode(Mode.WORLDMAP)
-        # exit out of the menu and set it were the player is in control and can walk around
+		
 
 	def Run(self):
 
@@ -273,11 +272,11 @@ class Game:
 
 				elif event.type in (pygame.KEYDOWN, pygame.KEYUP):
 					fHandled = False
-					for pri in sorted(self.mpPriHandler.keys()): #Mp mean map
+					for pri in sorted(self.mpPriHandler.keys()):
 						for obj in self.mpPriHandler[pri]:
 							if obj.FHandleEvent(event):
-								fHandled = True # f means flag
-								break # a way to get out of a loop(early)
+								fHandled = True
+								break
 						if fHandled:
 							break
 

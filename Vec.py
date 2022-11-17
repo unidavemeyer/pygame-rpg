@@ -1,7 +1,6 @@
 # Vec.py
 #
 # Copyright (c) 2012 by David Meyer
-#what does this script do for the game?
 import math
 import numbers
 
@@ -84,3 +83,14 @@ def VecCircle(radAngle, sLength):
 	y = math.sin(radAngle) * sLength
 	return Vec(x, y)
 
+def Lerp(t0, t1, u):
+	"""Interpolates between t0 and t1 based on u (u=0 gives t0)"""
+
+	# BB (davidm) hacky/fragile...would be better to handle types here more explicitly, I think?
+
+	if isinstance(t0, (tuple, list)):
+		assert isinstance(t1, (tuple, list))
+		return tuple([Lerp(x0, x1, u) for x0, x1 in zip(t0, t1)])
+
+	dT = t1 - t0
+	return t0 + u * dT

@@ -1,11 +1,14 @@
 # Hero.py
 #
 # Copyright (c) 2012 by David Meyer
-import Npc # imported the NPC code mah boi
+
 import Game
+import Lib
 import pygame
 import Vec
 import Weapon
+
+
 
 class Hero:
 	"""The game contains one or more Hero instances, which handles input, rendering, and"""
@@ -16,7 +19,8 @@ class Hero:
 		Game.game.AddUpdate(self, 20)	# relatively early update
 		Game.game.AddRender(self, 90)	# relatively late render (more on top)
 		Game.game.AddHandler(self, 20)	# relatively early event handler
-		self.Hellobro = False
+		self.fIsMagicAttackActive = False
+		
 		# Joystick tracking
 
 		self.joy = joy
@@ -48,7 +52,6 @@ class Hero:
 				pygame.K_e: KeyState(),
 			}
 
-		# BB (dave) placeholder surface until we have a reasonable graphic
 
 		self.surf = pygame.image.load(r"Oxygen.png")
 
@@ -160,7 +163,7 @@ class Hero:
 					npc.OnInteract(self)
 					break
 			
-		self.AttackMajic()
+		self.UpdateAttackMagic()
 			
 	def FHandleEvent(self, event):
 		if Game.game.Mode() == Game.Mode.COMBAT:
@@ -186,7 +189,7 @@ class Hero:
 			return False
 
 		# BB (dave) handle 'i' key to go to inventory
-        
+		
 		if event.type == pygame.KEYDOWN:
 			keystate = self.mpKeyState.get(event.key)
 			if keystate:
@@ -204,6 +207,8 @@ class Hero:
 		if Game.game.Mode() == Game.Mode.WORLDMAP:
 			# BB (dave) very basic positioning here -- can flow off sides, no collision, etc.
 			surfScreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
+
+			Lib.RenderHpBar(surfScreen, self.pos, self.hpCur, self.hpMax)
 			
 		elif Game.game.Mode() == Game.Mode.COMBAT:
 			# BB (davidm) draw the hero
@@ -290,23 +295,17 @@ class Hero:
 		vY = vMax * uUd
 
 		return Vec.Vec(vX, vY)
-        
-	def AttackMajic(self):
 		
-		Majica = self.mpKeyState.get(pygame.K_e)
+	def UpdateAttackMagic(self):
 		
-			
-		if Majica.FIsPressed() and not self.Hellobro:
+		keyStateAttack = self.mpKeyState.get(pygame.K_e)
+		if keyStateAttack.FIsPressed() and not self.fIsMagicAttackActive:
 			for npc in Game.game.LNpc():
-				npc.Ghealth -= 10 
-				print("it worked")
-			self.Hellobro = True
-				
-		if not Majica.FIsPressed() and self.Hellobro:
-			self.Hellobro = False
-				 
-           
-    
+				npc.hpCur -= 10  #BB Npc ondamage maybe? - Z.A.C.
+			self.fIsMagicAttackActive = True
+		if not keyStateAttack.FIsPressed() and self.fIsMagicAttackActive:
+			self.fIsMagicAttackActive = False
+
 	def VTargetComputeKeyboard(self):
 		"""Uses current keyboard input to determine target velocity."""
 

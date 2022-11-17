@@ -1,10 +1,12 @@
 # Npc.py
 #
 # Copyright (c) 2012 by David Meyer
-import random 
+
 import Game
+import Lib
 import Item
 import pygame
+import random 
 import Vec
 import math #uio
 import time #time.sleep() mah boy 
@@ -28,9 +30,9 @@ class Npc:
 		Game.game.RemoveRender(self, 80)
 
 	def OnUpdate(self):
-		# NOTE (davidm) xno default behavior here
+		# NOTE (davidm) no default behavior here
 
-		pass# a function that does not do anything
+		pass
 
 	def OnRender(self, surfScreen):
 		if Game.game.Mode() == Game.Mode.WORLDMAP:
@@ -67,8 +69,7 @@ class Npc:
 
 	def SetPos(self, pos):
 		self.pos = pos
-# take heros position and substracted npcs pos. delying the follow////
-# make class, fill in an onupdate function and a ondamage function////
+
 class Goon(Npc):
 	"""Basic goon opponent.  Attacks on a regular schedule doing minor damage"""
 	""" that never misses."""
@@ -158,7 +159,7 @@ class Animal(Npc):
 	""" rescued by a hero, have happy and sad states, etc."""
 
 	def __init__(self, world, mpVarValue):
-		Npc.__init__(self)#does npc class stuff
+		Npc.__init__(self)
 
 		self.surfHappy = None
 		pathHappy = mpVarValue.get('happy_image')
@@ -223,24 +224,35 @@ class Animal(Npc):
 		""" form of this animal."""
 
 		return None
-class Globster(Npc):
+
+
+
+class HeroFinder(Npc):
 	def __init__(self, world, hero):
 		Npc.__init__(self)
-		self.Gattack = 5
-		self.Ghealth = 50
-
+		self.dHpAttack = 5
+		self.hpCur = 50
+		self.hpMax = 50
 		self.surf = pygame.image.load(r"Amazoncrime.png")
+
+	def OnRender(self, surfScreen):
+		Npc.OnRender(self, surfScreen)
+
+		# BB (davidm) feels like this should be base Npc class behavior, along with hpCur/hpMax
+
+		Lib.RenderHpBar(surfScreen, self.pos, self.hpCur, self.hpMax)
+
 	def OnUpdate(self):
-		self.Gmove()
-		if self.Ghealth <= 0:
+		self.UpdateMove()
+		if self.hpCur <= 0:
 			self.Kill()
 		
-	def Gmove(self):
-		
-		hero = Game.game.LHero()[0] #
-		dpos = hero.pos - self.pos # self is WE Game.game
-		toadd = Vec.VecLimitLen(dpos, (random.randrange(1,6))) # boo idea
-		self.SetPos(self.pos + toadd)
+	def UpdateMove(self):
+		# BB what do we want to do with multiple heros bros? - ZAC
+		hero = Game.game.LHero()[0]
+		dPos = hero.pos - self.pos
+		dPosMove = Vec.VecLimitLen(dPos, random.randrange(1,6))
+		self.SetPos(self.pos + dPosMove)
 	
 class Petrol(Npc):
 	def __init__(self, world, hero):
