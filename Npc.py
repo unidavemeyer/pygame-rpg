@@ -271,8 +271,34 @@ class Petrol(Npc):
 			self.Pointr = Vec.Vec(300,60)
 		elif self.pos.y == 60:
 			self.Pointr = Vec.Vec(300, random.randrange(160,170))
+class Boss(Npc):
+	def __init__(self, world, hero):
+	#vec.vec notes
+		Npc.__init__(self)
+		self.Bcurhp = 999
+		self.Bhpmax = 999
+		self.Pointr = Vec.Vec(300,160)
+		self.surf = pygame.image.load(r"broaintnoway.png")
+	def OnRender(self, surfScreen):
+		Npc.OnRender(self, surfScreen)
 
-	
+
+
+		Lib.RenderHpBar(surfScreen, self.pos, self.hpCur, self.hpMax)
+	def OnUpdate(self):
+		self.RightandLeft()
+		
+	def RightandLeft(self):
+		Rpos = self.Pointr - self.pos  #Rpos = self.Pointr + self.pos
+		togo = Vec.VecLimitLen(Rpos, 4)		# limit len makes sure that they dont teleport
+		self.SetPos(self.pos + togo)
+		if self.pos.y >= 160:
+			self.Pointr = Vec.Vec(300,60)
+		elif self.pos.y == 60:
+			self.Pointr = Vec.Vec(300, random.randrange(160,170))
+
+	#def Ballspawner
+		#pass
 		
 		
 		#if self.pos.x == 5: # self.pos.X looks at the x
