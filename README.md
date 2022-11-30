@@ -39,15 +39,30 @@ Mentor Work Item Backlog
    * other opportunity to make own art for the fun of it as well -- walls, floor, doorways (if desired)
    * ~Mentor to provide "episode" support on the menu so that this work can be slotted in~
      * ~May be a good opportunity to allow code review the other direction~
- * Do we want to add graphical health bars to hero, NPCs?
+ * ~Do we want to add graphical health bars to hero, NPCs?~
    * Agreed that this was a good thing to add. Mentor to do this feature.
+ * ~Open question for Mentor: Is there availability for following session?~
+   * Yes, plan to continue for the following semester
+ * ~Should we consider making a boss NPC of some kind?~
  * Approximate end for current session: January 22, with 3 days removed for holidays
    * Suggests that current items should be completed and polished, probably boss NPC is last "add"
- * Open question for Mentor: Is there availability for following session?
+ * Should remove the specific combat mode - only have menu and worldmap
+ * Will need to come up with a concrete plan to unify/solidify the damage model
+   * should have maybe all objects take damage? maybe? at the very least, all NPCs, but as a function
+ * Do we want to add a melee attack for the hero and/or some of the NPCs?
+   * Effective model: short radius auto-hit attack, maybe?
+   * Do we want to allow the player to block? NPCs?
  * Consider a "freeze" or "slow" attack/aura for NPCs - reduce hero movement speed
  * Do we have any balance considerations?
- * Should we consider making a boss NPC of some kind?
  * Do we want inventory and inventory management?
+   * Current model makes this seem unnecessary
+ * Do we want to have an experience model and grow the hero stronger?
+   * support grinding in the world?
+   * unlock equipment, or just do stat gains?
+   * allow player choice, or simply increase things automatically via whatever forumulas we cook up?
+ * What is hero death model?
+   * Do we start again, prior room?
+   * Do we allow some kind of actual progress save system?
 
 Daily Plan 2022-09-28
 ---------------------
@@ -311,17 +326,17 @@ Daily Plan 2022-11-10
 
 Daily Plan 2022-11-17
 ---------------------
- * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
+ * ~Video call with Mentor in the morning to start up and again in the afternoon to wrap up~
    * Can do additional checks in the day if necessary
-   * Mentor has meeting in the morning so there will be a specific period if unavailability
+   * Mentor has meeting in the morning so there will be a specific period of unavailability
  * Reminder on overall project goals
    * Add two or more types of NPCs which move and damage the hero
    * Create end-to-end world as example to show entirely own work
    * Add flipbook animations for moving and maybe attacking characters (hero, npc)
- * Do a merge to pull changes from the main branch in to the Patroller branch
+ * ~Do a merge to pull changes from the main branch in to the Patroller branch~
    * Mentor to assist in this process to explain how things work as necessary
    * That will get said feature up and running with latest tech
- * Continue developing a "fixed path" NPC
+ * ~Continue developing a "fixed path" NPC~
    * Continue learning more about Vector math from Khan Academy as needed to improve knowledge/skills here
    * How is the path to follow defined?
    * Does NPC ever deviate, say for close range hero?
@@ -344,3 +359,38 @@ Daily Plan 2022-11-17
    * Experiment with "held key" behavior -- repeated attack with cooldown?
    * Possibility: Add some kind of basic graphical display for the attack happening
 
+Daily Plan 2022-12-01
+---------------------
+ * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
+   * Can do additional checks in the day if necessary
+ * Reminder on overall project goals
+   * Add two or more types of NPCs which move and damage the hero
+   * Create end-to-end world as example to show entirely own work
+   * Add flipbook animations for moving and maybe attacking characters (hero, npc)
+ * Continue work on miniboss NPC
+   * Discuss class inheritance plan with mentor - should derive from Patroller
+   * Discuss plans for projectiles with mentor - will follow NPC model, but not be an NPC
+   * Do not do further work in the Patroller branch once the patroller and mini boss + projectile are working!
+   * Will want to review that branch, do fixes, and merge to main before continuing
+ * Start setting up separate episode to demonstrate full end-to-end behaviors
+   * See Menu.py for where to hook this up
+   * Consider some kind of interesting layout -- multiple rooms (Worlds) with different enemy types?
+   * Could make own art for walls, floors, etc., to go with characters - remember 32x32 image size
+ * Make "facing you" statue
+   * Fun flavor element to add to world
+ * Consider how flipbook animation would work
+   * Do we wish to pursue this? Seems like world setup and AI work is more of interest...
+   * Effectively back-to-back images, pick which to show at any given time
+   * Could change based on motion, could change based on time, or a mix of the two
+   * Bonus: image interpolation to get "smooth frame" behavior?
+ * Discuss further work on heat seeking NPC
+   * Consider range - how close is the hero before this activates?
+   * Consider velocity target based approach - discuss with mentor to get the basic idea there
+   * Consider how NPC attacking works - contact? short range "stomp"? other?
+ * Consider improvements to hero magic attack
+   * Add "heat seeking" version of projectiles used by miniboss
+   * Consider if this will adjust timing of damage -- probably should?
+   * Experiment with "held key" behavior -- repeated attack with cooldown?
+ * Can/should we introduce a physics-aware NPC model?
+   * How crazy/simple/whatever should we make the pathing model? Full up A-star?
+   * Are we OK with keeping "ghosts" that can just go through walls arbitrarily for heat seekers?
