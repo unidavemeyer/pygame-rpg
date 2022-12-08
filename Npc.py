@@ -255,14 +255,16 @@ class HeroFinder(Npc):
 		self.SetPos(self.pos + dPosMove)
 	
 class Petrol(Npc):
-	def __init__(self, world, hero):
+	def __init__(self, world, hero, Fireball):
 	#vec.vec notes
 		Npc.__init__(self)
 		self.Vhealth = 999
 		self.Pointr = Vec.Vec(300,160)
 		self.surf = pygame.image.load(r"broaintnoway.png")
+	
 	def OnUpdate(self):
 		self.RightandLeft()
+	
 	def RightandLeft(self):
 		Rpos = self.Pointr - self.pos  #Rpos = self.Pointr + self.pos
 		togo = Vec.VecLimitLen(Rpos, 5)		# limit len makes sure that they dont teleport
@@ -272,8 +274,22 @@ class Petrol(Npc):
 		elif self.pos.y == 60:
 			self.Pointr = Vec.Vec(300, random.randrange(160,170))
 
+class Fireball():
 	
-		
-		
+	def __init__(self, world, hero):
+		self.Fhealth = 1
+		self.StartPos = Petrol.pos
+		self.surf = pygame.image.load(r"Fiyaball.png")
+	def Onrender(self)
+	def OnUpdate(self):
+		self.updatefireballmove()
+		if self.pos.x >= 50:
+			self.kill()
+			
+	def	updatefireballmove(self, world, hero):
+		Shootpos = self.StartPos - self.pos.x
+		toshoot = Vec.VecLimitLen(ShootPos, 10)
+		self.SetPos(self.pos + toshoot)
+	
 		#if self.pos.x == 5: # self.pos.X looks at the x
 			#print("now they will go left")
