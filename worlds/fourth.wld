@@ -30,7 +30,7 @@ tiles:
     spawner: true
     npc_type: petrol
     max_npcs: 2
-    simultaneous_npcs: 2
+    simultaneous_npcs: 1
     spawn_radius: 96
     npc_settings:
       happy_image: worlds/green_box.png
