@@ -404,6 +404,7 @@ Daily Plan 2022-12-15
    * Add two or more types of NPCs which move and damage the hero
    * Create end-to-end world as example to show entirely own work
    * Add flipbook animations for moving and maybe attacking characters (hero, npc)
+ * Discuss document that intern needs mentor to look over and/or sign off on
  * Discuss some additional vector math primer stuff
    * Mentor to provide information on this topic
  * Discuss how flipbook animation would work
