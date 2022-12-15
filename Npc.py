@@ -8,6 +8,7 @@ import Item
 import pygame
 import random 
 import Vec
+ 
 
 class Npc:
 	"""An Npc is an entity in the world that interacts with the Hero in some"""
@@ -244,10 +245,31 @@ class HeroFinder(Npc):
 		self.UpdateMove()
 		if self.hpCur <= 0:
 			self.Kill()
-
+		
 	def UpdateMove(self):
 		# BB what do we want to do with multiple heros bros? - ZAC
 		hero = Game.game.LHero()[0]
 		dPos = hero.pos - self.pos
 		dPosMove = Vec.VecLimitLen(dPos, random.randrange(1,6))
 		self.SetPos(self.pos + dPosMove)
+	
+class Pattroler(Npc):
+	def __init__(self, world, hero):
+	#vec.vec notes
+		Npc.__init__(self)
+		self.Vhealth = 100#all npcs should have the same health feild
+		self.posgoal = Vec.Vec(300,160)
+		self.surf = pygame.image.load(r"Workerdef.png")
+
+	def OnUpdate(self):
+		self.Updatepos()
+		
+	def Updatepos(self):
+		dPosgoal = self.posgoal - self.pos
+		dPosmove = Vec.VecLimitLen(dPosgoal, 2)
+		self.SetPos(self.pos + dPosmove)
+		if dPosgoal.Len() < 0.001:
+			if self.pos.y >= 160:
+				self.posgoal = Vec.Vec(300,60)# BB (Z) "should not be hard coded"
+			elif self.pos.y == 60:
+				self.posgoal = Vec.Vec(300, random.randrange(160,170))
