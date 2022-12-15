@@ -8,8 +8,7 @@ import Item
 import pygame
 import random 
 import Vec
-import math #uio
-import time #time.sleep() mah boy 
+ 
 
 class Npc:
 	"""An Npc is an entity in the world that interacts with the Hero in some"""
@@ -254,22 +253,23 @@ class HeroFinder(Npc):
 		dPosMove = Vec.VecLimitLen(dPos, random.randrange(1,6))
 		self.SetPos(self.pos + dPosMove)
 	
-class Petrol(Npc):
+class Pattroler(Npc):
 	def __init__(self, world, hero):
 	#vec.vec notes
 		Npc.__init__(self)
-		self.Vhealth = 999
-		self.Pointr = Vec.Vec(300,160)
+		self.Vhealth = 100#all npcs should have the same health feild
+		self.posgoal = Vec.Vec(300,160)
 		self.surf = pygame.image.load(r"Workerdef.png")
 
 	def OnUpdate(self):
-		self.RightandLeft()
+		self.Updatepos()
 		
-	def RightandLeft(self):
-		Rpos = self.Pointr - self.pos  #Rpos = self.Pointr + self.pos
-		togo = Vec.VecLimitLen(Rpos, 2)		# limit len makes sure that they dont teleport
-		self.SetPos(self.pos + togo)
-		if self.pos.y >= 160:
-			self.Pointr = Vec.Vec(300,60)
-		elif self.pos.y == 60:
-			self.Pointr = Vec.Vec(300, random.randrange(160,170))
+	def Updatepos(self):
+		dPosgoal = self.posgoal - self.pos
+		dPosmove = Vec.VecLimitLen(dPosgoal, 2)
+		self.SetPos(self.pos + dPosmove)
+		if dPosgoal.Len() < 0.001:
+			if self.pos.y >= 160:
+				self.posgoal = Vec.Vec(300,60)# BB (Z) "should not be hard coded"
+			elif self.pos.y == 60:
+				self.posgoal = Vec.Vec(300, random.randrange(160,170))
