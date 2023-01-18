@@ -409,10 +409,11 @@ Daily Plan 2022-12-15
    * Mentor to provide information on this topic
  * Discuss how flipbook animation would work
    * Do we wish to pursue this? Seems like world setup and AI work is more of interest...
+   * Interested, but not current semester
    * Effectively back-to-back images, pick which to show at any given time
    * Could change based on motion, could change based on time, or a mix of the two
    * Bonus: image interpolation to get "smooth frame" behavior?
- * Get patroller branch fixes tested and pushed
+ * ~Get patroller branch fixes tested and pushed~
    * Mentor will then do the branch merge
  * Continue work on miniboss NPC
    * Discuss class inheritance plan with mentor - should derive from Patroller
@@ -451,3 +452,44 @@ Daily Plan 2022-12-15
    * How crazy/simple/whatever should we make the pathing model? Full up A-star?
    * Are we OK with keeping "ghosts" that can just go through walls arbitrarily for heat seekers?
 
+Daily Plan 2022-12-15
+---------------------
+ * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
+   * Can do additional checks in the day if necessary
+ * Reminder on overall project goals
+ * Fireball class (boss and maybe later hero projectile weapon)
+   * Game object (single, for whole game) runs everything in phases: handle input, update, render
+   * Fireball won't need input, so just needs update and render to be connected up to game (see Npc's __init__ for AddRender, AddUpdate calls)
+     * Game will call update on everyone that needs to update, in priority order (fireball: use probably 10 as priority, to go early)
+     * Game will call render on everyone that needs to render, in priority order (fireball: use probably 95 as priority, to go late/top)
+   * Fireball will need to have an OnUpdate function taking self as arg (see Run function in Game.py)
+     * this is where the fireball should decide how and where to move
+   * Fireball will need to have an OnRender function taking self and surf as args (see Run function in Game.py)
+     * this is where the fireball will need to draw itself to the input surface - see Npc's OnRender as an example
+   * When the boss wants to shoot, its OnUpdate function (or a function called by it) should create a Fireball object
+     * This suggests that __init__ on class Fireball will want to take a starting and a target position as arguments as well
+     * Recall to create an object with a class, you just pretend the class name is a function, e.g., Fireball(posStart, posTarget)
+     * The boss probably doesn't need to remember the fireball as a variable, but you may feel differently
+ * Continue work on miniboss NPC
+   * Discuss class inheritance plan with mentor - should derive from Patroller
+   * Discuss plans for projectiles with mentor - will follow NPC model, but not be an NPC
+   * Note that damage should wait -- don't worry about setting up health/hitpoints on the boss -- will be generic
+ * Start setting up separate episode to demonstrate full end-to-end behaviors
+   * Remember to do this as its own branch off of the main branch
+   * See Menu.py for where to hook this up
+   * Consider some kind of interesting layout -- multiple rooms (Worlds) with different enemy types?
+   * Could make own art for walls, floors, etc., to go with characters - remember 32x32 image size
+ * Make "facing you" statue
+   * Remember to do this as its own branch off of the main branch
+   * Fun flavor element to add to world
+ * Discuss further work on heat seeking NPC
+   * Consider range - how close is the hero before this activates?
+   * Consider velocity target based approach - discuss with mentor to get the basic idea there
+   * Consider how NPC attacking works - contact? short range "stomp"? other?
+ * Consider improvements to hero magic attack
+   * Add "heat seeking" version of projectiles used by miniboss
+   * Consider if this will adjust timing of damage -- probably should?
+   * Experiment with "held key" behavior -- repeated attack with cooldown?
+ * Can/should we introduce a physics-aware NPC model?
+   * How crazy/simple/whatever should we make the pathing model? Full up A-star?
+   * Are we OK with keeping "ghosts" that can just go through walls arbitrarily for heat seekers?
