@@ -452,11 +452,16 @@ Daily Plan 2022-12-15
    * How crazy/simple/whatever should we make the pathing model? Full up A-star?
    * Are we OK with keeping "ghosts" that can just go through walls arbitrarily for heat seekers?
 
-Daily Plan 2022-12-15
+Daily Plan 2023-01-19
 ---------------------
  * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
    * Can do additional checks in the day if necessary
- * Reminder on overall project goals
+   * Note that mentor will be out 1:30 - 2:30 for exhibition (may need to adjust call schedule)
+ * Discussion on overall project goals for this semester
+   * Finish off fireball & boss classes
+   * Create end-to-end world as example to show entirely own work
+   * Add flipbook animations for moving and maybe attacking characters (hero, npc)
+   * Other things of interest? Also there is hardening that needs to happen.
  * Fireball class (boss and maybe later hero projectile weapon)
    * Game object (single, for whole game) runs everything in phases: handle input, update, render
    * Fireball won't need input, so just needs update and render to be connected up to game (see Npc's __init__ for AddRender, AddUpdate calls)
