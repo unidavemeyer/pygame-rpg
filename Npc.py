@@ -264,15 +264,15 @@ class Fireball():
 		Game.game.AddUpdate(self, 30)
 		Game.game.AddRender(self, 80)
 	def OnRender(self, Surfscreen):
-			self.OnRender(self, surfScreen)
+		Surfscreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
 	def OnUpdate(self):
 		
 		self.updatefireballmove()
 			
-	def	updatefireballmove(self, world, hero):
-		dPos = self.Endpos - self.Startpos
-		dPosdelay = Vec.VecLimitLen(dPosend, 10)
-		self.SetPos(self.pos + dPosdelay)
+	def	updatefireballmove(self):
+		dPos = self.endpos - self.pos
+		dPosdelay = Vec.VecLimitLen(dPos, 10)
+		self.pos = self.pos + dPosdelay
 
 
 class Petrol(Npc):
@@ -287,7 +287,7 @@ class Petrol(Npc):
 		if self.Vhealth == 999:
 			hero = Game.game.LHero()[0]
 			fire = Fireball(self.pos, hero.pos)
-			fire.updatefireballmove(self.pos, hero.pos)
+			#fire.updatefireballmove(self.pos, hero.pos)
 			self.Vhealth -= 1
 		print("it worked")
 	def RightandLeft(self, StartPos):
