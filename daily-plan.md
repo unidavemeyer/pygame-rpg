@@ -1,26 +1,67 @@
 BP Internship Spring 2023
 =========================
 
+Daily Plan 2023-01-26
+---------------------
+ * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
+   * Can do additional checks in the day if desired
+ * Continue on Fireball class (boss and maybe later hero projectile weapon)
+   * Make it detect and damage the hero as appropriate
+   * Make it disappear from everything once it has hit or reached its destination
+   * Should review and merge to main once Fireball is fully functional
+ * Continue work on miniboss NPC
+   * Boss class should derive from Patroller class
+   * Will want to figure out interesting firing pattern -- will involve keeping track of timing
+     * Consider: author the delays between firing as a list in the yaml -- would allow tuning and variation
+   * Note that damage should wait -- don't worry about setting up health/hitpoints on the boss -- will be generic
+   * After boss is functional, but before working on animation, should review and merge so mentor can do generic NPC health work
+ * Work on flipbook animation system for boss
+   * include flipbook animation so boss can "shoot" appropriately with animation
+   * Basic authoring: In the room config, list out the "fire" or other "action" files as a list
+     * Alt: maybe author as list of "hold time" and file -- allows authoring of speeds, etc., in one spot
+     * Actions: Fire, Damage, Move (maybe with directions), etc. -- should start with known ones we need (e.g., Fire)
+   * Basic code: Load list of anims, associate with action, and then run sequence of frames when action starts
+   * Basic timing: Will need current index in list of frames, and draw appropriate one in each OnRender call, incrementing frame as we go
+ * Start setting up separate episode to demonstrate full end-to-end behaviors
+   * Remember to do this as its own branch off of the main branch
+   * See Menu.py for where to hook this up
+   * Consider some kind of interesting layout -- multiple rooms (Worlds) with different enemy types?
+   * Could make own art for walls, floors, etc., to go with characters - remember 32x32 image size
+ * Make "facing you" statue
+   * Remember to do this as its own branch off of the main branch
+   * Fun flavor element to add to world
+   * Should leverage animation system to turn instead of snapping to the opposite side, etc.
+ * Discuss further work on heat seeking NPC
+   * Consider range - how close is the hero before this activates?
+   * Consider velocity target based approach - discuss with mentor to get the basic idea there
+   * Consider how NPC attacking works - contact? short range "stomp"? other?
+ * Consider improvements to hero magic attack
+   * Add "heat seeking" version of projectiles used by miniboss
+   * Consider if this will adjust timing of damage -- probably should?
+   * Experiment with "held key" behavior -- repeated attack with cooldown?
+
 Daily Plan 2023-01-19
 ---------------------
  * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
    * Can do additional checks in the day if necessary
    * Note that mentor will be out 1:30 - 2:30 for exhibition (may need to adjust call schedule)
- * Discussion on overall project goals for this semester
+ * ~Discussion on overall project goals for this semester~
    * Finish off fireball & boss classes
-   * Create end-to-end world as example to show entirely own work
    * Add flipbook animations for moving and maybe attacking characters (hero, npc)
-   * Other things of interest? Also there is hardening that needs to happen.
+     * Possibly also for the fireball if we want to do something cool there
+   * Add levels to make more of a finished game
+     * Create end-to-end world as example to show entirely own work
+   * Couch coop - two players at same keyboard, wasd + arrows - maybe for end of semester if we have time
  * Fireball class (boss and maybe later hero projectile weapon)
-   * Game object (single, for whole game) runs everything in phases: handle input, update, render
-   * Fireball won't need input, so just needs update and render to be connected up to game (see Npc's __init__ for AddRender, AddUpdate calls)
+   * ~Game object (single, for whole game) runs everything in phases: handle input, update, render~
+   * ~Fireball won't need input, so just needs update and render to be connected up to game (see Npc's __init__ for AddRender, AddUpdate calls)~
      * Game will call update on everyone that needs to update, in priority order (fireball: use probably 10 as priority, to go early)
      * Game will call render on everyone that needs to render, in priority order (fireball: use probably 95 as priority, to go late/top)
    * Fireball will need to have an OnUpdate function taking self as arg (see Run function in Game.py)
      * this is where the fireball should decide how and where to move
-   * Fireball will need to have an OnRender function taking self and surf as args (see Run function in Game.py)
+   * ~Fireball will need to have an OnRender function taking self and surf as args (see Run function in Game.py)~
      * this is where the fireball will need to draw itself to the input surface - see Npc's OnRender as an example
-   * When the boss wants to shoot, its OnUpdate function (or a function called by it) should create a Fireball object
+   * ~When the boss wants to shoot, its OnUpdate function (or a function called by it) should create a Fireball object~
      * This suggests that __init__ on class Fireball will want to take a starting and a target position as arguments as well
      * Recall to create an object with a class, you just pretend the class name is a function, e.g., Fireball(posStart, posTarget)
      * The boss probably doesn't need to remember the fireball as a variable, but you may feel differently

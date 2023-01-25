@@ -44,7 +44,7 @@ Mentor Work Item Backlog
  * ~Open question for Mentor: Is there availability for following session?~
    * Yes, plan to continue for the following semester
  * ~Should we consider making a boss NPC of some kind?~
- * Approximate end for current session: January 22, with 3 days removed for holidays
+ * ~Approximate end for current session: January 22, with 3 days removed for holidays~
    * Suggests that current items should be completed and polished, probably boss NPC is last "add"
  * Should remove the specific combat mode - only have menu and worldmap
  * Will need to come up with a concrete plan to unify/solidify the damage model
@@ -53,6 +53,8 @@ Mentor Work Item Backlog
  * Do we want to add a melee attack for the hero and/or some of the NPCs?
    * Effective model: short radius auto-hit attack, maybe?
    * Do we want to allow the player to block? NPCs?
+ * Consider an improved, enum-ized render/update/input model, maybe?
+   * Would allow us to see in one spot what order things happen, allow reorder easily, insert, etc.
  * Consider a "freeze" or "slow" attack/aura for NPCs - reduce hero movement speed
  * Do we have any balance considerations?
  * Do we want inventory and inventory management?
