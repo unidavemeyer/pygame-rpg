@@ -280,9 +280,9 @@ class Fireball():
 		elif Enddistance > 2.0:
 			print(1)
 		if HeroDist < 2.0:
-			print("Liv")
-		elif HeroDist > 2.0:
 			print("ded")
+		elif HeroDist > 2.0:
+			print("liv")
 class Petrol(Npc):
 	def __init__(self, world, hero,):
 	#vec.vec notes
