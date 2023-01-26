@@ -268,13 +268,21 @@ class Fireball():
 	def OnUpdate(self):
 		
 		self.updatefireballmove()
-			
 	def	updatefireballmove(self):
+		hero = Game.game.LHero()[0]
 		dPos = self.endpos - self.pos
+		Enddistance = dPos.Len()
+		HeroDist = (self.pos - hero.pos).Len()
 		dPosdelay = Vec.VecLimitLen(dPos, 10)
 		self.pos = self.pos + dPosdelay
-
-
+		if Enddistance < 2.0:
+			print(0)
+		elif Enddistance > 2.0:
+			print(1)
+		if HeroDist < 2.0:
+			print("Liv")
+		elif HeroDist > 2.0:
+			print("ded")
 class Petrol(Npc):
 	def __init__(self, world, hero,):
 	#vec.vec notes
@@ -289,7 +297,6 @@ class Petrol(Npc):
 			fire = Fireball(self.pos, hero.pos)
 			#fire.updatefireballmove(self.pos, hero.pos)
 			self.Vhealth -= 1
-		print("it worked")
 	def RightandLeft(self, StartPos):
 		Rpos = self.Pointr - self.pos  #Rpos = self.Pointr + self.pos
 		togo = Vec.VecLimitLen(Rpos, 5)		# limit len makes sure that they dont teleport
