@@ -1,13 +1,49 @@
 BP Internship Spring 2023
 =========================
 
+Daily Plan 2023-02-02
+---------------------
+ * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
+   * Can do additional checks in the day if desired
+ * Code review changes for Fireball, etc.
+   * Will do this with Mentor at beginning of day
+ * Continue work on miniboss NPC
+   * Boss class should derive from Patroller class
+   * Will want to figure out interesting firing pattern -- will involve keeping track of timing
+     * Consider: author the delays between firing as a list in the yaml -- would allow tuning and variation
+   * Note that damage should wait -- don't worry about setting up health/hitpoints on the boss -- will be generic
+   * After boss is functional, but before working on animation, should review and merge so mentor can do generic NPC health work
+ * Start setting up separate episode to demonstrate full end-to-end behaviors
+   * See Menu.py for where to hook this up
+   * Consider some kind of interesting layout -- multiple rooms (Worlds) with different enemy types?
+   * Could make own art for walls, floors, etc., to go with characters - remember 32x32 image size
+ * Work on flipbook animation system for boss
+   * include flipbook animation so boss can "shoot" appropriately with animation
+   * Basic authoring: In the room config, list out the "fire" or other "action" files as a list
+     * Alt: maybe author as list of "hold time" and file -- allows authoring of speeds, etc., in one spot
+     * Actions: Fire, Damage, Move (maybe with directions), etc. -- should start with known ones we need (e.g., Fire)
+   * Basic code: Load list of anims, associate with action, and then run sequence of frames when action starts
+   * Basic timing: Will need current index in list of frames, and draw appropriate one in each OnRender call, incrementing frame as we go
+ * Make "facing you" statue
+   * Remember to do this as its own branch off of the main branch
+   * Fun flavor element to add to world
+   * Should leverage animation system to turn instead of snapping to the opposite side, etc.
+ * Discuss further work on heat seeking NPC
+   * Consider range - how close is the hero before this activates?
+   * Consider velocity target based approach - discuss with mentor to get the basic idea there
+   * Consider how NPC attacking works - contact? short range "stomp"? other?
+ * Consider improvements to hero magic attack
+   * Add "heat seeking" version of projectiles used by miniboss
+   * Consider if this will adjust timing of damage -- probably should?
+   * Experiment with "held key" behavior -- repeated attack with cooldown?
+
 Daily Plan 2023-01-26
 ---------------------
  * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
    * Can do additional checks in the day if desired
  * Continue on Fireball class (boss and maybe later hero projectile weapon)
-   * Make it detect and damage the hero as appropriate
-   * Make it disappear from everything once it has hit or reached its destination
+   * ~Make it detect and damage the hero as appropriate~
+   * ~Make it disappear from everything once it has hit or reached its destination~
    * Should review and merge to main once Fireball is fully functional
  * Continue work on miniboss NPC
    * Boss class should derive from Patroller class
@@ -23,7 +59,7 @@ Daily Plan 2023-01-26
    * Basic code: Load list of anims, associate with action, and then run sequence of frames when action starts
    * Basic timing: Will need current index in list of frames, and draw appropriate one in each OnRender call, incrementing frame as we go
  * Start setting up separate episode to demonstrate full end-to-end behaviors
-   * Remember to do this as its own branch off of the main branch
+   * ~Remember to do this as its own branch off of the main branch~
    * See Menu.py for where to hook this up
    * Consider some kind of interesting layout -- multiple rooms (Worlds) with different enemy types?
    * Could make own art for walls, floors, etc., to go with characters - remember 32x32 image size
