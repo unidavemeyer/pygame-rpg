@@ -1,7 +1,7 @@
 BP Internship Spring 2023
 =========================
 
-Daily Plan 2023-02-02
+Daily Plan 2023-02-09
 ---------------------
  * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
    * Can do additional checks in the day if desired
@@ -36,6 +36,10 @@ Daily Plan 2023-02-02
    * Add "heat seeking" version of projectiles used by miniboss
    * Consider if this will adjust timing of damage -- probably should?
    * Experiment with "held key" behavior -- repeated attack with cooldown?
+
+Daily Plan 2023-02-09
+---------------------
+ * ~Illness prevented this day from working~
 
 Daily Plan 2023-01-26
 ---------------------
