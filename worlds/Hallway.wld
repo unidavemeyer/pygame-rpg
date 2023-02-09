@@ -39,10 +39,5 @@ tiles:
       move_pattern: [[0,0,2], [0,4,2], [0,0,2], [0,-4,2]]
 plan:
   - wwwwwwwwwwwwwwwww
-  - wfffffffwfffffffw
-  - wfafffafwfffffffw
-  - wffffffflfff$fffw
-  - wfffsffflfffffffw
-  - wfffffffwfffffffw
-  - wfffffffwfffffffw
-  - wwwwwwwwwwdwwwwww
+  - wsffflffffffffffw
+  - wwwwwwwwwwwwwwwww

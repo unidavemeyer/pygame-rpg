@@ -1,26 +1,26 @@
 tiles:
   w:
-    color: [255, 255, 128]
+    image: worlds/wallsofwood.png
     wall: true
   f:
-    image: worlds/kira-wall.png
+    image: worlds/EditFloor.png
   s:
     image: worlds/kira-wall.png
     start: true
   d:
-    color: [192, 192, 64]
+    image: worlds/Enterme.png
     gate: true
     target: start.wld
   a:
     image: worlds/kira-wall.png
     key: true
     activate_groups: [lock1]
-    held_image: worlds/key_held.png
-    unheld_image: worlds/key_unheld.png
+    held_image: worlds/ButtonP.png
+    unheld_image: worlds/ButtonUP.png
     group: key1
     sticky: true
   l:
-    image: worlds/kira-wall.png
+    image: worlds/Keylock.png
     lock: true
     group: lock1
     inactive_image: worlds/red_x.png
@@ -42,7 +42,7 @@ plan:
   - wfffffffwfffffffw
   - wfafffafwffwfffw
   - wffffffflfff$fffw
-  - wfffswfflffsffwww
+  - wfffsffflfffffwww
   - wfffffffwffffwffw
   - wfffffffwfffffffw
   - wwwwwwwwwwdwwwwww

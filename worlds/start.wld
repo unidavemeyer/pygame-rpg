@@ -1,26 +1,26 @@
 tiles:
   w:
-    color: [128, 128, 128]
+    image: worlds/wallsofwood.png
     wall: true
   f:
-    image: worlds/kira-wall.png
+    image: worlds/EditFloor.png
   s:
-    image: worlds/kira-wall.png
+    image: worlds/wallsofwood.png
     start: true
   1:
-    color: [192, 192, 64]
+    image: worlds/Enterme.png
     gate: true
     target: second.wld
   2:
-    color: [192, 192, 64]
+    image: worlds/Enterme.png
     gate: true
     target: third.wld
   3:
-    color: [192, 192, 64]
+    image: worlds/Enterme.png
     gate: true
     target: fourth.wld
   4:
-    color: [192, 192, 64]
+    image: worlds/Enterme.png
     gate: true
     target: fifth.wld
 plan:

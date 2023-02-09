@@ -3,9 +3,9 @@ tiles:
     color: [128, 255, 128]
     wall: true
   f:
-    image: worlds/kira-wall.png
+    image: worlds/EditFloor.png
   s:
-    image: worlds/kira-wall.png
+    image: worlds/wallsofwood.png
     start: true
   d:
     color: [192, 192, 64]
