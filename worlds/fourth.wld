@@ -28,9 +28,9 @@ tiles:
   $:
     image: worlds/kira-wall.png
     spawner: true
-    npc_type: petrol
+    npc_type: pattroler
     max_npcs: 2
-    simultaneous_npcs: 2
+    simultaneous_npcs: 1
     spawn_radius: 96
     npc_settings:
       happy_image: worlds/green_box.png

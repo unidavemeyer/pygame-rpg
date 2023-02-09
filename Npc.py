@@ -8,8 +8,7 @@ import Item
 import pygame
 import random 
 import Vec
-import math #uio
-import time #time.sleep() mah boy 
+ 
 
 class Npc:
 	"""An Npc is an entity in the world that interacts with the Hero in some"""
@@ -286,7 +285,7 @@ class Fireball():
 			hero.hpCur -= 15
 			self.Kill()
 
-class Petrol(Npc):
+class Pattroler(Npc):
 	def __init__(self, world, hero):
 		Npc.__init__(self)
 		self.Vhealth = 999
@@ -298,15 +297,13 @@ class Petrol(Npc):
 			hero = Game.game.LHero()[0]
 			fire = Fireball(self.pos, hero.pos)
 			self.Vhealth -= 1
-	
-	def RightandLeft(self, StartPos):
-		Rpos = self.Pointr - self.pos
-		togo = Vec.VecLimitLen(Rpos, 5)
-		self.SetPos(self.pos + togo)
-		if self.pos.y >= 160:
-			self.Pointr = Vec.Vec(300,60)
-		elif self.pos.y == 60:
-			self.Pointr = Vec.Vec(300, random.randrange(160,170))
-	
-		#if self.pos.x == 5: # self.pos.X looks at the x
-			#print("now they will go left")
+
+	def Updatepos(self):
+		dPosgoal = self.posgoal - self.pos
+		dPosmove = Vec.VecLimitLen(dPosgoal, 2)
+		self.SetPos(self.pos + dPosmove)
+		if dPosgoal.Len() < 0.001:
+			if self.pos.y >= 160:
+				self.posgoal = Vec.Vec(300,60)# BB (Z) "should not be hard coded"
+			elif self.pos.y == 60:
+				self.posgoal = Vec.Vec(300, random.randrange(160,170))
