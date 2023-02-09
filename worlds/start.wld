@@ -14,7 +14,7 @@ tiles:
   2:
     image: worlds/Enterme.png
     gate: true
-    target: third.wld
+    target: Hallway.wld
   3:
     image: worlds/Enterme.png
     gate: true
@@ -23,11 +23,15 @@ tiles:
     image: worlds/Enterme.png
     gate: true
     target: fifth.wld
+  5:
+   image: worlds/Enterme.png
+   gate: true
+   target: Grabthemegakey.wld
 plan:
   - wwww1wwwwwwww
   - wfffffffwfffw
   - wfsfffsfwfffw
-  - 2fffffffffsfw
+  - 2fffffffffsf5
   - wfsfffsfwfffw
   - wfffffffwfffw
   - ww3wwwwwww4ww
