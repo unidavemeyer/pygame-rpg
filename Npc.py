@@ -257,14 +257,14 @@ class HeroFinder(Npc):
 class Fireball():
 	
 	def __init__(self, posStart, posEnd):
-		self.pos = Startpos
-		self.posEnd = Endpos
+		self.pos = posStart
+		self.posEnd = posEnd
 		self.surf = pygame.image.load(r"Fiyaball.png")
-		Game.game.AddUpdate(self, 95)
-		Game.game.AddRender(self, 80)
+		Game.game.AddUpdate(self, 30)
+		Game.game.AddRender(self, 95)
 	
-	def OnRender(self, SurfScreen):
-		Surfscreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
+	def OnRender(self, surfScreen):
+		surfScreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
 	
 	def OnUpdate(self):
 		self.UpdateMove()
