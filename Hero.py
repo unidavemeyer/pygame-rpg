@@ -87,6 +87,7 @@ class Hero:
 
 			if self.weapon:
 				self.weapon.OnUpdate()
+		
 		elif Game.game.Mode() == Game.Mode.WORLDMAP:
 
 			# Compute new velocity

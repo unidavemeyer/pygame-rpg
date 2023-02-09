@@ -256,37 +256,38 @@ class HeroFinder(Npc):
 
 class Fireball():
 	
-	def __init__(self, Startpos, Endpos):
-		self.Fhealth = 1
+	def __init__(self, posStart, posEnd):
 		self.pos = Startpos
-		self.endpos = Endpos
+		self.posEnd = Endpos
 		self.surf = pygame.image.load(r"Fiyaball.png")
-		Game.game.AddUpdate(self, 30)
+		Game.game.AddUpdate(self, 95)
 		Game.game.AddRender(self, 80)
-	def OnRender(self, Surfscreen):
+	
+	def OnRender(self, SurfScreen):
 		Surfscreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
+	
 	def OnUpdate(self):
-		
-		self.updatefireballmove()
-	def fikill(self):
+		self.UpdateMove()
+	
+	def Kill(self):
 		Game.game.RemoveUpdate(self, 30)
-		Game.game.RemoveRender(self, 80)
-	def	updatefireballmove(self):
+		Game.game.RemoveRender(self, 95)
+	
+	def	UpdateMove(self):
 		hero = Game.game.LHero()[0]
-		dPos = self.endpos - self.pos
-		Enddistance = dPos.Len()
-		HeroDist = (self.pos - hero.pos).Len()
+		dPos = self.posEnd - self.pos
+		sEnd = dPos.Len()
+		sHero = (self.pos - hero.pos).Len()
 		dPosdelay = Vec.VecLimitLen(dPos, 10)
 		self.pos = self.pos + dPosdelay
-		if Enddistance < 1.0:
-			self.fikill()
-		if HeroDist < 10.0:
+		if sEnd < 1.0:
+			self.Kill()
+		if sHero < 10.0:
 			hero.hpCur -= 15
-			print(hero.hpCur)
-			self.fikill()
+			self.Kill()
+
 class Petrol(Npc):
-	def __init__(self, world, hero,):
-	#vec.vec notes
+	def __init__(self, world, hero):
 		Npc.__init__(self)
 		self.Vhealth = 999
 		self.Pointr = Vec.Vec(300,160)
@@ -296,11 +297,11 @@ class Petrol(Npc):
 		if self.Vhealth == 999:
 			hero = Game.game.LHero()[0]
 			fire = Fireball(self.pos, hero.pos)
-			#fire.updatefireballmove(self.pos, hero.pos)
 			self.Vhealth -= 1
+	
 	def RightandLeft(self, StartPos):
-		Rpos = self.Pointr - self.pos  #Rpos = self.Pointr + self.pos
-		togo = Vec.VecLimitLen(Rpos, 5)		# limit len makes sure that they dont teleport
+		Rpos = self.Pointr - self.pos
+		togo = Vec.VecLimitLen(Rpos, 5)
 		self.SetPos(self.pos + togo)
 		if self.pos.y >= 160:
 			self.Pointr = Vec.Vec(300,60)
