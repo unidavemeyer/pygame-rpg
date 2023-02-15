@@ -6,6 +6,7 @@ Daily Plan 2023-02-16
  * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
    * Can do additional checks in the day if desired
  * Review changes from mentor
+   * cleanup-priorities branch
  * Continue work on separate episode to demonstrate full end-to-end behaviors
    * See Menu.py for where to hook this up
    * Consider some kind of interesting layout -- multiple rooms (Worlds) with different enemy types?
