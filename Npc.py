@@ -32,13 +32,16 @@ class Npc:
 		Game.game.RemoveRender(self, 80)
 
 	def OnUpdate(self):
-		# NOTE (davidm) no default behavior here
 
-		pass
+		# Kill ourselves if hp has been exhausted
+
+		if self.hpCur <= 0:
+			self.Kill()
 
 	def OnRender(self, surfScreen):
 		if Game.game.Mode() == Game.Mode.WORLDMAP:
 			surfScreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
+			Lib.RenderHpBar(surfScreen, self.pos, self.hpCur, self.hpMax)
 
 	def OnDamage(self, dHp):
 		self.hpCur += dHp
@@ -74,6 +77,9 @@ class Goon(Npc):
 	"""Basic goon opponent.  Attacks on a regular schedule doing minor damage"""
 	""" that never misses."""
 
+	# BB (davidm) this is for the turn-based or time-based combat model, and is pretty much
+	#  vestigial at this point -- consider removing
+
 	def __init__(self, world, mpVarValue):
 		Npc.__init__(self)
 
@@ -103,8 +109,6 @@ class Goon(Npc):
 		# Leave combat if we've been killed
 
 		# BB (davidm) reward experience?  gold?  other?  use an end-of-combat mode?
-
-		# BB (davidm) move to unified location?
 
 		if self.hpCur <= 0:
 			Game.game.SetNpcCombatant(None)
@@ -237,15 +241,10 @@ class HeroFinder(Npc):
 	def OnRender(self, surfScreen):
 		Npc.OnRender(self, surfScreen)
 
-		# BB (davidm) feels like this should be base Npc class behavior, along with hpCur/hpMax
-
-		Lib.RenderHpBar(surfScreen, self.pos, self.hpCur, self.hpMax)
-
 	def OnUpdate(self):
+		Npc.OnUpdate(self)
 		self.UpdateMove()
-		if self.hpCur <= 0:
-			self.Kill()
-		
+
 	def UpdateMove(self):
 		# BB what do we want to do with multiple heros bros? - ZAC
 		hero = Game.game.LHero()[0]
@@ -288,17 +287,29 @@ class Fireball():
 class Pattroler(Npc):
 	def __init__(self, world, hero):
 		Npc.__init__(self)
-		self.Vhealth = 999
+
+		self.hpMax = 999
+		self.hpCur = self.hpMax
+
 		self.Pointr = Vec.Vec(300,160)
 		self.surf = pygame.image.load(r"broaintnoway.png")
 
 	def OnUpdate(self):
-		if self.Vhealth == 999:
+		Npc.OnUpdate(self)
+
+		# BB (davidm) placeholder behavior at the moment -- should not take damage when firing
+		#  fireballs at the hero, and not currently calling UpdatePos() to move around
+
+		# BB (davidm) fireball firing should not be in the base Patroller class -- should
+		#  instead have only movement in base Patroller class, and then have a derived class
+		#  (say Boss) which inherits from Patroller but adds periodic fireball launching
+
+		if self.hpCur == 999:
 			hero = Game.game.LHero()[0]
 			fire = Fireball(self.pos, hero.pos)
-			self.Vhealth -= 1
+			self.OnDamage(-1)
 
-	def Updatepos(self):
+	def UpdatePos(self):
 		dPosgoal = self.posgoal - self.pos
 		dPosmove = Vec.VecLimitLen(dPosgoal, 2)
 		self.SetPos(self.pos + dPosmove)
