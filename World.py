@@ -43,8 +43,8 @@ class World:
 
 	def MakeActive(self):
 		Game.game.SetWorld(self)
-		Game.game.AddUpdate(self, 90)	# relatively late update
-		Game.game.AddRender(self, 10)	# relatively early render (more on bottom)
+		Game.game.AddUpdate(self)
+		Game.game.AddRender(self)
 
 		# Chose randomized starting locations for the heroes
 
@@ -64,8 +64,11 @@ class World:
 	def MakeInactive(self):
 		if Game.game.World() == self:
 			Game.game.SetWorld(None)
-		Game.game.RemoveUpdate(self, 90)
-		Game.game.RemoveRender(self, 10)
+		Game.game.RemoveUpdate(self)
+		Game.game.RemoveRender(self)
+
+	def Updatepri(self):
+		return Game.UpdatePri.WORLD
 
 	def OnUpdate(self):
 		if Game.game.Mode() != Game.Mode.WORLDMAP:
@@ -115,6 +118,9 @@ class World:
 
 	def LMemberFromGroup(self, strGroup):
 		return self.mpGroupMembers.get(strGroup, [])
+
+	def Renderpri(self):
+		return Game.RenderPri.WORLD
 
 	def OnRender(self, surfScreen):
 		if Game.game.Mode() == Game.Mode.COMBAT:

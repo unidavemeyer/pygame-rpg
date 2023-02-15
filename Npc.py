@@ -17,21 +17,27 @@ class Npc:
 	""" and quest givers, etc."""
 
 	def __init__(self):
-		Game.game.AddUpdate(self, 30)	# relatively early update
-		Game.game.AddRender(self, 80)	# relatively late render (more on top)
+		Game.game.AddUpdate(self)
+		Game.game.AddRender(self)
 
 		self.pos = Vec.Vec(0,0)			# location in the world
 		self.surf = None				# surface to render onto the screen
 
 	def Kill(self):
 		Game.game.RemoveNpc(self)
-		Game.game.RemoveUpdate(self, 30)
-		Game.game.RemoveRender(self, 80)
+		Game.game.RemoveUpdate(self)
+		Game.game.RemoveRender(self)
+
+	def Updatepri(self):
+		return Game.UpdatePri.NPC
 
 	def OnUpdate(self):
 		# NOTE (davidm) no default behavior here
 
 		pass
+
+	def Renderpri(self):
+		return Game.RenderPri.NPC
 
 	def OnRender(self, surfScreen):
 		if Game.game.Mode() == Game.Mode.WORLDMAP:
@@ -259,18 +265,24 @@ class Fireball():
 		self.pos = posStart
 		self.posEnd = posEnd
 		self.surf = pygame.image.load(r"Fiyaball.png")
-		Game.game.AddUpdate(self, 30)
-		Game.game.AddRender(self, 95)
+		Game.game.AddUpdate(self)
+		Game.game.AddRender(self)
 	
+	def Renderpri(self):
+		return Game.RenderPri.FIREBALL
+
 	def OnRender(self, surfScreen):
 		surfScreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
 	
+	def Updatepri(self):
+		return Game.UpdatePri.FIREBALL
+
 	def OnUpdate(self):
 		self.UpdateMove()
 	
 	def Kill(self):
-		Game.game.RemoveUpdate(self, 30)
-		Game.game.RemoveRender(self, 95)
+		Game.game.RemoveUpdate(self)
+		Game.game.RemoveRender(self)
 	
 	def	UpdateMove(self):
 		hero = Game.game.LHero()[0]
