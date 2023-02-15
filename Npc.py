@@ -23,6 +23,9 @@ class Npc:
 		self.pos = Vec.Vec(0,0)			# location in the world
 		self.surf = None				# surface to render onto the screen
 
+		self.hpMax = 100				# default max hp
+		self.hpCur = self.hpMax			# default current hp
+
 	def Kill(self):
 		Game.game.RemoveNpc(self)
 		Game.game.RemoveUpdate(self, 30)
@@ -37,10 +40,8 @@ class Npc:
 		if Game.game.Mode() == Game.Mode.WORLDMAP:
 			surfScreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
 
-	def OnDamage(self, damage):
-		# NOTE (davidm) no default behavior here
-
-		pass
+	def OnDamage(self, dHp):
+		self.hpCur += dHp
 
 	def OnLeaveWorld(self, world):
 		"""Gives NPCs the option to handle world changes. Default behavior is for NPCs to kill themselves
@@ -76,8 +77,8 @@ class Goon(Npc):
 	def __init__(self, world, mpVarValue):
 		Npc.__init__(self)
 
-		self.hpCur = 20			# current hitpoints
-		self.hpMax = 20			# max hitpoints
+		self.hpMax = 20			# goons have few hitpoints
+		self.hpCur = self.hpMax	#  ...
 		self.dTAttack = 5		# seconds between attacks
 		self.dHpAttack = -1		# hp damage dealt by each attack
 
@@ -102,6 +103,8 @@ class Goon(Npc):
 		# Leave combat if we've been killed
 
 		# BB (davidm) reward experience?  gold?  other?  use an end-of-combat mode?
+
+		# BB (davidm) move to unified location?
 
 		if self.hpCur <= 0:
 			Game.game.SetNpcCombatant(None)
@@ -141,9 +144,6 @@ class Goon(Npc):
 
 		surfHp = Game.Font.FONT20.render("Goon HP: %d/%d" % (self.hpCur, self.hpMax), False, pygame.Color(255, 255, 255))
 		surfScreen.blit(surfHp, (200, 20))
-
-	def OnDamage(self, damage):
-		self.hpCur += damage
 
 	def OnInteract(self, hero):
 		Game.game.SetNpcCombatant(self)
@@ -229,9 +229,9 @@ class Animal(Npc):
 class HeroFinder(Npc):
 	def __init__(self, world, hero):
 		Npc.__init__(self)
-		self.dHpAttack = 5
-		self.hpCur = 50
+		self.dHpAttack = -5	# BB (davidm) currently unused
 		self.hpMax = 50
+		self.hpCur = self.hpMax
 		self.surf = pygame.image.load(r"Amazoncrime.png")
 
 	def OnRender(self, surfScreen):
@@ -282,7 +282,7 @@ class Fireball():
 		if sEnd < 1.0:
 			self.Kill()
 		if sHero < 10.0:
-			hero.hpCur -= 15
+			hero.OnDamage(-15)	# BB (davidm) unify damage numbers somewhere?
 			self.Kill()
 
 class Pattroler(Npc):
