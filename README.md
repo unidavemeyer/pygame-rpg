@@ -46,7 +46,7 @@ Mentor Work Item Backlog
  * ~Should we consider making a boss NPC of some kind?~
  * ~Approximate end for current session: January 22, with 3 days removed for holidays~
    * Suggests that current items should be completed and polished, probably boss NPC is last "add"
- * Should make update and render numbers into an enum/list type instead -- easier to see/maintain
+ * ~Should make update and render numbers into an enum/list type instead -- easier to see/maintain~
  * Will need to come up with a concrete plan to unify/solidify the damage model
    * should have maybe all objects take damage? maybe? at the very least, all NPCs, but as a function
    * Mentor to investigate the work here once the Patroller branch is in
