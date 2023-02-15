@@ -46,10 +46,11 @@ Mentor Work Item Backlog
  * ~Should we consider making a boss NPC of some kind?~
  * ~Approximate end for current session: January 22, with 3 days removed for holidays~
    * Suggests that current items should be completed and polished, probably boss NPC is last "add"
- * Should remove the specific combat mode - only have menu and worldmap
+ * Should make update and render numbers into an enum/list type instead -- easier to see/maintain
  * Will need to come up with a concrete plan to unify/solidify the damage model
    * should have maybe all objects take damage? maybe? at the very least, all NPCs, but as a function
    * Mentor to investigate the work here once the Patroller branch is in
+ * Should remove the specific combat mode - only have menu and worldmap
  * Do we want to add a melee attack for the hero and/or some of the NPCs?
    * Effective model: short radius auto-hit attack, maybe?
    * Do we want to allow the player to block? NPCs?
