@@ -7,6 +7,7 @@ Daily Plan 2023-02-16
    * Can do additional checks in the day if desired
  * Review changes from mentor
    * cleanup-priorities branch
+   * damage-rework branch
  * Continue work on separate episode to demonstrate full end-to-end behaviors
    * See Menu.py for where to hook this up
    * Consider some kind of interesting layout -- multiple rooms (Worlds) with different enemy types?
