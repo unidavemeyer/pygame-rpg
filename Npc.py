@@ -252,18 +252,52 @@ class HeroFinder(Npc):
 		dPos = hero.pos - self.pos
 		dPosMove = Vec.VecLimitLen(dPos, random.randrange(1,6))
 		self.SetPos(self.pos + dPosMove)
+
+class Fireball():
 	
+	def __init__(self, posStart, posEnd):
+		self.pos = posStart
+		self.posEnd = posEnd
+		self.surf = pygame.image.load(r"Fiyaball.png")
+		Game.game.AddUpdate(self, 30)
+		Game.game.AddRender(self, 95)
+	
+	def OnRender(self, surfScreen):
+		surfScreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
+	
+	def OnUpdate(self):
+		self.UpdateMove()
+	
+	def Kill(self):
+		Game.game.RemoveUpdate(self, 30)
+		Game.game.RemoveRender(self, 95)
+	
+	def	UpdateMove(self):
+		hero = Game.game.LHero()[0]
+		dPos = self.posEnd - self.pos
+		sEnd = dPos.Len()
+		sHero = (self.pos - hero.pos).Len()
+		dPosdelay = Vec.VecLimitLen(dPos, 10)
+		self.pos = self.pos + dPosdelay
+		if sEnd < 1.0:
+			self.Kill()
+		if sHero < 10.0:
+			hero.hpCur -= 15
+			self.Kill()
+
 class Pattroler(Npc):
 	def __init__(self, world, hero):
-	#vec.vec notes
 		Npc.__init__(self)
-		self.Vhealth = 100#all npcs should have the same health feild
-		self.posgoal = Vec.Vec(300,160)
-		self.surf = pygame.image.load(r"Workerdef.png")
+		self.Vhealth = 999
+		self.Pointr = Vec.Vec(300,160)
+		self.surf = pygame.image.load(r"broaintnoway.png")
 
 	def OnUpdate(self):
-		self.Updatepos()
-		
+		if self.Vhealth == 999:
+			hero = Game.game.LHero()[0]
+			fire = Fireball(self.pos, hero.pos)
+			self.Vhealth -= 1
+
 	def Updatepos(self):
 		dPosgoal = self.posgoal - self.pos
 		dPosmove = Vec.VecLimitLen(dPosgoal, 2)
