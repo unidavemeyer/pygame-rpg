@@ -1,11 +1,11 @@
 tiles:
   w:
-    image: worlds/wallsofwood.png
+    image: worlds/blackwall.png
     wall: true
   f:
-    image: worlds/kira-wall.png
+    color: [0, 0, 0]
   s:
-    image: worlds/kira-wall.png
+    color: [0, 0, 0]
     start: true
   d:
     image: worlds/Enterme.png
@@ -20,11 +20,11 @@ tiles:
     group: key1
     sticky: true
   l:
-    image: worlds/kira-wall.png
+    image: worlds/blackwall.png
     lock: true
     group: lock1
     inactive_image: worlds/Keylock.png
-    active_image: worlds/green_box.png
+    active_image: worlds/blackfloor.png
   $:
     image: worlds/kira-wall.png
     spawner: true
@@ -48,5 +48,13 @@ tiles:
     move_pattern: [[0,0,2], [0,4,2], [0,0,2], [0,-4,2]]
 plan:
   - wwwwwwwwwwwwwwwww
-  - 1fsffffffffffl0fw
+  - 1fsffffffffffflf0
+  - wwwwwwwwwwwwwwwww
+  - fffffffffffffffff
+  - wwwwwwwwwwwwwwwww
+  - fffffffffffffffff
+  - wwwwwwwwwwwwwwwww
+  - fffffffffffffffff
+  - wwwwwwwwwwwwwwwww
+  - fffffffffffffffff
   - wwwwwwwwwwwwwwwww

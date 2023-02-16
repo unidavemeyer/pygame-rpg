@@ -33,9 +33,9 @@ tiles:
    target: third.wld
 plan:
   - wwww1wwwww6ww
-  - wfffffffwfffw
-  - wfffffffwfffw
-  - 2fffsfffwfsf5
-  - wfffffffwfffw
-  - wfffffffwfffw
-  - ww3wwwwwww4ww
+  - wfffffffffffw
+  - wfffffffffffw
+  - 2fffsfffffsf5
+  - wfffffffffffw
+  - wfffffffffffw
+  - wwwwwwwwww4ww

@@ -1,11 +1,11 @@
 tiles:
   w:
-    image: worlds/wallsofwood.png
+    image: worlds/wallsofmetal.png
     wall: true
   f:
-    image: worlds/kira-wall.png
+    image: worlds/Floorblock.png
   s:
-    image: worlds/kira-wall.png
+    image: worlds/Floorblock.png
     start: true
   d:
     image: worlds/Enterme.png
@@ -20,11 +20,11 @@ tiles:
     group: key1
     sticky: true
   l:
-    image: worlds/kira-wall.png
+    image: worlds/wallsofmetal.png
     lock: true
     group: lock1
     inactive_image: worlds/Keylock.png
-    active_image: worlds/green_box.png
+    active_image: worlds/Floorblock.png
   $:
     image: worlds/kira-wall.png
     spawner: true
@@ -41,7 +41,7 @@ plan:
   - wwwwwwwwwwwwwwwww
   - wfffffffwfffffffw
   - wfafffafwfffffffw
-  - wffffffflfff$fffw
+  - wffffffflfffffffw
   - wfffsffflfffffffw
   - wfffffffwfffffffw
   - wfffffffwfffffffw

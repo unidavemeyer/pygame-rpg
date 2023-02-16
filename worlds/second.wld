@@ -10,7 +10,7 @@ tiles:
   d:
     color: [192, 192, 64]
     gate: true
-    target: start.wld
+    target: enemy.wld
   a:
     image: worlds/kira-wall.png
     key: true

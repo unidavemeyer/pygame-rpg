@@ -1,11 +1,11 @@
 tiles:
   w:
-    image: worlds/wallsofwood.png
+    image: worlds/wallsofmetal.png
     wall: true
   f:
-    image: worlds/EditFloor.png
+    image: worlds/Floorblock.png
   s:
-    image: worlds/kira-wall.png
+    image: worlds/Floorblock.png
     start: true
   d:
     image: worlds/Enterme.png
@@ -26,7 +26,7 @@ tiles:
     inactive_image: worlds/red_x.png
     active_image: worlds/green_box.png
   $:
-    image: worlds/kira-wall.png
+    image: worlds/EditFloor.png
     spawner: true
     npc_type: herofinder
     max_npcs: 2
@@ -40,9 +40,9 @@ tiles:
 plan:
   - wwwwwwwwwwwwwwwww
   - wfffffffwfffffffw
-  - wfafffafwffwfffw
-  - wffffffflfff$fffw
-  - wfffsffflfffffwww
-  - wfffffffwffffwffw
+  - wfafffafwfffffffw
+  - wffffffflffff$ffw
+  - wfffsffflfffffffw
+  - wfafffafwfffffffw
   - wfffffffwfffffffw
   - wwwwwwwwwwdwwwwww

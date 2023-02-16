@@ -3,9 +3,9 @@ tiles:
     image: worlds/wallsofwood.png
     wall: true
   f:
-    image: worlds/kira-wall.png
+    color: [0, 0, 0]
   s:
-    image: worlds/kira-wall.png
+    color: [0, 0, 0]
     start: true
   d:
     image: worlds/Enterme.png
