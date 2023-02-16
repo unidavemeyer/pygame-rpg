@@ -12,11 +12,11 @@ tiles:
     gate: true
     target: start.wld
   a:
-    image: worlds/kira-wall.png
+    image: worlds/wallsofwood.png
     key: true
     activate_groups: [lock1]
-    held_image: worlds/key_held.png
-    unheld_image: worlds/key_unheld.png
+    held_image: worlds/ButtonP.png
+    unheld_image: worlds/ButtonUP.png
     group: key1
     sticky: true
   l:

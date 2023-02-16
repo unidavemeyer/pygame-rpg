@@ -5,7 +5,7 @@ tiles:
   f:
     image: worlds/EditFloor.png
   s:
-    image: worlds/wallsofwood.png
+    image: worlds/EditFloor.png
     start: true
   1:
     image: worlds/Enterme.png
@@ -27,11 +27,15 @@ tiles:
    image: worlds/Enterme.png
    gate: true
    target: Grabthemegakey.wld
+  6:
+   image: worlds/Enterme.png
+   gate: true
+   target: third.wld
 plan:
-  - wwww1wwwwwwww
+  - wwww1wwwww6ww
   - wfffffffwfffw
-  - wfsfffsfwfffw
-  - 2fffffffffsf5
-  - wfsfffsfwfffw
+  - wfffffffwfffw
+  - 2fffsfffwfsf5
+  - wfffffffwfffw
   - wfffffffwfffw
   - ww3wwwwwww4ww

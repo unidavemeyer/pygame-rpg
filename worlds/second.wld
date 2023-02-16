@@ -1,11 +1,11 @@
 tiles:
   w:
-    color: [128, 255, 128]
+    image: worlds/wallsofwood.png
     wall: true
   f:
-    image: worlds/kira-wall.png
+    image: worlds/wallsofwood.png
   s:
-    image: worlds/kira-wall.png
+    image: worlds/wallsofwood.png
     start: true
   d:
     color: [192, 192, 64]
@@ -39,10 +39,10 @@ tiles:
       move_pattern: [[0,0,2], [0,4,2], [0,0,2], [0,-4,2]]
 plan:
   - wwwwwwwwwwwwwwwww
+  - wfffwfffwfffffffw
+  - wfffffffwfwwwwwww
+  - wfffwffwwffffwffd
+  - wsffwfffffwffwffw
+  - wfffwwwwwwfffwffw
   - wfffffffwfffffffw
-  - wfafffafwfffffffw
-  - wffffffflfff$fffw
-  - wfffsffflfffffffw
-  - wfffffffwfffffffw
-  - wfffffffwfffffffw
-  - wwwwwwwwwwdwwwwww
+  - wwwwwwwwwwwwwwwww
