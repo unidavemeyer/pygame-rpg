@@ -48,9 +48,9 @@ class Menu:
 	""" game, etc."""
 
 	def __init__(self):
-		Game.game.AddUpdate(self, 10)	# relatively early update
-		Game.game.AddRender(self, 100)	# relatively late render (more on top)
-		Game.game.AddHandler(self, 10)	# relatively early event handler
+		Game.game.AddUpdate(self)
+		Game.game.AddRender(self)
+		Game.game.AddHandler(self)
 
 		self.m_lMd = []
 
@@ -97,6 +97,9 @@ class Menu:
 
 		Game.game.OnNewGame(strWorld)
 
+	def Updatepri(self):
+		return Game.UpdatePri.MENU
+
 	def OnUpdate(self):
 
 		# BB (davidm) unfortunate to have some menu actions happen in FHandleEvent
@@ -127,6 +130,9 @@ class Menu:
 
 		return
 
+	def Handlerpri(self):
+		return Game.HandlerPri.MENU
+
 	def FHandleEvent(self, event):
 		if event.type != pygame.KEYDOWN:
 			return False
@@ -150,6 +156,9 @@ class Menu:
 			self.m_lMd[-1].OnNavOk()
 
 		return True
+
+	def Renderpri(self):
+		return Game.RenderPri.MENU
 
 	def OnRender(self, surfScreen):
 		if Game.game.Mode() != Game.Mode.MENU:

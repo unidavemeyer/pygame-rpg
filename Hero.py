@@ -16,9 +16,9 @@ class Hero:
 	""" and other features of the character for worldmap and combat modes."""
 
 	def __init__(self, joy):
-		Game.game.AddUpdate(self, 20)	# relatively early update
-		Game.game.AddRender(self, 90)	# relatively late render (more on top)
-		Game.game.AddHandler(self, 20)	# relatively early event handler
+		Game.game.AddUpdate(self)
+		Game.game.AddRender(self)
+		Game.game.AddHandler(self)
 		self.fIsMagicAttackActive = False
 		
 		# Joystick tracking
@@ -55,7 +55,6 @@ class Hero:
 
 		self.surf = pygame.image.load(r"Oxygen.png")
 
-
 		# position, velocity, etc.
 
 		self.v = Vec.Vec(0, 0)
@@ -74,9 +73,12 @@ class Hero:
 		self.weapon = Weapon.Sword()	# BB (davidm) placeholder for now
 
 	def Kill(self):
-		Game.game.RemoveUpdate(self, 20)
-		Game.game.RemoveRender(self, 90)
-		Game.game.RemoveHandler(self, 20)
+		Game.game.RemoveUpdate(self)
+		Game.game.RemoveRender(self)
+		Game.game.RemoveHandler(self)
+
+	def Updatepri(self):
+		return Game.UpdatePri.HERO
 
 	def OnUpdate(self):
 		if Game.game.Mode() == Game.Mode.COMBAT:
@@ -165,6 +167,9 @@ class Hero:
 			
 		self.UpdateAttackMagic()
 			
+	def Handlerpri(self):
+		return Game.HandlerPri.HERO
+
 	def FHandleEvent(self, event):
 		if Game.game.Mode() == Game.Mode.COMBAT:
 
@@ -203,6 +208,9 @@ class Hero:
 
 		return False
 
+	def Renderpri(self):
+		return Game.RenderPri.HERO
+
 	def OnRender(self, surfScreen):
 		if Game.game.Mode() == Game.Mode.WORLDMAP:
 			# BB (dave) very basic positioning here -- can flow off sides, no collision, etc.
@@ -223,8 +231,8 @@ class Hero:
 			if self.weapon:
 				self.weapon.OnRender(surfScreen)
 		
-	def OnDamage(self, damage):
-		self.hpCur += damage
+	def OnDamage(self, dHp):
+		self.hpCur += dHp
 
 	def AddItem(self, item):
 		self.lItem.append(item)
@@ -301,7 +309,7 @@ class Hero:
 		keyStateAttack = self.mpKeyState.get(pygame.K_e)
 		if keyStateAttack.FIsPressed() and not self.fIsMagicAttackActive:
 			for npc in Game.game.LNpc():
-				npc.hpCur -= 10  #BB Npc ondamage maybe? - Z.A.C.
+				npc.OnDamage(-10)	# BB (davidm) should damage numbers be unified somewhere?
 			self.fIsMagicAttackActive = True
 		if not keyStateAttack.FIsPressed() and self.fIsMagicAttackActive:
 			self.fIsMagicAttackActive = False

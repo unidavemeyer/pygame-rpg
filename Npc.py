@@ -17,30 +17,40 @@ class Npc:
 	""" and quest givers, etc."""
 
 	def __init__(self):
-		Game.game.AddUpdate(self, 30)	# relatively early update
-		Game.game.AddRender(self, 80)	# relatively late render (more on top)
+		Game.game.AddUpdate(self)
+		Game.game.AddRender(self)
 
 		self.pos = Vec.Vec(0,0)			# location in the world
 		self.surf = None				# surface to render onto the screen
 
+		self.hpMax = 100				# default max hp
+		self.hpCur = self.hpMax			# default current hp
+
 	def Kill(self):
 		Game.game.RemoveNpc(self)
-		Game.game.RemoveUpdate(self, 30)
-		Game.game.RemoveRender(self, 80)
+		Game.game.RemoveUpdate(self)
+		Game.game.RemoveRender(self)
+
+	def Updatepri(self):
+		return Game.UpdatePri.NPC
 
 	def OnUpdate(self):
-		# NOTE (davidm) no default behavior here
 
-		pass
+		# Kill ourselves if hp has been exhausted
+
+		if self.hpCur <= 0:
+			self.Kill()
+
+	def Renderpri(self):
+		return Game.RenderPri.NPC
 
 	def OnRender(self, surfScreen):
 		if Game.game.Mode() == Game.Mode.WORLDMAP:
 			surfScreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
+			Lib.RenderHpBar(surfScreen, self.pos, self.hpCur, self.hpMax)
 
-	def OnDamage(self, damage):
-		# NOTE (davidm) no default behavior here
-
-		pass
+	def OnDamage(self, dHp):
+		self.hpCur += dHp
 
 	def OnLeaveWorld(self, world):
 		"""Gives NPCs the option to handle world changes. Default behavior is for NPCs to kill themselves
@@ -73,11 +83,14 @@ class Goon(Npc):
 	"""Basic goon opponent.  Attacks on a regular schedule doing minor damage"""
 	""" that never misses."""
 
+	# BB (davidm) this is for the turn-based or time-based combat model, and is pretty much
+	#  vestigial at this point -- consider removing
+
 	def __init__(self, world, mpVarValue):
 		Npc.__init__(self)
 
-		self.hpCur = 20			# current hitpoints
-		self.hpMax = 20			# max hitpoints
+		self.hpMax = 20			# goons have few hitpoints
+		self.hpCur = self.hpMax	#  ...
 		self.dTAttack = 5		# seconds between attacks
 		self.dHpAttack = -1		# hp damage dealt by each attack
 
@@ -141,9 +154,6 @@ class Goon(Npc):
 
 		surfHp = Game.Font.FONT20.render("Goon HP: %d/%d" % (self.hpCur, self.hpMax), False, pygame.Color(255, 255, 255))
 		surfScreen.blit(surfHp, (200, 20))
-
-	def OnDamage(self, damage):
-		self.hpCur += damage
 
 	def OnInteract(self, hero):
 		Game.game.SetNpcCombatant(self)
@@ -229,23 +239,18 @@ class Animal(Npc):
 class HeroFinder(Npc):
 	def __init__(self, world, hero):
 		Npc.__init__(self)
-		self.dHpAttack = 5
-		self.hpCur = 50
+		self.dHpAttack = -5	# BB (davidm) currently unused
 		self.hpMax = 50
+		self.hpCur = self.hpMax
 		self.surf = pygame.image.load(r"Amazoncrime.png")
 
 	def OnRender(self, surfScreen):
 		Npc.OnRender(self, surfScreen)
 
-		# BB (davidm) feels like this should be base Npc class behavior, along with hpCur/hpMax
-
-		Lib.RenderHpBar(surfScreen, self.pos, self.hpCur, self.hpMax)
-
 	def OnUpdate(self):
+		Npc.OnUpdate(self)
 		self.UpdateMove()
-		if self.hpCur <= 0:
-			self.Kill()
-		
+
 	def UpdateMove(self):
 		# BB what do we want to do with multiple heros bros? - ZAC
 		hero = Game.game.LHero()[0]
@@ -259,18 +264,24 @@ class Fireball():
 		self.pos = posStart
 		self.posEnd = posEnd
 		self.surf = pygame.image.load(r"Fiyaball.png")
-		Game.game.AddUpdate(self, 30)
-		Game.game.AddRender(self, 95)
+		Game.game.AddUpdate(self)
+		Game.game.AddRender(self)
 	
+	def Renderpri(self):
+		return Game.RenderPri.FIREBALL
+
 	def OnRender(self, surfScreen):
 		surfScreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
 	
+	def Updatepri(self):
+		return Game.UpdatePri.FIREBALL
+
 	def OnUpdate(self):
 		self.UpdateMove()
 	
 	def Kill(self):
-		Game.game.RemoveUpdate(self, 30)
-		Game.game.RemoveRender(self, 95)
+		Game.game.RemoveUpdate(self)
+		Game.game.RemoveRender(self)
 	
 	def	UpdateMove(self):
 		hero = Game.game.LHero()[0]
@@ -282,23 +293,35 @@ class Fireball():
 		if sEnd < 1.0:
 			self.Kill()
 		if sHero < 10.0:
-			hero.hpCur -= 15
+			hero.OnDamage(-15)	# BB (davidm) unify damage numbers somewhere?
 			self.Kill()
 
 class Pattroler(Npc):
 	def __init__(self, world, hero):
 		Npc.__init__(self)
-		self.Vhealth = 999
+
+		self.hpMax = 999
+		self.hpCur = self.hpMax
+
 		self.Pointr = Vec.Vec(300,160)
 		self.surf = pygame.image.load(r"broaintnoway.png")
 
 	def OnUpdate(self):
-		if self.Vhealth == 999:
+		Npc.OnUpdate(self)
+
+		# BB (davidm) placeholder behavior at the moment -- should not take damage when firing
+		#  fireballs at the hero, and not currently calling UpdatePos() to move around
+
+		# BB (davidm) fireball firing should not be in the base Patroller class -- should
+		#  instead have only movement in base Patroller class, and then have a derived class
+		#  (say Boss) which inherits from Patroller but adds periodic fireball launching
+
+		if self.hpCur == 999:
 			hero = Game.game.LHero()[0]
 			fire = Fireball(self.pos, hero.pos)
-			self.Vhealth -= 1
+			self.OnDamage(-1)
 
-	def Updatepos(self):
+	def UpdatePos(self):
 		dPosgoal = self.posgoal - self.pos
 		dPosmove = Vec.VecLimitLen(dPosgoal, 2)
 		self.SetPos(self.pos + dPosmove)
