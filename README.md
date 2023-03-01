@@ -50,6 +50,7 @@ Mentor Work Item Backlog
  * ~Will need to come up with a concrete plan to unify/solidify the damage model~
    * should have maybe all objects take damage? maybe? at the very least, all NPCs, but as a function
    * Mentor to investigate the work here once the Patroller branch is in
+ * Consider making Npc.__init__() take max hp as a parameter to do setup once
  * Should remove the specific combat mode - only have menu and worldmap
  * Should convert to super() instead of direct class super calls
  * Do we want to add a melee attack for the hero and/or some of the NPCs?
