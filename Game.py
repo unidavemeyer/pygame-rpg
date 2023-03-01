@@ -2,6 +2,7 @@
 #
 # Copyright 2012 by David Meyer
 
+from enum import Enum, auto
 import os
 import pygame
 import sys
@@ -12,14 +13,42 @@ import Menu
 import World
 import Joystick
 
-class Mode:
-	"""Enum-type class tracking various game modes."""
+class Mode(Enum):
+	"""Enum tracking various game modes."""
 
-	# BB (dave) should make these read-only attributes
+	MENU = auto()	   # player is using the menu
+	WORLDMAP = auto()	# player is navigating the world map
+	COMBAT = auto()		# player is in combat
 
-	MENU = 0		# player is using the menu
-	WORLDMAP = 1	# player is navigating the world map
-	COMBAT = 2		# player is in combat
+
+
+class RenderPri(Enum):
+	"""Enum tracking rendering priorities. Ordered from first (bottom) to last (top)."""
+
+	WORLD = auto()
+	NPC = auto()
+	HERO = auto()
+	FIREBALL = auto()
+	MENU = auto()
+
+
+
+class UpdatePri(Enum):
+	"""Enum tracking update priorities. Ordered from first opportunity to last."""
+
+	MENU = auto()
+	HERO = auto()
+	NPC = auto()
+	FIREBALL = auto()
+	WORLD = auto()
+
+
+
+class HandlerPri(Enum):
+	"""Enum tracking handler priorities. Ordered from first opportunity to last."""
+
+	MENU = auto()
+	HERO = auto()
 
 
 
@@ -59,10 +88,11 @@ class Game:
 	""" rendering."""
 
 	def __init__(self):
-		self.mpPriUpdate = {}		# priority based list of update objects
-		self.mpPriRender = {}		# priority based list of render objects
-		self.mpPriHandler = {}		# priority based list of handler objects
-		self.lNpc = []		       		# (unsorted) list of NPCs currently in the world
+		self.mpPriUpdate = { x: [] for x in UpdatePri }		# priority based list of update objects
+		self.mpPriRender = { x: [] for x in RenderPri }		# priority based list of render objects
+		self.mpPriHandler = { x: [] for x in HandlerPri }	# priority based list of handler objects
+
+		self.lNpc = []			   	# (unsorted) list of NPCs currently in the world
 		self.lHero = []				# current hero objects
 		self.menu = None			# current menu object
 		self.world = None			# current world object
@@ -75,43 +105,53 @@ class Game:
 
 		self.m_mode = Mode.MENU
 
-	def AddUpdate(self, obj, priority):
-		"""Add obj to the priority list of objects to update.  obj is expected"""
-		""" to have an OnUpdate() method, which will be called to do the update."""
-		""" Priorities are run each frame from least to greatest."""
+	def AddUpdate(self, obj):
+		"""Add obj to the priority list of objects to update.  obj is expected
+		to have an OnUpdate() method, which will be called to do the update.
+		obj is also expected to have an Updatepri() method which will be called
+		to know what update priority to use. Priorities are run each frame from
+		least to greatest."""
 
-		self.mpPriUpdate.setdefault(priority, []).append(obj)
+		updatepri = obj.Updatepri()
+		self.mpPriUpdate[updatepri].append(obj)
 
-	def RemoveUpdate(self, obj, priority):
+	def RemoveUpdate(self, obj):
 		"""Remove obj from the priority list of update objects."""
 
-		self.mpPriUpdate[priority].remove(obj)
+		updatepri = obj.Updatepri()
+		self.mpPriUpdate[updatepri].remove(obj)
 
-	def AddRender(self, obj, priority):
-		"""Add obj to the priority list of objects to render.  obj is expected"""
-		""" to have an OnRender(surf) method, which will be called when the object"""
-		""" is to render itself to the display surface.  Priorities are run each"""
-		""" frame from least to greatest."""
+	def AddRender(self, obj):
+		"""Add obj to the priority list of objects to render. obj is expected
+		to have an OnRender(surf) method, which will be called when the object
+		is to render itself to the display surface. obj is also expected to have
+		a Renderpri() method, which is called to find the render priority. Priorities
+		are run each frame from least to greatest."""
 
-		self.mpPriRender.setdefault(priority, []).append(obj)
+		renderpri = obj.Renderpri()
+		self.mpPriRender[renderpri].append(obj)
 
-	def RemoveRender(self, obj, priority):
+	def RemoveRender(self, obj):
 		"""Remove obj from the priority list of render objects."""
 
-		self.mpPriRender[priority].remove(obj)
+		renderpri = obj.Renderpri()
+		self.mpPriRender[renderpri].remove(obj)
 
-	def AddHandler(self, obj, priority):
-		"""Add obj to the priority list of event handler objects.  obj is expected"""
-		""" to have an FHandleEvent(event) function.  If said function returns true,"""
-		""" the event is considered consumed and will not be sent to any other objects"""
-		""" in the list.  Priorities are run in order from least to greatest."""
+	def AddHandler(self, obj):
+		"""Add obj to the priority list of event handler objects. obj is expected
+		to have an FHandleEvent(event) function. If said function returns true,
+		the event is considered consumed and will not be sent to any other objects
+		in the list. obj is also expected to have a Handlerpri() method which returns
+		the handler priority. Priorities are run in order from least to greatest."""
 
-		self.mpPriHandler.setdefault(priority, []).append(obj)
+		handlerpri = obj.Handlerpri()
+		self.mpPriHandler[handlerpri].append(obj)
 
-	def RemoveHandler(self, obj, priority):
+	def RemoveHandler(self, obj):
 		"""Remove obj from the priority list of event handler objects."""
 
-		self.mpPriHandler[priority].remove(obj)
+		handlerpri = obj.Handlerpri()
+		self.mpPriHandler[handlerpri].remove(obj)
 
 	def Mode(self):
 		"""Queries the current game mode, which will be a value from the Mode enum class"""
@@ -160,7 +200,7 @@ class Game:
 		#  links inside the .wld files
 
 		self.worldNext = World.World('worlds/%s' % strWorld)
-        #makes more worlds 
+		#makes more worlds 
 
 	def AddJoysticks(self):
 		"""Make sure that self.lJoy is consistent with the number of"""
@@ -184,7 +224,6 @@ class Game:
 
 	def OnNewGame(self, strWorld):
 		"""Clears objects and internal state and makes a new game start at the world map"""
-         
 
 		for npc in self.lNpc:
 			npc.Kill()
@@ -272,7 +311,7 @@ class Game:
 
 				elif event.type in (pygame.KEYDOWN, pygame.KEYUP):
 					fHandled = False
-					for pri in sorted(self.mpPriHandler.keys()):
+					for pri in HandlerPri:
 						for obj in self.mpPriHandler[pri]:
 							if obj.FHandleEvent(event):
 								fHandled = True
@@ -290,13 +329,13 @@ class Game:
 			#  modify the running copy? or is python ok with dynamic
 			#  changes to the list while it's being iterated over?
 
-			for pri in sorted(self.mpPriUpdate.keys()):
+			for pri in UpdatePri:
 				for obj in self.mpPriUpdate[pri]:
 					obj.OnUpdate()
 
 			# Give objects a chance to render
 
-			for pri in sorted(self.mpPriRender.keys()):
+			for pri in RenderPri:
 				for obj in self.mpPriRender[pri]:
 					obj.OnRender(self.surfScreen)
 
