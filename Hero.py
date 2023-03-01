@@ -231,8 +231,8 @@ class Hero:
 			if self.weapon:
 				self.weapon.OnRender(surfScreen)
 		
-	def OnDamage(self, damage):
-		self.hpCur += damage
+	def OnDamage(self, dHp):
+		self.hpCur += dHp
 
 	def AddItem(self, item):
 		self.lItem.append(item)
@@ -309,7 +309,7 @@ class Hero:
 		keyStateAttack = self.mpKeyState.get(pygame.K_e)
 		if keyStateAttack.FIsPressed() and not self.fIsMagicAttackActive:
 			for npc in Game.game.LNpc():
-				npc.hpCur -= 10  #BB Npc ondamage maybe? - Z.A.C.
+				npc.OnDamage(-10)	# BB (davidm) should damage numbers be unified somewhere?
 			self.fIsMagicAttackActive = True
 		if not keyStateAttack.FIsPressed() and self.fIsMagicAttackActive:
 			self.fIsMagicAttackActive = False
