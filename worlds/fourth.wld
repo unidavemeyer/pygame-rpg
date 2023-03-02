@@ -28,7 +28,7 @@ tiles:
   $:
     image: worlds/kira-wall.png
     spawner: true
-    npc_type: pattroler
+    npc_type: Boss
     max_npcs: 2
     simultaneous_npcs: 1
     spawn_radius: 96

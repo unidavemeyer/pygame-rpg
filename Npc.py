@@ -332,10 +332,15 @@ class Pattroler(Npc):
 				self.posgoal = Vec.Vec(300, random.randrange(160,170))
 class Boss(Pattroler):
 	def __init__(self, world, hero):
-		self.vhealth = 100
+		self.hpMax = 999
+		self.hpCur = self.hpMax
 		self.Stariginal = Vec.Vec(300, 160)
+		self.surf = pygame.image.load(r"worker1.png")
+		Game.game.AddUpdate(self)
+		Game.game.AddRender(self)
 	def OnUpdate(self):
-		self.Updatepos()
+		Pattroler.UpdatePos(self)
+		Bossmove(self)
 	def Bossmove (self):
 		tickCur = pygame.tick.get_cur()
 		if tickCur < 1000:
