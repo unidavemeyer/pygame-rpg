@@ -330,3 +330,15 @@ class Pattroler(Npc):
 				self.posgoal = Vec.Vec(300,60)# BB (Z) "should not be hard coded"
 			elif self.pos.y == 60:
 				self.posgoal = Vec.Vec(300, random.randrange(160,170))
+class Boss(Pattroler):
+	def __init__(self, world, hero):
+		self.vhealth = 100
+		self.Stariginal = Vec.Vec(300, 160)
+	def OnUpdate(self):
+		self.Updatepos()
+	def Bossmove (self):
+		tickCur = pygame.tick.get_cur()
+		if tickCur < 1000:
+			return
+		print("attackthing")
+	
