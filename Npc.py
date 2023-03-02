@@ -303,7 +303,7 @@ class Pattroler(Npc):
 		self.hpMax = 999
 		self.hpCur = self.hpMax
 
-		self.Pointr = Vec.Vec(300,160)
+		self.posgoal = Vec.Vec(300,160)
 		self.surf = pygame.image.load(r"broaintnoway.png")
 
 	def OnUpdate(self):
@@ -332,18 +332,22 @@ class Pattroler(Npc):
 				self.posgoal = Vec.Vec(300, random.randrange(160,170))
 class Boss(Pattroler):
 	def __init__(self, world, hero):
+		Pattroler.__init__(self, world, hero)
 		self.hpMax = 999
+		self.ticklast = 0
 		self.hpCur = self.hpMax
-		self.Stariginal = Vec.Vec(300, 160)
 		self.surf = pygame.image.load(r"worker1.png")
 		Game.game.AddUpdate(self)
 		Game.game.AddRender(self)
 	def OnUpdate(self):
 		Pattroler.UpdatePos(self)
-		Bossmove(self)
+		self.Bossmove()
 	def Bossmove (self):
-		tickCur = pygame.tick.get_cur()
-		if tickCur < 1000:
+		tickCur = pygame.time.get_ticks()
+		if tickCur - self.ticklast < 1000:
 			return
-		print("attackthing")
-	
+		print(f"attackthing {tickCur}")
+		hero = Game.game.LHero()[0]
+		fire = Fireball(self.pos, hero.pos)
+		self.OnDamage(-1)
+		self.ticklast = tickCur
