@@ -39,7 +39,7 @@ tiles:
   0:
     image: worlds/Enterme.png
     gate: true
-    target: fourth.wld
+    target: enemy.wld
     move_pattern: [[0,0,2], [0,4,2], [0,0,2], [0,-4,2]]
   1:
     image: worlds/Enterme.png
