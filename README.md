@@ -50,8 +50,16 @@ Mentor Work Item Backlog
  * ~Will need to come up with a concrete plan to unify/solidify the damage model~
    * should have maybe all objects take damage? maybe? at the very least, all NPCs, but as a function
    * Mentor to investigate the work here once the Patroller branch is in
- * Consider making Npc.__init__() take max hp as a parameter to do setup once
+ * ~Investigate how to add sound/music stuff via pygame~
+   * https://www.pygame.org/docs/ref/music.html covers this
+ * ~Figure out why the hero doesn't die~
+   * Missing any checks on hp to make a Kill call
+ * ~Figure out how to reset main branch to match origin in github desktop~
+   * maybe put changes in own branch, and then they'll be removed from main...maybe?
+   * see: https://stackoverflow.com/questions/34790794/going-back-to-a-previous-commit-in-github-desktop
+ * Consider button puzzle implementation details - maybe use Items as buttons?
  * Should remove the specific combat mode - only have menu and worldmap
+ * Consider making Npc.__init__() take max hp as a parameter to do setup once
  * Should convert to super() instead of direct class super calls
  * Do we want to add a melee attack for the hero and/or some of the NPCs?
    * Effective model: short radius auto-hit attack, maybe?
