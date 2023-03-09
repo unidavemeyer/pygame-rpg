@@ -290,10 +290,10 @@ class Fireball():
 		sHero = (self.pos - hero.pos).Len()
 		dPosdelay = Vec.VecLimitLen(dPos, 10)
 		self.pos = self.pos + dPosdelay
-		if sEnd < 1.0:
-			self.Kill()
 		if sHero < 10.0:
 			hero.OnDamage(-15)	# BB (davidm) unify damage numbers somewhere?
+			self.Kill()
+		elif sEnd < 1.0:
 			self.Kill()
 
 class Pattroler(Npc):
@@ -335,19 +335,40 @@ class Boss(Pattroler):
 		Pattroler.__init__(self, world, hero)
 		self.hpMax = 999
 		self.ticklast = 0
+		self.stagelevel = 1
 		self.hpCur = self.hpMax
-		self.surf = pygame.image.load(r"worker1.png")
+		self.surf = pygame.image.load(r"workerdef.png")
 		Game.game.AddUpdate(self)
 		Game.game.AddRender(self)
 	def OnUpdate(self):
 		Pattroler.UpdatePos(self)
-		self.Bossmove()
+		if self.hpCur > 0.5 * self.hpMax:
+			self.Bossmove()
+		elif self.hpCur < 0.5 * self.hpMax:
+			self.Bossmove2()
+	
 	def Bossmove (self):
 		tickCur = pygame.time.get_ticks()
 		if tickCur - self.ticklast < 1000:
 			return
+		self.surf = pygame.image.load(r"workerde1.png")
+		self.surf = pygame.image.load(r"workerde2.png")
+		self.surf = pygame.image.load(r"workerde3.png")
+		self.surf = pygame.image.load(r"workerde4.png")
 		print(f"attackthing {tickCur}")
 		hero = Game.game.LHero()[0]
 		fire = Fireball(self.pos, hero.pos)
-		self.OnDamage(-1)
 		self.ticklast = tickCur
+		self.surf = pygame.image.load(r"worker4.png")
+		self.surf = pygame.image.load(r"worker3.png")
+		self.surf = pygame.image.load(r"workerde2.png")
+		self.surf = pygame.image.load(r"workerde1.png")
+	def Bossmove2 (self):
+		tickCur = pygame.time.get_ticks()
+		if tickCur - self.ticklast < 400:
+			return
+		print(f"attackthing {tickCur}")
+		hero = Game.game.LHero()[0]
+		fire = Fireball(self.pos, hero.pos)
+		self.ticklast = tickCur
+		

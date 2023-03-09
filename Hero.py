@@ -99,6 +99,8 @@ class Hero:
 			#  fairly rapid to collapse to the target velocity anyway
 
 			# BB (dave) don't use fixed dT
+			#if self.hpCur <= 0:
+				#self.Kill() vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
 			rdV = 0.6
 			dT = 0.03
