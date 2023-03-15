@@ -64,8 +64,6 @@ Mentor Work Item Backlog
  * Do we want to add a melee attack for the hero and/or some of the NPCs?
    * Effective model: short radius auto-hit attack, maybe?
    * Do we want to allow the player to block? NPCs?
- * Consider an improved, enum-ized render/update/input model, maybe?
-   * Would allow us to see in one spot what order things happen, allow reorder easily, insert, etc.
  * Consider a "freeze" or "slow" attack/aura for NPCs - reduce hero movement speed
  * Do we have any balance considerations?
  * Do we want inventory and inventory management?
