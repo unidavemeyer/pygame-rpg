@@ -340,29 +340,57 @@ class Boss(Pattroler):
 		self.surf = pygame.image.load(r"workerdef.png")
 		Game.game.AddUpdate(self)
 		Game.game.AddRender(self)
+		self.m_tickAnimate = 0
+		self.stageactivate = False
 	def OnUpdate(self):
 		Pattroler.UpdatePos(self)
 		if self.hpCur > 0.5 * self.hpMax:
 			self.Bossmove()
+			#self.AnimationUpdate()
 		elif self.hpCur < 0.5 * self.hpMax:
+			self.stageactivate = True
 			self.Bossmove2()
-	
+		self.AnimationUpdate()
+	def AnimationUpdate(self):
+		tickOP = pygame.time.get_ticks()
+		tickInAnim = tickOP - self.m_tickAnimate 
+		if self.stageactivate == False:
+			if tickInAnim <= 100:
+				self.surf = pygame.image.load(r"worker1.png")
+			elif tickInAnim <= 210:	
+				self.surf = pygame.image.load(r"worker2.png")
+			elif tickInAnim <= 270:	
+				self.surf = pygame.image.load(r"worker3.png")
+			elif tickInAnim <= 300:
+				self.surf = pygame.image.load(r"worker4.png")
+			elif tickInAnim <= 350:
+				self.surf = pygame.image.load(r"worker6.png")
+			elif tickInAnim <= 375:	
+				self.surf = pygame.image.load(r"worker6.png")
+				hero = Game.game.LHero()[0]
+				fire = Fireball(self.pos, hero.pos)
+			elif tickInAnim <= 420:	
+				self.surf = pygame.image.load(r"worker5.png")
+			elif tickInAnim <= 475:
+				self.surf = pygame.image.load(r"worker4.png")
+			elif tickInAnim <= 520:	
+				self.surf = pygame.image.load(r"worker3.png")
+			elif tickInAnim <= 560:	
+				self.surf = pygame.image.load(r"worker2.png")
+			elif tickInAnim <= 595:
+				self.surf = pygame.image.load(r"worker1.png")
+			else:
+				self.surf = pygame.image.load(r"workerdef.png")
+		elif self.stageactivate == True:
+			self.surf = pygame.image.load(r"worker6.png")
 	def Bossmove (self):
 		tickCur = pygame.time.get_ticks()
-		if tickCur - self.ticklast < 1000:
+		if tickCur - self.ticklast < 2000:
 			return
-		self.surf = pygame.image.load(r"workerde1.png")
-		self.surf = pygame.image.load(r"workerde2.png")
-		self.surf = pygame.image.load(r"workerde3.png")
-		self.surf = pygame.image.load(r"workerde4.png")
 		print(f"attackthing {tickCur}")
-		hero = Game.game.LHero()[0]
-		fire = Fireball(self.pos, hero.pos)
+		self.m_tickAnimate = tickCur
+		
 		self.ticklast = tickCur
-		self.surf = pygame.image.load(r"worker4.png")
-		self.surf = pygame.image.load(r"worker3.png")
-		self.surf = pygame.image.load(r"workerde2.png")
-		self.surf = pygame.image.load(r"workerde1.png")
 	def Bossmove2 (self):
 		tickCur = pygame.time.get_ticks()
 		if tickCur - self.ticklast < 400:
