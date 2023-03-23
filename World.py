@@ -10,7 +10,6 @@ import random
 import re
 import Vec
 import yaml
-Item
 # NOTE (davidm) set True to get debug info printed from world operations
 
 g_fDebug = True
@@ -413,12 +412,12 @@ class Spawner:
 
 		self.lNpcCur.append(npc)
 		self.cNpcLifetime += 1
-	def ItemSpawn(self, pos):
-		itmTypeFn = {'Bosskey' : Item.BossKey,
-					 'SpeedPotion' : Item.SPitem
-					 'Coin' : Item.Coin,
-					}
-		if not #we want to say "if you ask fo an item, it is always just an item class"
+	#def ItemSpawn(self, pos):
+	#	itmTypeFn = {'Bosskey' : Item.BossKey,
+	#				 'SpeedPotion' : Item.SPitem
+	#				 'Coin' : Item.Coin,
+	#				}
+	#	if not #we want to say "if you ask fo an item, it is always just an item class"
 
 
 class Key:
