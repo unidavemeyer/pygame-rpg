@@ -325,9 +325,8 @@ class Boss(Pattroler):
 		Pattroler.__init__(self, world, hero)#BB(Z) why include hero?
 		self.hpMax = 999
 		self.hpCur = self.hpMax
-		self.tickLast = 0
+		self.tickAttack = 0
 		self.tickAnimate = 0
-		self.surf = pygame.image.load(r"workerdef.png")
 		Game.game.AddUpdate(self)
 		Game.game.AddRender(self)
 		self.fIsStage2 = False
@@ -338,6 +337,8 @@ class Boss(Pattroler):
 		self.surf4 = pygame.image.load(r"worker4.png")
 		self.surf5 = pygame.image.load(r"worker5.png")
 		self.surf6 = pygame.image.load(r"worker6.png")
+		self.surfDef = pygame.image.load(r"workerdef.png")
+		self.surf = self.surfDef
 	
 	def OnUpdate(self):
 		Pattroler.OnUpdate(self)
@@ -348,7 +349,7 @@ class Boss(Pattroler):
 			self.BossAttack2()
 		self.AnimationUpdate()
 	
-	def AnimationUpdate(self):#BB we are loading a file(image) from disc everytime we run this function which might be expensive; in __init: self.suf1 = ...load worker1 png etc. load them as seprate def variables. self,surf = self.surf 1 etc.
+	def AnimationUpdate(self):
 		tickCur = pygame.time.get_ticks()
 		tickInAnim = tickCur - self.tickAnimate 
 		if self.fIsStage2 == True:
@@ -366,11 +367,11 @@ class Boss(Pattroler):
 				self.surf = self.surf6
 				self.fIsPrimed = True
 			elif tickInAnim <= 375:	
-				if self.fIsprime:
-					self.surf = self.surf6
+				self.surf = self.surf6
+				if self.fIsPrimed:
 					hero = Game.game.LHero()[0]
 					fire = Fireball(self.pos, hero.pos)
-					fIsprime = False
+					self.fIsPrimed = False
 			elif tickInAnim <= 420:	
 				self.surf = self.surf5
 			elif tickInAnim <= 475:
@@ -382,11 +383,11 @@ class Boss(Pattroler):
 			elif tickInAnim <= 595:
 				self.surf = self.surf1
 			else:
-				self.surf = pygame.image.load(r"workerdef.png")
+				self.surf = self.surfDef
 	
 	def BossAttack (self):
 		tickCur = pygame.time.get_ticks()
-		if tickCur - self.tickLast < 2000:
+		if tickCur - self.tickAttack < 2000:
 			return
 		self.tickAnimate = tickCur
 		
@@ -394,7 +395,7 @@ class Boss(Pattroler):
 	
 	def BossAttack2 (self):
 		tickCur = pygame.time.get_ticks()
-		if tickCur - self.tickLast < 400:
+		if tickCur - self.tickAttack < 400:
 			return
 		hero = Game.game.LHero()[0]
 		fire = Fireball(self.pos, hero.pos)
