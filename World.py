@@ -10,7 +10,7 @@ import random
 import re
 import Vec
 import yaml
-
+Item
 # NOTE (davidm) set True to get debug info printed from world operations
 
 g_fDebug = True

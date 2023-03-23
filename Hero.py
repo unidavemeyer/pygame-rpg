@@ -309,7 +309,7 @@ class Hero:
 		keyStateAttack = self.mpKeyState.get(pygame.K_e)
 		if keyStateAttack.FIsPressed() and not self.fIsMagicAttackActive:
 			for npc in Game.game.LNpc():
-				npc.OnDamage(-10)	# BB (davidm) should damage numbers be unified somewhere?
+				npc.OnDamage(-10)# BB (davidm) should damage numbers be unified somewhere?
 			self.fIsMagicAttackActive = True
 		if not keyStateAttack.FIsPressed() and self.fIsMagicAttackActive:
 			self.fIsMagicAttackActive = False
