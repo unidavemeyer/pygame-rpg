@@ -298,7 +298,6 @@ class Spawner:
 		self.sRadius = mpVarValue.get('spawn_radius', 64)
 		self.sRadiusHero = mpVarValue.get('hero_nospawn_radius', -1)
 		self.npcSettings = mpVarValue.get('npc_settings')
-
 		self.lNpcCur = []
 		self.cNpcLifetime = 0
 		self.world = world
@@ -414,7 +413,12 @@ class Spawner:
 
 		self.lNpcCur.append(npc)
 		self.cNpcLifetime += 1
-
+	def ItemSpawn(self, pos):
+		itmTypeFn = {'Bosskey' : Item.BossKey,
+					 'SpeedPotion' : Item.SPitem
+					 'Coin' : Item.Coin,
+					}
+		if not #we want to say "if you ask fo an item, it is always just an item class"
 
 
 class Key:
