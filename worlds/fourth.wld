@@ -29,7 +29,7 @@ tiles:
     image: worlds/kira-wall.png
     spawner: true
     npc_type: Boss
-    max_npcs: 2
+    max_npcs: 1
     simultaneous_npcs: 1
     spawn_radius: 96
     npc_settings:

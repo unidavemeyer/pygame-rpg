@@ -332,49 +332,55 @@ class Boss(Pattroler):
 		Game.game.AddRender(self)
 		self.fIsStage2 = False
 		self.fIsPrimed = False
+		self.surf1 = pygame.image.load(r"worker1.png")
+		self.surf2 = pygame.image.load(r"worker2.png")
+		self.surf3 = pygame.image.load(r"worker3.png")
+		self.surf4 = pygame.image.load(r"worker4.png")
+		self.surf5 = pygame.image.load(r"worker5.png")
+		self.surf6 = pygame.image.load(r"worker6.png")
 	
 	def OnUpdate(self):
 		Pattroler.OnUpdate(self)
 		if self.hpCur > 0.5 * self.hpMax:
-			self.Bossmove()
+			self.BossAttack()
 		else:
 			self.fIsStage2 = True
-			self.Bossmove2()
+			self.BossAttack2()
 		self.AnimationUpdate()
 	
 	def AnimationUpdate(self):#BB we are loading a file(image) from disc everytime we run this function which might be expensive; in __init: self.suf1 = ...load worker1 png etc. load them as seprate def variables. self,surf = self.surf 1 etc.
 		tickCur = pygame.time.get_ticks()
-		tickInAnim = tickOP - self.tickAnimate 
+		tickInAnim = tickCur - self.tickAnimate 
 		if self.fIsStage2 == True:
-			self.surf = pygame.image.load(r"worker6.png")
+			self.surf = self.surf6
 		else:
 			if tickInAnim <= 100:
-				self.surf = pygame.image.load(r"worker1.png")
+				self.surf = self.surf1
 			elif tickInAnim <= 210:	
-				self.surf = pygame.image.load(r"worker2.png")
+				self.surf = self.surf2
 			elif tickInAnim <= 270:	
-				self.surf = pygame.image.load(r"worker3.png")
+				self.surf = self.surf3
 			elif tickInAnim <= 300:
-				self.surf = pygame.image.load(r"worker4.png")
+				self.surf = self.surf5
 			elif tickInAnim <= 350:
-				self.surf = pygame.image.load(r"worker5.png")
+				self.surf = self.surf6
 				self.fIsPrimed = True
 			elif tickInAnim <= 375:	
 				if self.fIsprime:
-					self.surf = pygame.image.load(r"worker6.png")
+					self.surf = self.surf6
 					hero = Game.game.LHero()[0]
 					fire = Fireball(self.pos, hero.pos)
 					fIsprime = False
 			elif tickInAnim <= 420:	
-				self.surf = pygame.image.load(r"worker5.png")
+				self.surf = self.surf5
 			elif tickInAnim <= 475:
-				self.surf = pygame.image.load(r"worker4.png")
+				self.surf = self.surf4
 			elif tickInAnim <= 520:	
-				self.surf = pygame.image.load(r"worker3.png")
+				self.surf = self.surf3
 			elif tickInAnim <= 560:	
-				self.surf = pygame.image.load(r"worker2.png")
+				self.surf = self.surf2
 			elif tickInAnim <= 595:
-				self.surf = pygame.image.load(r"worker1.png")
+				self.surf = self.surf1
 			else:
 				self.surf = pygame.image.load(r"workerdef.png")
 	
