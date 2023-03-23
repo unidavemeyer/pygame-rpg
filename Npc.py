@@ -303,58 +303,51 @@ class Pattroler(Npc):
 		self.hpMax = 999
 		self.hpCur = self.hpMax
 
-		self.posgoal = Vec.Vec(300,160)
+		self.posGoal = Vec.Vec(300,160)
 		self.surf = pygame.image.load(r"broaintnoway.png")
 
 	def OnUpdate(self):
 		Npc.OnUpdate(self)
-
-		# BB (davidm) placeholder behavior at the moment -- should not take damage when firing
-		#  fireballs at the hero, and not currently calling UpdatePos() to move around
-
-		# BB (davidm) fireball firing should not be in the base Patroller class -- should
-		#  instead have only movement in base Patroller class, and then have a derived class
-		#  (say Boss) which inherits from Patroller but adds periodic fireball launching
-
-		if self.hpCur == 999:
-			hero = Game.game.LHero()[0]
-			fire = Fireball(self.pos, hero.pos)
-			self.OnDamage(-1)
+		self.UpdatePos()
 
 	def UpdatePos(self):
-		dPosgoal = self.posgoal - self.pos
+		dPosgoal = self.posGoal - self.pos
 		dPosmove = Vec.VecLimitLen(dPosgoal, 2)
 		self.SetPos(self.pos + dPosmove)
 		if dPosgoal.Len() < 0.001:
 			if self.pos.y >= 160:
-				self.posgoal = Vec.Vec(300,60)# BB (Z) "should not be hard coded"
+				self.posGoal = Vec.Vec(300,60)# BB (Z) "should not be hard coded"
 			elif self.pos.y == 60:
-				self.posgoal = Vec.Vec(300, random.randrange(160,170))
+				self.posGoal = Vec.Vec(300, random.randrange(160,170))
+
 class Boss(Pattroler):
 	def __init__(self, world, hero):
-		Pattroler.__init__(self, world, hero)
+		Pattroler.__init__(self, world, hero)#BB(Z) why include hero?
 		self.hpMax = 999
-		self.ticklast = 0
-		self.stagelevel = 1
 		self.hpCur = self.hpMax
+		self.tickLast = 0
+		self.tickAnimate = 0
 		self.surf = pygame.image.load(r"workerdef.png")
 		Game.game.AddUpdate(self)
 		Game.game.AddRender(self)
-		self.m_tickAnimate = 0
-		self.stageactivate = False
+		self.fIsStage2 = False
+		self.fIsPrimed = False
+	
 	def OnUpdate(self):
-		Pattroler.UpdatePos(self)
+		Pattroler.OnUpdate(self)
 		if self.hpCur > 0.5 * self.hpMax:
 			self.Bossmove()
-			#self.AnimationUpdate()
-		elif self.hpCur < 0.5 * self.hpMax:
-			self.stageactivate = True
+		else:
+			self.fIsStage2 = True
 			self.Bossmove2()
 		self.AnimationUpdate()
-	def AnimationUpdate(self):
-		tickOP = pygame.time.get_ticks()
-		tickInAnim = tickOP - self.m_tickAnimate 
-		if self.stageactivate == False:
+	
+	def AnimationUpdate(self):#BB we are loading a file(image) from disc everytime we run this function which might be expensive; in __init: self.suf1 = ...load worker1 png etc. load them as seprate def variables. self,surf = self.surf 1 etc.
+		tickCur = pygame.time.get_ticks()
+		tickInAnim = tickOP - self.tickAnimate 
+		if self.fIsStage2 == True:
+			self.surf = pygame.image.load(r"worker6.png")
+		else:
 			if tickInAnim <= 100:
 				self.surf = pygame.image.load(r"worker1.png")
 			elif tickInAnim <= 210:	
@@ -364,11 +357,14 @@ class Boss(Pattroler):
 			elif tickInAnim <= 300:
 				self.surf = pygame.image.load(r"worker4.png")
 			elif tickInAnim <= 350:
-				self.surf = pygame.image.load(r"worker6.png")
+				self.surf = pygame.image.load(r"worker5.png")
+				self.fIsPrimed = True
 			elif tickInAnim <= 375:	
-				self.surf = pygame.image.load(r"worker6.png")
-				hero = Game.game.LHero()[0]
-				fire = Fireball(self.pos, hero.pos)
+				if self.fIsprime:
+					self.surf = pygame.image.load(r"worker6.png")
+					hero = Game.game.LHero()[0]
+					fire = Fireball(self.pos, hero.pos)
+					fIsprime = False
 			elif tickInAnim <= 420:	
 				self.surf = pygame.image.load(r"worker5.png")
 			elif tickInAnim <= 475:
@@ -381,22 +377,20 @@ class Boss(Pattroler):
 				self.surf = pygame.image.load(r"worker1.png")
 			else:
 				self.surf = pygame.image.load(r"workerdef.png")
-		elif self.stageactivate == True:
-			self.surf = pygame.image.load(r"worker6.png")
-	def Bossmove (self):
+	
+	def BossAttack (self):
 		tickCur = pygame.time.get_ticks()
-		if tickCur - self.ticklast < 2000:
+		if tickCur - self.tickLast < 2000:
 			return
-		print(f"attackthing {tickCur}")
-		self.m_tickAnimate = tickCur
+		self.tickAnimate = tickCur
 		
-		self.ticklast = tickCur
-	def Bossmove2 (self):
+		self.tickAttack = tickCur
+	
+	def BossAttack2 (self):
 		tickCur = pygame.time.get_ticks()
-		if tickCur - self.ticklast < 400:
+		if tickCur - self.tickLast < 400:
 			return
-		print(f"attackthing {tickCur}")
 		hero = Game.game.LHero()[0]
 		fire = Fireball(self.pos, hero.pos)
-		self.ticklast = tickCur
+		self.tickAttack = tickCur
 		
