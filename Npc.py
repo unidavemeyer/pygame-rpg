@@ -290,10 +290,10 @@ class Fireball():
 		sHero = (self.pos - hero.pos).Len()
 		dPosdelay = Vec.VecLimitLen(dPos, 10)
 		self.pos = self.pos + dPosdelay
-		if sEnd < 1.0:
-			self.Kill()
 		if sHero < 10.0:
 			hero.OnDamage(-15)	# BB (davidm) unify damage numbers somewhere?
+			self.Kill()
+		elif sEnd < 1.0:
 			self.Kill()
 
 class Pattroler(Npc):
@@ -303,30 +303,101 @@ class Pattroler(Npc):
 		self.hpMax = 999
 		self.hpCur = self.hpMax
 
-		self.Pointr = Vec.Vec(300,160)
+		self.posGoal = Vec.Vec(300,160)
 		self.surf = pygame.image.load(r"broaintnoway.png")
 
 	def OnUpdate(self):
 		Npc.OnUpdate(self)
-
-		# BB (davidm) placeholder behavior at the moment -- should not take damage when firing
-		#  fireballs at the hero, and not currently calling UpdatePos() to move around
-
-		# BB (davidm) fireball firing should not be in the base Patroller class -- should
-		#  instead have only movement in base Patroller class, and then have a derived class
-		#  (say Boss) which inherits from Patroller but adds periodic fireball launching
-
-		if self.hpCur == 999:
-			hero = Game.game.LHero()[0]
-			fire = Fireball(self.pos, hero.pos)
-			self.OnDamage(-1)
+		self.UpdatePos()
 
 	def UpdatePos(self):
-		dPosgoal = self.posgoal - self.pos
+		dPosgoal = self.posGoal - self.pos
 		dPosmove = Vec.VecLimitLen(dPosgoal, 2)
 		self.SetPos(self.pos + dPosmove)
 		if dPosgoal.Len() < 0.001:
 			if self.pos.y >= 160:
-				self.posgoal = Vec.Vec(300,60)# BB (Z) "should not be hard coded"
+				self.posGoal = Vec.Vec(300,60)# BB (Z) "should not be hard coded"
 			elif self.pos.y == 60:
-				self.posgoal = Vec.Vec(300, random.randrange(160,170))
+				self.posGoal = Vec.Vec(300, random.randrange(160,170))
+
+class Boss(Pattroler):
+	def __init__(self, world, hero):
+		Pattroler.__init__(self, world, hero)#BB(Z) why include hero?
+		self.hpMax = 999
+		self.hpCur = self.hpMax
+		self.tickAttack = 0
+		self.tickAnimate = 0
+		Game.game.AddUpdate(self)
+		Game.game.AddRender(self)
+		self.fIsStage2 = False
+		self.fIsPrimed = False
+		self.surf1 = pygame.image.load(r"worker1.png")
+		self.surf2 = pygame.image.load(r"worker2.png")
+		self.surf3 = pygame.image.load(r"worker3.png")
+		self.surf4 = pygame.image.load(r"worker4.png")
+		self.surf5 = pygame.image.load(r"worker5.png")
+		self.surf6 = pygame.image.load(r"worker6.png")
+		self.surfDef = pygame.image.load(r"workerdef.png")
+		self.surf = self.surfDef
+	
+	def OnUpdate(self):
+		Pattroler.OnUpdate(self)
+		if self.hpCur > 0.5 * self.hpMax:
+			self.BossAttack()
+		else:
+			self.fIsStage2 = True
+			self.BossAttack2()
+		self.AnimationUpdate()
+	
+	def AnimationUpdate(self):
+		tickCur = pygame.time.get_ticks()
+		tickInAnim = tickCur - self.tickAnimate 
+		if self.fIsStage2 == True:
+			self.surf = self.surf6
+		else:
+			if tickInAnim <= 100:
+				self.surf = self.surf1
+			elif tickInAnim <= 210:	
+				self.surf = self.surf2
+			elif tickInAnim <= 270:	
+				self.surf = self.surf3
+			elif tickInAnim <= 300:
+				self.surf = self.surf5
+			elif tickInAnim <= 350:
+				self.surf = self.surf6
+				self.fIsPrimed = True
+			elif tickInAnim <= 375:	
+				self.surf = self.surf6
+				if self.fIsPrimed:
+					hero = Game.game.LHero()[0]
+					fire = Fireball(self.pos, hero.pos)
+					self.fIsPrimed = False
+			elif tickInAnim <= 420:	
+				self.surf = self.surf5
+			elif tickInAnim <= 475:
+				self.surf = self.surf4
+			elif tickInAnim <= 520:	
+				self.surf = self.surf3
+			elif tickInAnim <= 560:	
+				self.surf = self.surf2
+			elif tickInAnim <= 595:
+				self.surf = self.surf1
+			else:
+				self.surf = self.surfDef
+	
+	def BossAttack (self):
+		tickCur = pygame.time.get_ticks()
+		if tickCur - self.tickAttack < 2000:
+			return
+		self.tickAnimate = tickCur
+		
+		self.tickAttack = tickCur
+	
+	def BossAttack2 (self):
+		tickCur = pygame.time.get_ticks()
+		if tickCur - self.tickAttack < 400:
+			return
+		hero = Game.game.LHero()[0]
+		fire = Fireball(self.pos, hero.pos)
+		self.tickAttack = tickCur
+		
