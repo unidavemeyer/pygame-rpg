@@ -400,6 +400,7 @@ class Spawner:
 				'animal' : Npc.Animal,
 				'herofinder' : Npc.HeroFinder,
 				'pattroler' : Npc.Pattroler,
+				'Boss' : Npc.Boss,
 			}
 
 		fn = mpTypeFn.get(self.npcType)
