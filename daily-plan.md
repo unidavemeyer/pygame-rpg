@@ -1,10 +1,9 @@
 BP Internship Spring 2023
 =========================
 
-Daily Plan 2023-04-06
+Daily Plan 2023-04-20
 ---------------------
  * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
-   * Maybe do first call after SLC?
  * Fill in Item class in Item.py
    * Update for Item should effectively check if any hero is touching
      * When hero "picks up" Item it should do Game.game.RemoveRender() since we don't want it visible anymore
@@ -56,6 +55,61 @@ Daily Plan 2023-04-06
    * Consider velocity target based approach - discuss with mentor to get the basic idea there
    * Consider how NPC attacking works - contact? short range "stomp"? other?
 
+Daily Plan 2023-04-06
+---------------------
+ * ~Video call with Mentor in the morning to start up and again in the afternoon to wrap up~
+   * ~Maybe do first call after SLC?~
+   * ~Discussed instances vs. classes and instantiation~
+ * Fill in Item class in Item.py
+   * Update for Item should effectively check if any hero is touching
+     * When hero "picks up" Item it should do Game.game.RemoveRender() since we don't want it visible anymore
+     * When hero "picks up" Item it should do Game.game.RemoveUpdate() since we don't want it to update anymore
+     * When hero "picks up" Item it should go into that hero's lItem list (probably append(), i.e., added to end of list)
+   * Will need changes in World.py to allow .wld files to have Items added on specific tiles
+     * Add entry in LoadFromFile to see 'item' and create Item, passing pos and some extra bits to ItemTrySpawn function (see below)
+       * Should look for mpSecData\['tiles']\[sym]\['tags'] which should be a list of strings
+       * Should look for mpSecData\['tiles']\[sym]\['item-image'] to set image instead of hard coding in class
+     * ~Add ItemTrySpawn function to World class~
+       * Should scan hero object's lItem to see if one exists with the appropriate tags
+       * If such item is found, return None
+       * If such item is *not* found, return new Item object
+       * This model allows us flexibility: if we want doors to be once-only, they can "eat" the key; otherwise, they leave them alone
+       * Likewise, if we did health drops, those could be available until/unless consumed before they would reappear, etc.
+ * Create Door class in Door.py
+   * Like class Fireball, will need several standard methods
+     * __init__ will be required; will need position for door as argument
+     * Renderpri() and OnRender() functions will be needed
+     * Updatepri() and OnUpdate() functions will be needed
+   * Update for Door should check Hero inventory for Item with appropriate tags
+     * If found, Door should switch to open state
+     * If not found, Door should switch to closed state
+   * In closed state, Door needs to add a "wall" rectangle to the world (see class World, self.lRectWall)
+   * In open state, Door needs to find matching "wall" rectangle and remove from the world
+   * This should work as a state machine -- if door is open, and wants to be open, nothing happens, etc.
+   * Discuss state machines with Mentor
+   * Will need changes in World.py to allow .wld files to have Doors added on specific tiles
+     * Add entry in LoadFromFile to see 'door' and create new Door object, passing pos and some extra bits to Door.__init__:
+       * Should look for mpSecData\['tiles']\[sym]\['tags'] which should be a list of strings
+       * Should look for mpSecData\['tiles']\[sym]\['door-closed-image'] to set image instead of hard coding in class
+       * Should look for mpSecData\['tiles']\[sym]\['door-open-image'] to set image instead of hard coding in class
+ * Investigate how to add music
+   * https://www.pygame.org/docs/ref/music.html covers this
+ * Make "facing you" statue
+   * Remember to do this as its own branch off of the main branch
+   * Fun flavor element to add to world
+   * Should leverage animation system to turn instead of snapping to the opposite side, etc.
+ * Consider improvements to hero magic attack
+   * Add "heat seeking" version of projectiles used by miniboss
+   * Consider if this will adjust timing of damage -- probably should?
+   * Experiment with "held key" behavior -- repeated attack with cooldown?
+ * Tuning pass
+   * Playtest a few levels, make sure combat feels good, not too hard, not too easy
+   * Mentor should also play and provide feedback
+   * Make action items for what things should be adjusted for better player experience
+ * Discuss further work on heat seeking NPC
+   * Consider range - how close is the hero before this activates?
+   * Consider velocity target based approach - discuss with mentor to get the basic idea there
+   * Consider how NPC attacking works - contact? short range "stomp"? other?
 
 Daily Plan 2023-03-30
 ---------------------
