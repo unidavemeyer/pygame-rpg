@@ -10,6 +10,7 @@ import random
 import re
 import Vec
 import yaml
+import Item
 # NOTE (davidm) set True to get debug info printed from world operations
 
 g_fDebug = True
@@ -32,6 +33,7 @@ class World:
 		self.lGate = []					# gates (go to other worlds)
 		self.lPosStart = []				# start positions for hero characters
 		self.lKey = []					# keys, which interact with locks or other keys
+		self.litem = []
 		self.lLock = []					# locks, which act as walls until unlocked
 		self.mpGroupMembers = {}		# mapping from group names to member lists
 
@@ -147,7 +149,27 @@ class World:
 
 		for lock in self.lLock:
 			lock.OnRender(surfScreen)
-
+	def ItemTrySpawn(self, item, pos):
+		self.itemtags = item
+		#magickey = Item.Item(self, item)
+		#Hero = hero.lItem
+		#if example:
+			#magickey = Item.Item(self, item, )
+		#for lItem in Hero:
+			#if lItem.item == 2:
+				#example = True
+		
+		#self,
+		#mpSecData['tiles'][sym],
+		#iCol * dSTile, # for tile collums 
+		#iRow * dSTile, # for tile rows
+		#dSTile,
+		#dSTile)),
+	#def temTrySpawn(self, Item):
+		print("test")
+		print(item)
+		Item.Item(self, item, pos) #generate me an item
+		
 	def LoadFromFile(self, strPath):
 		"""Loads data from the given path and constructs the surface"""
 		""" for the world."""
@@ -166,9 +188,9 @@ class World:
 		#	- aaaaaa
 		#	- abbbba
 		#	- aaaaaa
-
 		fileIn = open(strPath, 'r')
 		mpSecData = yaml.safe_load(fileIn)
+		#mpSecData
 		fileIn.close()
 
 		# Add surfaces for each symbol as appropriate and ensure we have string
@@ -182,6 +204,7 @@ class World:
 			if mpSymData.get('color'):
 				mpSymData['surf'] = pygame.Surface((dSTile, dSTile))
 				mpSymData['surf'].fill(pygame.Color(*mpSymData['color']))
+				#mpSecData['tiles'][sym]['Superkey']
 			elif mpSymData.get('image'):
 				mpSymData['surf'] = pygame.image.load(mpSymData['image'])
 			else:
@@ -254,7 +277,8 @@ class World:
 										iRow * dSTile,
 										dSTile,
 										dSTile))
-
+				if mpSecData['tiles'][sym].get('item', False):
+					self.ItemTrySpawn(mpSecData['tiles'][sym], Vec.Vec(iCol * dSTile, iRow * dSTile))
 		# Ensure we have a reasonable start position list (at least *some* start position)
 
 		if not self.lPosStart:

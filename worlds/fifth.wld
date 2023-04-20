@@ -37,9 +37,12 @@ tiles:
       sad_image: worlds/red_x.png
       group: lock1
       move_pattern: [[0,0,2], [0,4,2], [0,0,2], [0,-4,2]]
+  u:
+     image: worlds/green_box.png
+     item: true
 plan:
   - wwwwwwwwwwwwwwwww
-  - wfffffffwfffffffw
+  - wfffffffwfffffufw
   - wfafffafwffwfffw
   - wffffffflfff$fffw
   - wfffswfflffsffwww
