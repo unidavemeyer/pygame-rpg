@@ -24,7 +24,7 @@ class Item:
 		return Game.UpdatePri.Item
 	def OnUpdate(self):
 		self.sHero = (self.pos - hero.pos).Len()
-		if self.sHero < 10.0:
-			Game.game.RemoveRender()
-			Game.game.RemoveUpdate()
+		if self.sHero < 1.0:
+			Game.game.RemoveRender(self)
+			Game.game.RemoveUpdate(self)
 			hero.lItem.append(self)
