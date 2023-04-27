@@ -310,6 +310,7 @@ class Hero:
 		if keyStateAttack.FIsPressed() and not self.fIsMagicAttackActive:
 			for npc in Game.game.LNpc():
 				npc.OnDamage(-10)# BB (davidm) should damage numbers be unified somewhere?
+			print(self.lItem)
 			self.fIsMagicAttackActive = True
 		if not keyStateAttack.FIsPressed() and self.fIsMagicAttackActive:
 			self.fIsMagicAttackActive = False
