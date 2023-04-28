@@ -24,6 +24,13 @@ class Item:
 		return Game.RenderPri.ITEM
 	def OnRender(self, surfScreen):
 		surfScreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
+	def	FMatches(self, mpVarValue):
+		print(mpVarValue)
+		if self.mpVarValue['tag'] == mpVarValue['tag']:
+			print("checked item")
+			return True
+		else: 
+			return False
 	
 	def Updatepri(self):
 		return Game.UpdatePri.ITEM

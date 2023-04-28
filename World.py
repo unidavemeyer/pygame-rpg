@@ -168,7 +168,12 @@ class World:
 	#def temTrySpawn(self, Item):
 		print("test")
 		print(item)
-		Item.Item(self, item, pos) #generate me an item
+		hero = Game.game.LHero()[0]
+		for itemh in hero.lItem:
+			#itemh.FMatches(self)
+			if itemh.FMatches(item) is True:
+				return False #generate me an item
+		Item.Item(self, item, pos)
 		
 	def LoadFromFile(self, strPath):
 		"""Loads data from the given path and constructs the surface"""
