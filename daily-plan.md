@@ -1,14 +1,38 @@
 BP Internship Spring 2023
 =========================
 
-Daily Plan 2023-04-27
+Daily Plan 2023-05-04
 ---------------------
  * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
+   * Expect final work day is 6/8 but may need to modify as the end nears
+ * Do final testing and review of Item class
+ * Improvements to hero magic attack
+   * Should do as separate branch (like features are done in git typically)
+   * Add "heat seeking" version of Fireball used by miniboss
+     * Could be a different/optional argument to __init__ on Fireball
+     * Could be a separate added def which reconfigures to do heat seeking
+   * Consider if this will adjust timing of damage -- probably should, so fireball does damage on strike
+   * Possibly: experiment with "held key" behavior -- repeated attack with cooldown?
+ * Make "facing you" statue
+   * Remember to do this as its own branch off of the main branch
+   * Fun flavor element to add to world
+   * Should leverage animation system to turn instead of snapping to the opposite side, etc.
+ * Death screen
+   * When hero is killed, show a death screen (possibly special Menu page?)
+   * When player confirms that screen, the option should be restart - start them over again
+ * Tuning pass
+   * Playtest a few levels, make sure combat feels good, not too hard, not too easy
+   * Mentor should also play and provide feedback
+   * Make action items for what things should be adjusted for better player experience
+
+Daily Plan 2023-04-27
+---------------------
+ * ~Video call with Mentor in the morning to start up and again in the afternoon to wrap up~
    * Discuss music (dropped from list, not a concern)
    * Discuss Items and Doors; should mentor help out more on Items, and/or should mentor assist with Doors?
    * Think about outline of remaining weeks and how things can/should fit into that time
    * Discuss hero death model - what should happen when the hero is killed?
- * Fill in Item class in Item.py
+ * ~Fill in Item class in Item.py~
    * Update for Item should effectively check if any hero is touching
      * When hero "picks up" Item it should do Game.game.RemoveRender() since we don't want it visible anymore
      * When hero "picks up" Item it should do Game.game.RemoveUpdate() since we don't want it to update anymore

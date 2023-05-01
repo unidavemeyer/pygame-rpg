@@ -57,9 +57,15 @@ Mentor Work Item Backlog
  * ~Figure out how to reset main branch to match origin in github desktop~
    * maybe put changes in own branch, and then they'll be removed from main...maybe?
    * see: https://stackoverflow.com/questions/34790794/going-back-to-a-previous-commit-in-github-desktop
- * What is hero death model?
+ * ~What is hero death model?~
    * Do we start again, prior room?
    * Do we allow some kind of actual progress save system?
+ * Mentor to create Door class
+   * Manages visible state to be open vs. closed
+   * Pays attention to tag value for Item held by hero (in lItem)
+     * check [x.mpVarValue['tag'] for x in hero.lItem]
+   * Probably also add/remove blocker boxes per collision detection system
+   * First pass: do not consume key, just check for presence
  * Consider button puzzle implementation details - maybe use Items as buttons?
  * Should remove the specific combat mode - only have menu and worldmap
  * Consider making Npc.__init__() take max hp as a parameter to do setup once
