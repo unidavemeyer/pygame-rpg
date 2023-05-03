@@ -37,12 +37,25 @@ tiles:
       sad_image: worlds/red_x.png
       group: lock1
       move_pattern: [[0,0,2], [0,4,2], [0,0,2], [0,-4,2]]
+  0:
+    image: worlds/kira-wall.png
+    door: true
+    door-closed: false
+    door-img-open: worlds/door-open-yellow.png
+    door-img-closed: worlds/door-closed-yellow.png
+  2:
+    image: worlds/kira-wall.png
+    door: true
+    door-keytag: key-red
+    door-img-open: worlds/door-open-red.png
+    door-img-closed: worlds/door-closed-red.png
+
 plan:
   - wwwwwwwwwwwwwwwww
-  - wfffffffwfffffffw
+  - wfffffff0fffffffw
   - wfafffafwfffffffw
   - wffffffflfff$fffw
   - wfffsffflfffffffw
   - wfffffffwfffffffw
-  - wfffffffwfffffffw
+  - wfffffff2fffffffw
   - wwwwwwwwwwdwwwwww
