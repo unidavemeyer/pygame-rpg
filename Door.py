@@ -58,3 +58,6 @@ class Door:
 	def FIsClosed(self):
 		return self.fIsClosed
 
+	def Kill(self):
+		Game.game.RemoveUpdate(self)
+		Game.game.RemoveRender(self)
