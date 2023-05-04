@@ -8,9 +8,9 @@ import math
 import pygame
 import random
 import re
+import Item
 import Vec
 import yaml
-
 # NOTE (davidm) set True to get debug info printed from world operations
 
 g_fDebug = True
@@ -148,7 +148,13 @@ class World:
 
 		for lock in self.lLock:
 			lock.OnRender(surfScreen)
-
+	def ItemTrySpawn(self, mpVarValue, pos):
+		hero = Game.game.LHero()[0]
+		for item in hero.lItem:
+			if item.FMatches(mpVarValue):
+				return None
+		return Item.Item(self, mpVarValue, pos)
+		
 	def LoadFromFile(self, strPath):
 		"""Loads data from the given path and constructs the surface"""
 		""" for the world."""
@@ -167,7 +173,6 @@ class World:
 		#	- aaaaaa
 		#	- abbbba
 		#	- aaaaaa
-
 		fileIn = open(strPath, 'r')
 		mpSecData = yaml.safe_load(fileIn)
 		fileIn.close()
@@ -255,7 +260,8 @@ class World:
 										iRow * dSTile,
 										dSTile,
 										dSTile))
-
+				if mpSecData['tiles'][sym].get('item', False):
+					self.ItemTrySpawn(mpSecData['tiles'][sym], Vec.Vec(iCol * dSTile, iRow * dSTile))
 		# Ensure we have a reasonable start position list (at least *some* start position)
 
 		if not self.lPosStart:
@@ -298,7 +304,6 @@ class Spawner:
 		self.sRadius = mpVarValue.get('spawn_radius', 64)
 		self.sRadiusHero = mpVarValue.get('hero_nospawn_radius', -1)
 		self.npcSettings = mpVarValue.get('npc_settings')
-
 		self.lNpcCur = []
 		self.cNpcLifetime = 0
 		self.world = world
@@ -415,7 +420,6 @@ class Spawner:
 
 		self.lNpcCur.append(npc)
 		self.cNpcLifetime += 1
-
 
 
 class Key:
