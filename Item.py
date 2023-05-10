@@ -26,6 +26,11 @@ class Item:
 		else: 
 			return False
 	
+	def FHasTag(self, tag):
+		# BB (davidm) consider merging the FHasTag and FMatches concepts -- quite similar
+
+		return self.mpVarValue['tag'] == tag
+
 	def Updatepri(self):
 		return Game.UpdatePri.ITEM
 	

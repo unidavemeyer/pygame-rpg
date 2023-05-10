@@ -2,6 +2,7 @@
 #
 # Copyright (c) 2012 by David Meyer
 
+import Door
 import Npc
 import Game
 import math
@@ -34,6 +35,7 @@ class World:
 		self.lPosStart = []				# start positions for hero characters
 		self.lKey = []					# keys, which interact with locks or other keys
 		self.lLock = []					# locks, which act as walls until unlocked
+		self.lDoor = []					# open/closed doors which can optionally block player/etc.
 		self.mpGroupMembers = {}		# mapping from group names to member lists
 
 		self.LoadFromFile(strPath)
@@ -67,6 +69,11 @@ class World:
 		Game.game.RemoveUpdate(self)
 		Game.game.RemoveRender(self)
 
+		# clean up any doors
+
+		for door in self.lDoor:
+			door.Kill()
+
 	def Updatepri(self):
 		return Game.UpdatePri.WORLD
 
@@ -97,10 +104,22 @@ class World:
 			key.OnUpdate()
 
 	def ColinfoFromRect(self, rectCheck):
+
+		# check walls
+
 		liRectCollide = []
 		liRectCollide.extend(rectCheck.collidelistall(self.lRectWall))
 		lRectCollide = [rect for iRect, rect in enumerate(self.lRectWall) if iRect in liRectCollide]
+
+		# check doors (closed ones)
+
+		lRectDoor = self.LRectDoor()
+		liRectCollide = []
+		liRectCollide.extend(rectCheck.collidelistall(lRectDoor))
+		lRectCollide.extend([rect for iRect, rect in enumerate(lRectDoor) if iRect in liRectCollide])
 		
+		# check locks
+
 		for lock in self.lLock:
 			if lock.FIsActive():
 				continue
@@ -112,6 +131,11 @@ class World:
 			return None
 
 		return Colinfo(lRectCollide)
+
+	def LRectDoor(self):
+		"""Generate rectangles for doors that are closed (i.e., ones things should collide with)"""
+
+		return [door.Rect() for door in self.lDoor if door.FIsClosed()]
 
 	def AddGroupMember(self, strGroup, member):
 		self.mpGroupMembers.setdefault(strGroup, []).append(member)
@@ -260,8 +284,18 @@ class World:
 										iRow * dSTile,
 										dSTile,
 										dSTile))
+
 				if mpSecData['tiles'][sym].get('item', False):
 					self.ItemTrySpawn(mpSecData['tiles'][sym], Vec.Vec(iCol * dSTile, iRow * dSTile))
+
+				if mpSecData['tiles'][sym].get('door', False):
+					self.lDoor.append(Door.Door(
+										mpSecData['tiles'][sym],
+										iCol * dSTile,
+										iRow * dSTile,
+										dSTile,
+										dSTile))
+
 		# Ensure we have a reasonable start position list (at least *some* start position)
 
 		if not self.lPosStart:
