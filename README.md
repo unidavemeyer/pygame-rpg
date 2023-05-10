@@ -60,12 +60,14 @@ Mentor Work Item Backlog
  * ~What is hero death model?~
    * Do we start again, prior room?
    * Do we allow some kind of actual progress save system?
- * Mentor to create Door class
+ * ~Mentor to create Door class~
    * Manages visible state to be open vs. closed
    * Pays attention to tag value for Item held by hero (in lItem)
      * check [x.mpVarValue['tag'] for x in hero.lItem]
    * Probably also add/remove blocker boxes per collision detection system
    * First pass: do not consume key, just check for presence
+ * Mentor to investigate why boss stays alive when we do new game
+   * Is there a missing notify for render/update objects when switching worlds?
  * Consider button puzzle implementation details - maybe use Items as buttons?
  * Should remove the specific combat mode - only have menu and worldmap
  * Consider making Npc.__init__() take max hp as a parameter to do setup once
