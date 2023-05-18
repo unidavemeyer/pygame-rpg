@@ -1,13 +1,39 @@
 BP Internship Spring 2023
 =========================
 
-Daily Plan 2023-05-11
+Daily Plan 2023-05-18
 ---------------------
  * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
+   * Meeting in the morning with advisor at 8:30
+   * Need to go through internship eval form
  * Improvements to hero magic attack
-   * Add "heat seeking" version of Fireball used by miniboss - the Hyerball
+   * Set up fake target if there is no NPC to attack
+   * Add firing rate
+     * should we have a timeout between each fire?
+     * should we do a mana-based system with a bar and a refill rate and a per-fireball-cost?
+     * add some type of UI element - maybe show charges? maybe show bar? either can work
+   * Smarter selection of NPC target
+     * probably want to select the nearest NPC but other alternatives could be considered
+ * Death screen
+   * When hero is killed, show a death screen (possibly special Menu page?)
+   * When player confirms that screen, the option should be restart - start them over again
+ * Tuning pass
+   * Playtest a few levels, make sure combat feels good, not too hard, not too easy
+   * Mentor should also play and provide feedback
+   * Make action items for what things should be adjusted for better player experience
+   * Should fireballs and hyerballs collide and cancel each other out?
+ * Make "facing you" statue (if we get here)
+   * Remember to do this as its own branch off of the main branch
+   * Fun flavor element to add to world
+   * Should leverage animation system to turn instead of snapping to the opposite side, etc.
+
+Daily Plan 2023-05-11
+---------------------
+ * ~Video call with Mentor in the morning to start up and again in the afternoon to wrap up~
+ * Improvements to hero magic attack
+   * ~Add "heat seeking" version of Fireball used by miniboss - the Hyerball~
      * What should be done if there is no target?
-   * Consider if this will adjust timing of damage -- probably should, so hyerball does damage on strike
+   * ~Consider if this will adjust timing of damage -- probably should, so hyerball does damage on strike~
    * Possibly: experiment with firing rate
      * should we have a timeout between each fire?
      * should we do a mana-based system with a bar and a refill rate and a per-fireball-cost?
