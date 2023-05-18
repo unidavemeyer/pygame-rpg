@@ -7,9 +7,48 @@ import Lib
 import pygame
 import Vec
 import Weapon
+import Npc
 
+class Hyerball():
+	
+	def __init__(self, posStart, target):
+		#self.pos = posStart
+		self.surf = pygame.image.load(r"Hyerball.png")
+		Game.game.AddUpdate(self)
+		Game.game.AddRender(self)
+		self.pos = posStart
+		self.target = target
+		#self.pose = posEnd
+	
+	def Renderpri(self):
+		return Game.RenderPri.HYERBALL
 
+	def OnRender(self, surfScreen):
+		surfScreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
+	
+	def Updatepri(self):
+		return Game.UpdatePri.HYERBALL
 
+	def OnUpdate(self):
+		self.UpdateMove()
+	
+	def Kill(self):
+		Game.game.RemoveUpdate(self)
+		Game.game.RemoveRender(self)
+	
+	def	UpdateMove(self):
+		#for dis in NPC.Pattroler:
+			print(type(self.pos))
+			dPos = self.target.pos - self.pos
+			sEnd = dPos.Len()
+			starget = (self.pos - self.target.pos).Len()
+			dPosdelay = Vec.VecLimitLen(dPos, 10)
+			self.pos = self.pos + dPosdelay
+			if starget < 10.0:
+				self.target.OnDamage(-15)	# BB (davidm) unify damage numbers somewhere?
+				self.Kill()
+			elif sEnd < 1.0:
+				self.Kill()
 class Hero:
 	"""The game contains one or more Hero instances, which handles input, rendering, and"""
 	""" positioning in worldmap mode.  They also handle inventory functions, hit points,"""
@@ -59,7 +98,7 @@ class Hero:
 
 		self.v = Vec.Vec(0, 0)
 		self.pos = Vec.Vec(50, 50)
-
+		#self.target = Game.Game.LNpc
 		# player statistics
 
 		self.hpMax = 100
@@ -310,8 +349,8 @@ class Hero:
 		
 		keyStateAttack = self.mpKeyState.get(pygame.K_e)
 		if keyStateAttack.FIsPressed() and not self.fIsMagicAttackActive:
-			for npc in Game.game.LNpc():
-				npc.OnDamage(-10)	# BB (davidm) should damage numbers be unified somewhere?
+			npcbest = Game.game.LNpc()[0]
+			FH = Hyerball(self.pos, npcbest)
 			self.fIsMagicAttackActive = True
 		if not keyStateAttack.FIsPressed() and self.fIsMagicAttackActive:
 			self.fIsMagicAttackActive = False

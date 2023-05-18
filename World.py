@@ -75,7 +75,7 @@ class World:
 			return
 
 		# Let spawners we control do their things
-
+	
 		for spawner in self.lSpawner:
 			spawner.OnUpdate()
 

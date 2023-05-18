@@ -28,6 +28,7 @@ class RenderPri(Enum):
 	WORLD = auto()
 	NPC = auto()
 	HERO = auto()
+	HYERBALL = auto()
 	FIREBALL = auto()
 	MENU = auto()
 
@@ -38,6 +39,7 @@ class UpdatePri(Enum):
 
 	MENU = auto()
 	HERO = auto()
+	HYERBALL = auto()
 	NPC = auto()
 	FIREBALL = auto()
 	WORLD = auto()
