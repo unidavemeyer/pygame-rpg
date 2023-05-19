@@ -8,6 +8,7 @@ import pygame
 import Vec
 import Weapon
 import Npc
+import random
 
 class Hyerball():
 	
@@ -49,6 +50,12 @@ class Hyerball():
 				self.Kill()
 			elif sEnd < 1.0:
 				self.Kill()
+class Aimbox:
+	def __init__(self):
+		self.pos = Vec.Vec(random.randrange(0,1000), random.randrange(0,1000))
+	def OnDamage(self, damage):
+		pass
+
 class Hero:
 	"""The game contains one or more Hero instances, which handles input, rendering, and"""
 	""" positioning in worldmap mode.  They also handle inventory functions, hit points,"""
@@ -349,8 +356,12 @@ class Hero:
 		
 		keyStateAttack = self.mpKeyState.get(pygame.K_e)
 		if keyStateAttack.FIsPressed() and not self.fIsMagicAttackActive:
-			npcbest = Game.game.LNpc()[0]
-			FH = Hyerball(self.pos, npcbest)
+			if not Game.game.LNpc():
+				randobj = Aimbox()
+				FH = Hyerball(self.pos, randobj)
+			else:
+				npcbest = Game.game.LNpc()[0]
+				FH = Hyerball(self.pos, npcbest)
 			self.fIsMagicAttackActive = True
 		if not keyStateAttack.FIsPressed() and self.fIsMagicAttackActive:
 			self.fIsMagicAttackActive = False
