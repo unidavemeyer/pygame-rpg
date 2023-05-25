@@ -70,7 +70,8 @@ class Hero:
 		# Joystick tracking
 
 		self.joy = joy
-
+		self.tickAnimate = 0
+		self.Hiyacount = 0
 		# Tracking for key events
 
 		class KeyState:
@@ -351,17 +352,39 @@ class Hero:
 		vY = vMax * uUd
 
 		return Vec.Vec(vX, vY)
-		
+	def HFcount(self, LNpc, postarg):
+		BNPC = 1000
+		nice = None
+		for targ in LNpc:
+			dx = targ.pos - postarg # how we get from the target position to the NPC
+			dx = dx.Len() # calc length
+			if dx < BNPC:
+				BNPC = dx
+				nice = targ
+		return nice
+	def AMtimer(self):
+		tickCur = pygame.time.get_ticks()
+		tickInAnim = tickCur - self.tickAnimate
+		if tickInAnim >= 4000:
+			self.tickAnimate = tickCur
+			self.Hiyacount = 0
+
 	def UpdateAttackMagic(self):
-		
+	
 		keyStateAttack = self.mpKeyState.get(pygame.K_e)
 		if keyStateAttack.FIsPressed() and not self.fIsMagicAttackActive:
-			if not Game.game.LNpc():
-				randobj = Aimbox()
-				FH = Hyerball(self.pos, randobj)
-			else:
-				npcbest = Game.game.LNpc()[0]
-				FH = Hyerball(self.pos, npcbest)
+			if(self.Hiyacount < 3):
+				if not Game.game.LNpc():
+					randobj = Aimbox()
+					FH = Hyerball(self.pos, randobj)
+					self.Hiyacount += 1
+				else:
+					npcbest = self.HFcount(Game.game.LNpc(), self.pos)
+					FH = Hyerball(self.pos, npcbest)
+					self.Hiyacount += 1
+			else: 
+				print("wait")
+				self.AMtimer()
 			self.fIsMagicAttackActive = True
 		if not keyStateAttack.FIsPressed() and self.fIsMagicAttackActive:
 			self.fIsMagicAttackActive = False

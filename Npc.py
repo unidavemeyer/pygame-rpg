@@ -243,7 +243,6 @@ class HeroFinder(Npc):
 		self.hpMax = 50
 		self.hpCur = self.hpMax
 		self.surf = pygame.image.load(r"Amazoncrime.png")
-
 	def OnRender(self, surfScreen):
 		Npc.OnRender(self, surfScreen)
 
