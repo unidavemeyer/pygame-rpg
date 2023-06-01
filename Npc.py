@@ -47,7 +47,7 @@ class Npc:
 	def OnRender(self, surfScreen):
 		if Game.game.Mode() == Game.Mode.WORLDMAP:
 			surfScreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
-			Lib.RenderHpBar(surfScreen, self.pos, self.hpCur, self.hpMax)
+			Lib.RenderHpBar(surfScreen, self.pos, self.hpCur, self.hpMax, False)
 
 	def OnDamage(self, dHp):
 		self.hpCur += dHp
@@ -390,7 +390,7 @@ class Boss(Pattroler):
 			return
 		self.tickAnimate = tickCur
 		
-		self.tickAttack = tickCur
+		self.tickAttack = tickCur\
 	
 	def BossAttack2 (self):
 		tickCur = pygame.time.get_ticks()

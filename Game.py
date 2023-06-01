@@ -7,7 +7,6 @@ import os
 import pygame
 import sys
 import traceback
-
 import Hero
 import Menu
 import World

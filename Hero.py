@@ -71,7 +71,7 @@ class Hero:
 
 		self.joy = joy
 		self.tickAnimate = 0
-		self.Hiyacount = 0
+		#self.Hiyacount = 0
 		# Tracking for key events
 
 		class KeyState:
@@ -112,6 +112,10 @@ class Hero:
 		self.hpMax = 100
 		self.hpCur = self.hpMax
 		self.xp = 0
+		
+		self.Hiyacount = 3
+		self.Hiyacountmax = 3
+		self.checktime = True
 
 		# inventory
 
@@ -265,8 +269,8 @@ class Hero:
 			# BB (dave) very basic positioning here -- can flow off sides, no collision, etc.
 			surfScreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
 
-			Lib.RenderHpBar(surfScreen, self.pos, self.hpCur, self.hpMax)
-			
+			Lib.RenderHpBar(surfScreen, self.pos, self.hpCur, self.hpMax, False) # MAIN POINT FOR MEMEORY FOR ME
+			Lib.RenderHpBar(surfScreen, self.pos + Vec.Vec(0, 2), self.Hiyacount, self.Hiyacountmax, True)
 		elif Game.game.Mode() == Game.Mode.COMBAT:
 			# BB (davidm) draw the hero
 
@@ -363,27 +367,27 @@ class Hero:
 				nice = targ
 		return nice
 	def AMtimer(self):
+		self.checktime = False
 		tickCur = pygame.time.get_ticks()
 		tickInAnim = tickCur - self.tickAnimate
-		if tickInAnim >= 4000:
+		if tickInAnim >= 3500:
+			self.Hiyacount = 3
+			self.checktime = True
 			self.tickAnimate = tickCur
-			self.Hiyacount = 0
 
 	def UpdateAttackMagic(self):
 	
 		keyStateAttack = self.mpKeyState.get(pygame.K_e)
 		if keyStateAttack.FIsPressed() and not self.fIsMagicAttackActive:
-			if(self.Hiyacount < 3):
+			if(self.Hiyacount > 0 and self.checktime):
+				self.Hiyacount -= 1
 				if not Game.game.LNpc():
 					randobj = Aimbox()
 					FH = Hyerball(self.pos, randobj)
-					self.Hiyacount += 1
 				else:
 					npcbest = self.HFcount(Game.game.LNpc(), self.pos)
 					FH = Hyerball(self.pos, npcbest)
-					self.Hiyacount += 1
-			else: 
-				print("wait")
+			else:
 				self.AMtimer()
 			self.fIsMagicAttackActive = True
 		if not keyStateAttack.FIsPressed() and self.fIsMagicAttackActive:

@@ -7,12 +7,10 @@ import Vec
 
 
 
-def RenderHpBar(surfScreen, pos, hpCur, hpMax):
+def RenderHpBar(surfScreen, pos, hpCur, hpMax, heroset):
 	"""Renders a hit point bar to the screen based on the position for an entity and its current/max hitpoint
 	values"""
-
 	# Calculate fraction of full health that hpCur represents
-
 	uHp = min(max(hpCur / hpMax, 0.0), 1.0)
 	wHp = int(uHp * 32)
 	wBack = 32 - wHp
@@ -28,9 +26,12 @@ def RenderHpBar(surfScreen, pos, hpCur, hpMax):
 	rectHpBack = pygame.Rect(pos.x + wHp, yHpTop, wBack, s_dYHp)
 
 	# Calculate color for hp bar
-
-	s_rgbFull = (128, 255, 128)
-	s_rgbEmpty = (255, 0, 0)
+	if heroset:
+		s_rgbFull = (64,224,208)
+		s_rgbEmpty = (64,224,208)
+	elif not heroset:
+		s_rgbFull = (124,252,0)
+		s_rgbEmpty = (255, 0, 0)
 
 	rgbHp = Vec.Lerp(s_rgbEmpty, s_rgbFull, uHp)
 	rgbHpBack = (0, 0, 0)
