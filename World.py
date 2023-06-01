@@ -29,6 +29,7 @@ class World:
 
 	def __init__(self, strPath):
 		self.surf = None				# surface to render to the screen
+		self.strPath = strPath			# name of the world
 		self.lRectWall = []				# rectangles that are impassable
 		self.lSpawner = []				# spawners
 		self.lGate = []					# gates (go to other worlds)
@@ -40,6 +41,8 @@ class World:
 
 		self.LoadFromFile(strPath)
 		
+	def StrPath(self):
+		return self.strPath
 	def Kill(self):
 		self.MakeInactive()
 

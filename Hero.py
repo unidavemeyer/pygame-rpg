@@ -81,6 +81,7 @@ class Hero:
 		return Game.UpdatePri.HERO
 
 	def OnUpdate(self):
+
 		if Game.game.Mode() == Game.Mode.COMBAT:
 
 			# BB (dave) Handle damge, etc.
@@ -166,7 +167,9 @@ class Hero:
 				if npc.FShouldInteract(rectHero):
 					npc.OnInteract(self)
 					break
-			
+		if(self.hpCur <= 0):
+			world = Game.game.World()
+			Game.game.OnNewGame(world.StrPath()) # BB does not exactly set back to original scene
 		self.UpdateAttackMagic()
 			
 	def Handlerpri(self):
@@ -310,6 +313,7 @@ class Hero:
 		
 		keyStateAttack = self.mpKeyState.get(pygame.K_e)
 		if keyStateAttack.FIsPressed() and not self.fIsMagicAttackActive:
+			self.hpCur -= 10
 			for npc in Game.game.LNpc():
 				npc.OnDamage(-10)# BB (davidm) should damage numbers be unified somewhere?
 			self.fIsMagicAttackActive = True
