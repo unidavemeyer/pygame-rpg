@@ -108,7 +108,8 @@ class Game:
 		self.surfScreen = None		# area where everything is drawn
 		self.lJoy = []				# joysticks we've found
 
-		self.m_mode = Mode.MENU
+		self.m_mode = Mode.MENU			# mode we're in
+		self.m_strWorldNewGame = None	# what was the last new game world
 
 	def AddUpdate(self, obj):
 		"""Add obj to the priority list of objects to update.  obj is expected
@@ -230,6 +231,8 @@ class Game:
 	def OnNewGame(self, strWorld):
 		"""Clears objects and internal state and makes a new game start at the world map"""
 
+		self.m_strWorldNewGame = strWorld
+
 		for npc in self.lNpc:
 			npc.Kill()
 
@@ -266,6 +269,10 @@ class Game:
 		# exit out of the menu and set it were the player is in control and can walk around
 		self.SetMode(Mode.WORLDMAP)
 		
+	def StrWorldNewGameLast(self):
+		"""Returns the last new game world used, suitable for passing to OnNewGame, etc."""
+
+		return self.m_strWorldNewGame
 
 	def Run(self):
 
