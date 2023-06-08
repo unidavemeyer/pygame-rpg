@@ -390,7 +390,7 @@ class Boss(Pattroler):
 			return
 		self.tickAnimate = tickCur
 		
-		self.tickAttack = tickCur\
+		self.tickAttack = tickCur
 	
 	def BossAttack2 (self):
 		tickCur = pygame.time.get_ticks()
