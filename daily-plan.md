@@ -1,22 +1,40 @@
 BP Internship Spring 2023
 =========================
 
-Daily Plan 2023-06-01
+Daily Plan 2023-06-08
 ---------------------
  * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
+   * Discuss missing files - worker1.png
+ * Improvements to hero magic attack
+   * Review and push to main
+ * Death restart
+   * When hero dies start them over again
+   * Mentor to provide start world info
+ * End of game flow
+   * Door out of boss arena could lead to main room, or could go to congrats screen
+   * Congrats screen could maybe work like death screen, just different messaging, or could be world
+ * Tuning pass
+   * Playtest a few levels, make sure combat feels good, not too hard, not too easy
+   * Mentor should also play and provide feedback
+   * Make action items for what things should be adjusted for better player experience
+   * Should fireballs and hyerballs collide and cancel each other out?
+
+Daily Plan 2023-06-01
+---------------------
+ * ~Video call with Mentor in the morning to start up and again in the afternoon to wrap up~
    * Discuss plans - magic attack pri 1, but what after?
    * Mentor view: 6/8 ideally all about tuning, final layout, etc.
    * Discuss missing files - worker1.png
- * Improvements to hero magic attack
+ * ~Improvements to hero magic attack~
    * Add firing rate
      * should we have a timeout between each fire?
      * should we do a mana-based system with a bar and a refill rate and a per-fireball-cost?
      * add some type of UI element - maybe show charges? maybe show bar? either can work
- * Death screen
+ * ~Death screen~
    * When hero is killed, show a death screen (possibly special Menu page?)
    * When player confirms that screen, the option should be restart - start them over again
  * End of game flow
-   * Consider boss defeat gives Item to hero that unlocks "doors" that are the walls separating hero & boss
+   * ~Consider boss defeat gives Item to hero that unlocks "doors" that are the walls separating hero & boss~
    * Door out of boss arena could lead to main room, or could go to congrats screen
    * Congrats screen could maybe work like death screen, just different messaging
  * Tuning pass
