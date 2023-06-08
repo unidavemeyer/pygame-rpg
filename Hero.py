@@ -347,16 +347,17 @@ class Hero:
 		vY = vMax * uUd
 
 		return Vec.Vec(vX, vY)
-	def NPCFindTarget(self, lNpc, postarg):
+	def NpcFindTarget(self, lNpc, postarg):
 		dsBest = 1000
 		npcBest = None
 		for npcCheck in lNpc:
-			dsCheck = targ.pos - postarg # how we get from the target position to the NPC
+			dsCheck = npcCheck.pos - postarg # how we get from the target position to the NPC
 			dsCheck = dsCheck.Len() # calc length
-			if dx < dsBest:
-				BNPC = dsCheck
-				npcBest = targ
-		return nice
+			if dsCheck < dsBest:
+				dsBest = dsCheck
+				npcBest = npcCheck
+		return npcBest
+
 	def RechargeHiyaball(self):
 
 		tickCur = pygame.time.get_ticks()
@@ -376,7 +377,7 @@ class Hero:
 					randobj = Aimbox()
 					Hyerball(self.pos, randobj)
 				else:
-					npcBest = self.HFcount(Game.game.LNpc(), self.pos)
+					npcBest = self.NpcFindTarget(Game.game.LNpc(), self.pos)
 					Hyerball(self.pos, npcBest)
 			self.fIsMagicAttackActive = True
 		if not keyStateAttack.FIsPressed() and self.fIsMagicAttackActive:
