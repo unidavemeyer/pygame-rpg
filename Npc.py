@@ -248,6 +248,7 @@ class HeroFinder(Npc):
 		Npc.OnRender(self, surfScreen)
 
 	def OnUpdate(self):
+		self.Restart()
 		Npc.OnUpdate(self)
 		self.UpdateMove()
 
@@ -257,6 +258,10 @@ class HeroFinder(Npc):
 		dPos = hero.pos - self.pos
 		dPosMove = Vec.VecLimitLen(dPos, random.randrange(1,6))
 		self.SetPos(self.pos + dPosMove)
+	def Restart(self):
+		hero = Game.game.LHero()[0]
+		if hero.hpCur <= 0:
+			self.Kill()
 
 class Fireball():
 	
@@ -300,15 +305,19 @@ class Pattroler(Npc):
 	def __init__(self, world, hero):
 		Npc.__init__(self)
 
-		self.hpMax = 999
+		self.hpMax = 800
 		self.hpCur = self.hpMax
-
 		self.posGoal = Vec.Vec(300,160)
 		self.surf = pygame.image.load(r"broaintnoway.png")
 
 	def OnUpdate(self):
+		self.Restart()
 		Npc.OnUpdate(self)
 		self.UpdatePos()
+	def Restart(self):
+		hero = Game.game.LHero()[0]
+		if hero.hpCur <= 0:
+			self.Kill()
 
 	def UpdatePos(self):
 		dPosgoal = self.posGoal - self.pos
