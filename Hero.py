@@ -210,8 +210,7 @@ class Hero:
 					npc.OnInteract(self)
 					break
 		if(self.hpCur <= 0):
-			world = Game.game.World()
-			Game.game.OnNewGame(world.StrPath()) # BB does not exactly set back to original scene
+			Game.game.OnNewGame(Game.game.StrWorldNewGameLast())
 		self.UpdateAttackMagic()
 			
 	def Handlerpri(self):
