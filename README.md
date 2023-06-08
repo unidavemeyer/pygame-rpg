@@ -46,15 +46,35 @@ Mentor Work Item Backlog
  * ~Should we consider making a boss NPC of some kind?~
  * ~Approximate end for current session: January 22, with 3 days removed for holidays~
    * Suggests that current items should be completed and polished, probably boss NPC is last "add"
- * Should remove the specific combat mode - only have menu and worldmap
- * Will need to come up with a concrete plan to unify/solidify the damage model
+ * ~Should make update and render numbers into an enum/list type instead -- easier to see/maintain~
+ * ~Will need to come up with a concrete plan to unify/solidify the damage model~
    * should have maybe all objects take damage? maybe? at the very least, all NPCs, but as a function
    * Mentor to investigate the work here once the Patroller branch is in
+ * ~Investigate how to add sound/music stuff via pygame~
+   * https://www.pygame.org/docs/ref/music.html covers this
+ * ~Figure out why the hero doesn't die~
+   * Missing any checks on hp to make a Kill call
+ * ~Figure out how to reset main branch to match origin in github desktop~
+   * maybe put changes in own branch, and then they'll be removed from main...maybe?
+   * see: https://stackoverflow.com/questions/34790794/going-back-to-a-previous-commit-in-github-desktop
+ * ~What is hero death model?~
+   * Do we start again, prior room?
+   * Do we allow some kind of actual progress save system?
+ * ~Mentor to create Door class~
+   * Manages visible state to be open vs. closed
+   * Pays attention to tag value for Item held by hero (in lItem)
+     * check [x.mpVarValue['tag'] for x in hero.lItem]
+   * Probably also add/remove blocker boxes per collision detection system
+   * First pass: do not consume key, just check for presence
+ * Mentor to investigate why boss stays alive when we do new game
+   * Is there a missing notify for render/update objects when switching worlds?
+ * Consider button puzzle implementation details - maybe use Items as buttons?
+ * Should remove the specific combat mode - only have menu and worldmap
+ * Consider making Npc.__init__() take max hp as a parameter to do setup once
+ * Should convert to super() instead of direct class super calls
  * Do we want to add a melee attack for the hero and/or some of the NPCs?
    * Effective model: short radius auto-hit attack, maybe?
    * Do we want to allow the player to block? NPCs?
- * Consider an improved, enum-ized render/update/input model, maybe?
-   * Would allow us to see in one spot what order things happen, allow reorder easily, insert, etc.
  * Consider a "freeze" or "slow" attack/aura for NPCs - reduce hero movement speed
  * Do we have any balance considerations?
  * Do we want inventory and inventory management?
@@ -63,6 +83,3 @@ Mentor Work Item Backlog
    * support grinding in the world?
    * unlock equipment, or just do stat gains?
    * allow player choice, or simply increase things automatically via whatever forumulas we cook up?
- * What is hero death model?
-   * Do we start again, prior room?
-   * Do we allow some kind of actual progress save system?

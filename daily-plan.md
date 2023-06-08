@@ -1,11 +1,645 @@
 BP Internship Spring 2023
 =========================
 
+Daily Plan 2023-06-08
+---------------------
+ * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
+   * Discuss missing files - worker1.png
+ * Improvements to hero magic attack
+   * Review and push to main
+ * Death restart
+   * When hero dies start them over again
+   * Mentor to provide start world info
+ * End of game flow
+   * Door out of boss arena could lead to main room, or could go to congrats screen
+   * Congrats screen could maybe work like death screen, just different messaging, or could be world
+ * Tuning pass
+   * Playtest a few levels, make sure combat feels good, not too hard, not too easy
+   * Mentor should also play and provide feedback
+   * Make action items for what things should be adjusted for better player experience
+   * Should fireballs and hyerballs collide and cancel each other out?
+
+Daily Plan 2023-06-01
+---------------------
+ * ~Video call with Mentor in the morning to start up and again in the afternoon to wrap up~
+   * Discuss plans - magic attack pri 1, but what after?
+   * Mentor view: 6/8 ideally all about tuning, final layout, etc.
+   * Discuss missing files - worker1.png
+ * ~Improvements to hero magic attack~
+   * Add firing rate
+     * should we have a timeout between each fire?
+     * should we do a mana-based system with a bar and a refill rate and a per-fireball-cost?
+     * add some type of UI element - maybe show charges? maybe show bar? either can work
+ * ~Death screen~
+   * When hero is killed, show a death screen (possibly special Menu page?)
+   * When player confirms that screen, the option should be restart - start them over again
+ * End of game flow
+   * ~Consider boss defeat gives Item to hero that unlocks "doors" that are the walls separating hero & boss~
+   * Door out of boss arena could lead to main room, or could go to congrats screen
+   * Congrats screen could maybe work like death screen, just different messaging
+ * Tuning pass
+   * Playtest a few levels, make sure combat feels good, not too hard, not too easy
+   * Mentor should also play and provide feedback
+   * Make action items for what things should be adjusted for better player experience
+   * Should fireballs and hyerballs collide and cancel each other out?
+ * Make "facing you" statue (if we get here)
+   * Remember to do this as its own branch off of the main branch
+   * Fun flavor element to add to world
+   * Should leverage animation system to turn instead of snapping to the opposite side, etc.
+
+Daily Plan 2023-05-25
+---------------------
+ * ~Video call with Mentor in the morning to start up and again in the afternoon to wrap up~
+ * Improvements to hero magic attack
+   * ~Smarter selection of NPC target~
+     * probably want to select the nearest NPC but other alternatives could be considered
+   * Add firing rate
+     * should we have a timeout between each fire?
+     * should we do a mana-based system with a bar and a refill rate and a per-fireball-cost?
+     * add some type of UI element - maybe show charges? maybe show bar? either can work
+ * Death screen
+   * When hero is killed, show a death screen (possibly special Menu page?)
+   * When player confirms that screen, the option should be restart - start them over again
+ * End of game flow
+   * Consider boss defeat gives Item to hero that unlocks "doors" that are the walls separating hero & boss
+   * Door out of boss arena could lead to main room, or could go to congrats screen
+   * Congrats screen could maybe work like death screen, just different messaging
+ * Tuning pass
+   * Playtest a few levels, make sure combat feels good, not too hard, not too easy
+   * Mentor should also play and provide feedback
+   * Make action items for what things should be adjusted for better player experience
+   * Should fireballs and hyerballs collide and cancel each other out?
+ * Make "facing you" statue (if we get here)
+   * Remember to do this as its own branch off of the main branch
+   * Fun flavor element to add to world
+   * Should leverage animation system to turn instead of snapping to the opposite side, etc.
+
+Daily Plan 2023-05-18
+---------------------
+ * ~Video call with Mentor in the morning to start up and again in the afternoon to wrap up~
+   * Meeting in the morning with advisor at 8:30
+   * Need to go through internship eval form
+ * Improvements to hero magic attack
+   * ~Set up fake target if there is no NPC to attack~
+   * Smarter selection of NPC target
+     * probably want to select the nearest NPC but other alternatives could be considered
+   * Add firing rate
+     * should we have a timeout between each fire?
+     * should we do a mana-based system with a bar and a refill rate and a per-fireball-cost?
+     * add some type of UI element - maybe show charges? maybe show bar? either can work
+ * Death screen
+   * When hero is killed, show a death screen (possibly special Menu page?)
+   * When player confirms that screen, the option should be restart - start them over again
+ * Tuning pass
+   * Playtest a few levels, make sure combat feels good, not too hard, not too easy
+   * Mentor should also play and provide feedback
+   * Make action items for what things should be adjusted for better player experience
+   * Should fireballs and hyerballs collide and cancel each other out?
+ * Make "facing you" statue (if we get here)
+   * Remember to do this as its own branch off of the main branch
+   * Fun flavor element to add to world
+   * Should leverage animation system to turn instead of snapping to the opposite side, etc.
+
+Daily Plan 2023-05-11
+---------------------
+ * ~Video call with Mentor in the morning to start up and again in the afternoon to wrap up~
+ * Improvements to hero magic attack
+   * ~Add "heat seeking" version of Fireball used by miniboss - the Hyerball~
+     * What should be done if there is no target?
+   * ~Consider if this will adjust timing of damage -- probably should, so hyerball does damage on strike~
+   * Possibly: experiment with firing rate
+     * should we have a timeout between each fire?
+     * should we do a mana-based system with a bar and a refill rate and a per-fireball-cost?
+   * Should fireballs and hyerballs collide and cancel each other out?
+ * Make "facing you" statue
+   * Remember to do this as its own branch off of the main branch
+   * Fun flavor element to add to world
+   * Should leverage animation system to turn instead of snapping to the opposite side, etc.
+ * Death screen
+   * When hero is killed, show a death screen (possibly special Menu page?)
+   * When player confirms that screen, the option should be restart - start them over again
+ * Tuning pass
+   * Playtest a few levels, make sure combat feels good, not too hard, not too easy
+   * Mentor should also play and provide feedback
+   * Make action items for what things should be adjusted for better player experience
+
+Daily Plan 2023-05-04
+---------------------
+ * ~Video call with Mentor in the morning to start up and again in the afternoon to wrap up~
+   * Expect final work day is 6/8 but may need to modify as the end nears
+ * ~Do final testing and review of Item class~
+ * Improvements to hero magic attack
+   * ~Should do as separate branch (like features are done in git typically)~
+   * Add "heat seeking" version of Fireball used by miniboss
+     * Could be a different/optional argument to __init__ on Fireball
+     * Could be a separate added def which reconfigures to do heat seeking
+   * Consider if this will adjust timing of damage -- probably should, so fireball does damage on strike
+   * Possibly: experiment with "held key" behavior -- repeated attack with cooldown?
+ * Make "facing you" statue
+   * Remember to do this as its own branch off of the main branch
+   * Fun flavor element to add to world
+   * Should leverage animation system to turn instead of snapping to the opposite side, etc.
+ * Death screen
+   * When hero is killed, show a death screen (possibly special Menu page?)
+   * When player confirms that screen, the option should be restart - start them over again
+ * Tuning pass
+   * Playtest a few levels, make sure combat feels good, not too hard, not too easy
+   * Mentor should also play and provide feedback
+   * Make action items for what things should be adjusted for better player experience
+
+Daily Plan 2023-04-27
+---------------------
+ * ~Video call with Mentor in the morning to start up and again in the afternoon to wrap up~
+   * Discuss music (dropped from list, not a concern)
+   * Discuss Items and Doors; should mentor help out more on Items, and/or should mentor assist with Doors?
+   * Think about outline of remaining weeks and how things can/should fit into that time
+   * Discuss hero death model - what should happen when the hero is killed?
+ * ~Fill in Item class in Item.py~
+   * Update for Item should effectively check if any hero is touching
+     * When hero "picks up" Item it should do Game.game.RemoveRender() since we don't want it visible anymore
+     * When hero "picks up" Item it should do Game.game.RemoveUpdate() since we don't want it to update anymore
+     * When hero "picks up" Item it should go into that hero's lItem list (probably append(), i.e., added to end of list)
+   * Will need changes in World.py to allow .wld files to have Items added on specific tiles
+     * Add ItemTrySpawn function to World class
+       * First pass: get Item object to spawn with appropriate settings (as listed in .wld file)
+       * Second pass: Should scan hero object's lItem to see if one exists with the appropriate tags
+         * If such item is found, return None
+         * If such item is *not* found, return new Item object
+       * This model allows us flexibility: if we want doors to be once-only, they can "eat" the key; otherwise, they leave them alone
+       * Likewise, if we did health drops, those could be available until/unless consumed before they would reappear, etc.
+ * Create Door class in Door.py
+   * Like class Fireball, will need several standard methods
+     * __init__ will be required; will need position for door as argument
+     * Renderpri() and OnRender() functions will be needed
+     * Updatepri() and OnUpdate() functions will be needed
+   * Update for Door should check Hero inventory for Item with appropriate tags
+     * If found, Door should switch to open state
+     * If not found, Door should switch to closed state
+   * In closed state, Door needs to add a "wall" rectangle to the world (see class World, self.lRectWall)
+   * In open state, Door needs to find matching "wall" rectangle and remove from the world
+   * This should work as a state machine -- if door is open, and wants to be open, nothing happens, etc.
+   * Discuss state machines with Mentor
+   * Will need changes in World.py to allow .wld files to have Doors added on specific tiles
+     * Add entry in LoadFromFile to see 'door' and create new Door object, passing pos and some extra bits to Door.__init__:
+       * Should look for mpSecData\['tiles']\[sym]\['tags'] which should be a list of strings
+       * Should look for mpSecData\['tiles']\[sym]\['door-closed-image'] to set image instead of hard coding in class
+       * Should look for mpSecData\['tiles']\[sym]\['door-open-image'] to set image instead of hard coding in class
+ * Make "facing you" statue
+   * Remember to do this as its own branch off of the main branch
+   * Fun flavor element to add to world
+   * Should leverage animation system to turn instead of snapping to the opposite side, etc.
+ * Consider improvements to hero magic attack
+   * Add "heat seeking" version of projectiles used by miniboss
+   * Consider if this will adjust timing of damage -- probably should?
+   * Experiment with "held key" behavior -- repeated attack with cooldown?
+ * Tuning pass
+   * Playtest a few levels, make sure combat feels good, not too hard, not too easy
+   * Mentor should also play and provide feedback
+   * Make action items for what things should be adjusted for better player experience
+ * Discuss further work on heat seeking NPC
+   * Consider range - how close is the hero before this activates?
+   * Consider velocity target based approach - discuss with mentor to get the basic idea there
+   * Consider how NPC attacking works - contact? short range "stomp"? other?
+
+Daily Plan 2023-04-20
+---------------------
+ * ~Video call with Mentor in the morning to start up and again in the afternoon to wrap up~
+ * Fill in Item class in Item.py
+   * Update for Item should effectively check if any hero is touching
+     * When hero "picks up" Item it should do Game.game.RemoveRender() since we don't want it visible anymore
+     * When hero "picks up" Item it should do Game.game.RemoveUpdate() since we don't want it to update anymore
+     * When hero "picks up" Item it should go into that hero's lItem list (probably append(), i.e., added to end of list)
+   * Will need changes in World.py to allow .wld files to have Items added on specific tiles
+     * ~Add entry in LoadFromFile to see 'item' and create Item, passing pos and some extra bits to ItemTrySpawn function (see below)~
+       * ~Should look for mpSecData\['tiles']\[sym]\['tags'] which should be a list of strings~
+       * ~Should look for mpSecData\['tiles']\[sym]\['item-image'] to set image instead of hard coding in class~
+     * Add ItemTrySpawn function to World class
+       * Should scan hero object's lItem to see if one exists with the appropriate tags
+       * If such item is found, return None
+       * If such item is *not* found, return new Item object
+       * This model allows us flexibility: if we want doors to be once-only, they can "eat" the key; otherwise, they leave them alone
+       * Likewise, if we did health drops, those could be available until/unless consumed before they would reappear, etc.
+ * Create Door class in Door.py
+   * Like class Fireball, will need several standard methods
+     * __init__ will be required; will need position for door as argument
+     * Renderpri() and OnRender() functions will be needed
+     * Updatepri() and OnUpdate() functions will be needed
+   * Update for Door should check Hero inventory for Item with appropriate tags
+     * If found, Door should switch to open state
+     * If not found, Door should switch to closed state
+   * In closed state, Door needs to add a "wall" rectangle to the world (see class World, self.lRectWall)
+   * In open state, Door needs to find matching "wall" rectangle and remove from the world
+   * This should work as a state machine -- if door is open, and wants to be open, nothing happens, etc.
+   * Discuss state machines with Mentor
+   * Will need changes in World.py to allow .wld files to have Doors added on specific tiles
+     * Add entry in LoadFromFile to see 'door' and create new Door object, passing pos and some extra bits to Door.__init__:
+       * Should look for mpSecData\['tiles']\[sym]\['tags'] which should be a list of strings
+       * Should look for mpSecData\['tiles']\[sym]\['door-closed-image'] to set image instead of hard coding in class
+       * Should look for mpSecData\['tiles']\[sym]\['door-open-image'] to set image instead of hard coding in class
+ * Investigate how to add music
+   * https://www.pygame.org/docs/ref/music.html covers this
+ * Make "facing you" statue
+   * Remember to do this as its own branch off of the main branch
+   * Fun flavor element to add to world
+   * Should leverage animation system to turn instead of snapping to the opposite side, etc.
+ * Consider improvements to hero magic attack
+   * Add "heat seeking" version of projectiles used by miniboss
+   * Consider if this will adjust timing of damage -- probably should?
+   * Experiment with "held key" behavior -- repeated attack with cooldown?
+ * Tuning pass
+   * Playtest a few levels, make sure combat feels good, not too hard, not too easy
+   * Mentor should also play and provide feedback
+   * Make action items for what things should be adjusted for better player experience
+ * Discuss further work on heat seeking NPC
+   * Consider range - how close is the hero before this activates?
+   * Consider velocity target based approach - discuss with mentor to get the basic idea there
+   * Consider how NPC attacking works - contact? short range "stomp"? other?
+
+Daily Plan 2023-04-06
+---------------------
+ * ~Video call with Mentor in the morning to start up and again in the afternoon to wrap up~
+   * ~Maybe do first call after SLC?~
+   * ~Discussed instances vs. classes and instantiation~
+ * Fill in Item class in Item.py
+   * Update for Item should effectively check if any hero is touching
+     * When hero "picks up" Item it should do Game.game.RemoveRender() since we don't want it visible anymore
+     * When hero "picks up" Item it should do Game.game.RemoveUpdate() since we don't want it to update anymore
+     * When hero "picks up" Item it should go into that hero's lItem list (probably append(), i.e., added to end of list)
+   * Will need changes in World.py to allow .wld files to have Items added on specific tiles
+     * Add entry in LoadFromFile to see 'item' and create Item, passing pos and some extra bits to ItemTrySpawn function (see below)
+       * Should look for mpSecData\['tiles']\[sym]\['tags'] which should be a list of strings
+       * Should look for mpSecData\['tiles']\[sym]\['item-image'] to set image instead of hard coding in class
+     * ~Add ItemTrySpawn function to World class~
+       * Should scan hero object's lItem to see if one exists with the appropriate tags
+       * If such item is found, return None
+       * If such item is *not* found, return new Item object
+       * This model allows us flexibility: if we want doors to be once-only, they can "eat" the key; otherwise, they leave them alone
+       * Likewise, if we did health drops, those could be available until/unless consumed before they would reappear, etc.
+ * Create Door class in Door.py
+   * Like class Fireball, will need several standard methods
+     * __init__ will be required; will need position for door as argument
+     * Renderpri() and OnRender() functions will be needed
+     * Updatepri() and OnUpdate() functions will be needed
+   * Update for Door should check Hero inventory for Item with appropriate tags
+     * If found, Door should switch to open state
+     * If not found, Door should switch to closed state
+   * In closed state, Door needs to add a "wall" rectangle to the world (see class World, self.lRectWall)
+   * In open state, Door needs to find matching "wall" rectangle and remove from the world
+   * This should work as a state machine -- if door is open, and wants to be open, nothing happens, etc.
+   * Discuss state machines with Mentor
+   * Will need changes in World.py to allow .wld files to have Doors added on specific tiles
+     * Add entry in LoadFromFile to see 'door' and create new Door object, passing pos and some extra bits to Door.__init__:
+       * Should look for mpSecData\['tiles']\[sym]\['tags'] which should be a list of strings
+       * Should look for mpSecData\['tiles']\[sym]\['door-closed-image'] to set image instead of hard coding in class
+       * Should look for mpSecData\['tiles']\[sym]\['door-open-image'] to set image instead of hard coding in class
+ * Investigate how to add music
+   * https://www.pygame.org/docs/ref/music.html covers this
+ * Make "facing you" statue
+   * Remember to do this as its own branch off of the main branch
+   * Fun flavor element to add to world
+   * Should leverage animation system to turn instead of snapping to the opposite side, etc.
+ * Consider improvements to hero magic attack
+   * Add "heat seeking" version of projectiles used by miniboss
+   * Consider if this will adjust timing of damage -- probably should?
+   * Experiment with "held key" behavior -- repeated attack with cooldown?
+ * Tuning pass
+   * Playtest a few levels, make sure combat feels good, not too hard, not too easy
+   * Mentor should also play and provide feedback
+   * Make action items for what things should be adjusted for better player experience
+ * Discuss further work on heat seeking NPC
+   * Consider range - how close is the hero before this activates?
+   * Consider velocity target based approach - discuss with mentor to get the basic idea there
+   * Consider how NPC attacking works - contact? short range "stomp"? other?
+
+Daily Plan 2023-03-30
+---------------------
+ * ~Video call with Mentor in the morning to start up and again in the afternoon to wrap up~
+   * Can do additional checks in the day if desired
+ * ~Discuss/reminder on 4/6 plans~
+   * What items would we like to have on the list to provide backup/cover for that day?
+ * Fill in Item class in Item.py
+   * ~Like class Fireball, will need several standard methods~
+     * __init__ will be required; will need position for item as argument and probably some additional data
+     * Renderpri() and OnRender() functions will be needed
+     * Updatepri() and OnUpdate() functions will be needed
+   * Update for Item should effectively check if any hero is touching
+     * When hero "picks up" Item it should do Game.game.RemoveRender() since we don't want it visible anymore
+     * When hero "picks up" Item it should do Game.game.RemoveUpdate() since we don't want it to update anymore
+     * When hero "picks up" Item it should go into that hero's lItem list (probably append(), i.e., added to end of list)
+   * Will need changes in World.py to allow .wld files to have Items added on specific tiles
+     * Add entry in LoadFromFile to see 'item' and create Item, passing pos and some extra bits to ItemTrySpawn function (see below)
+       * Should look for mpSecData\['tiles']\[sym]\['tags'] which should be a list of strings
+       * Should look for mpSecData\['tiles']\[sym]\['item-image'] to set image instead of hard coding in class
+     * Add ItemTrySpawn function to World class
+       * Should scan hero object's lItem to see if one exists with the appropriate tags
+       * If such item is found, return None
+       * If such item is *not* found, return new Item object
+       * This model allows us flexibility: if we want doors to be once-only, they can "eat" the key; otherwise, they leave them alone
+       * Likewise, if we did health drops, those could be available until/unless consumed before they would reappear, etc.
+ * Create Door class in Door.py
+   * Like class Fireball, will need several standard methods
+     * __init__ will be required; will need position for door as argument
+     * Renderpri() and OnRender() functions will be needed
+     * Updatepri() and OnUpdate() functions will be needed
+   * Update for Door should check Hero inventory for Item with appropriate tags
+     * If found, Door should switch to open state
+     * If not found, Door should switch to closed state
+   * In closed state, Door needs to add a "wall" rectangle to the world (see class World, self.lRectWall)
+   * In open state, Door needs to find matching "wall" rectangle and remove from the world
+   * This should work as a state machine -- if door is open, and wants to be open, nothing happens, etc.
+   * Discuss state machines with Mentor
+   * Will need changes in World.py to allow .wld files to have Doors added on specific tiles
+     * Add entry in LoadFromFile to see 'door' and create new Door object, passing pos and some extra bits to Door.__init__:
+       * Should look for mpSecData\['tiles']\[sym]\['tags'] which should be a list of strings
+       * Should look for mpSecData\['tiles']\[sym]\['door-closed-image'] to set image instead of hard coding in class
+       * Should look for mpSecData\['tiles']\[sym]\['door-open-image'] to set image instead of hard coding in class
+ * Tuning pass
+   * Playtest a few levels, make sure combat feels good, not too hard, not too easy
+   * Mentor should also play and provide feedback
+   * Make action items for what things should be adjusted for better player experience
+ * Make "facing you" statue
+   * Remember to do this as its own branch off of the main branch
+   * Fun flavor element to add to world
+   * Should leverage animation system to turn instead of snapping to the opposite side, etc.
+ * Discuss further work on heat seeking NPC
+   * Consider range - how close is the hero before this activates?
+   * Consider velocity target based approach - discuss with mentor to get the basic idea there
+   * Consider how NPC attacking works - contact? short range "stomp"? other?
+ * Consider improvements to hero magic attack
+   * Add "heat seeking" version of projectiles used by miniboss
+   * Consider if this will adjust timing of damage -- probably should?
+   * Experiment with "held key" behavior -- repeated attack with cooldown?
+
+Daily Plan 2023-03-23
+---------------------
+ * ~Video call with Mentor in the morning to start up and again in the afternoon to wrap up~
+   * Can do additional checks in the day if desired
+ * ~Review miniboss NPC branch~
+   * Need to have it committed locally and pushed to github
+ * Fill in Item class in Item.py
+   * Like class Fireball, will need several standard methods
+     * __init__ will be required; will need position for item as argument and probably some additional data
+     * Renderpri() and OnRender() functions will be needed
+     * Updatepri() and OnUpdate() functions will be needed
+   * Update for Item should effectively check if any hero is touching
+     * When hero "picks up" Item it should do Game.game.RemoveRender() since we don't want it visible anymore
+     * When hero "picks up" Item it should do Game.game.RemoveUpdate() since we don't want it to update anymore
+     * When hero "picks up" Item it should go into that hero's lItem list (probably append(), i.e., added to end of list)
+   * Will need changes in World.py to allow .wld files to have Items added on specific tiles
+     * Add new ItemSpawner class, based on (but not derived from) Spawner class
+       * Will need similar __init__ function to Spawner class (args, anyway)
+     * Add entry in LoadFromFile to see 'item' and create Item, passing pos and some extra bits to Item.__init__:
+       * Should look for mpSecData\['tiles']\[sym]\['tags'] which should be a list of strings
+       * Should look for mpSecData\['tiles']\[sym]\['item-image'] to set image instead of hard coding in class
+       * Should not create Item if hero already has that Item (maybe checked by tags list?)
+ * Create Door class in Door.py
+   * Like class Fireball, will need several standard methods
+     * __init__ will be required; will need position for door as argument
+     * Renderpri() and OnRender() functions will be needed
+     * Updatepri() and OnUpdate() functions will be needed
+   * Update for Door should check Hero inventory for Item with appropriate tags
+     * If found, Door should switch to open state
+     * If not found, Door should switch to closed state
+   * In closed state, Door needs to add a "wall" rectangle to the world (see class World, self.lRectWall)
+   * In open state, Door needs to find matching "wall" rectangle and remove from the world
+   * This should work as a state machine -- if door is open, and wants to be open, nothing happens, etc.
+   * Discuss state machines with Mentor
+   * Will need changes in World.py to allow .wld files to have Doors added on specific tiles
+     * Add entry in LoadFromFile to see 'door' and create new Door object, passing pos and some extra bits to Door.__init__:
+       * Should look for mpSecData\['tiles']\[sym]\['tags'] which should be a list of strings
+       * Should look for mpSecData\['tiles']\[sym]\['door-closed-image'] to set image instead of hard coding in class
+       * Should look for mpSecData\['tiles']\[sym]\['door-open-image'] to set image instead of hard coding in class
+ * Tuning pass
+   * Playtest a few levels, make sure combat feels good, not too hard, not too easy
+   * Mentor should also play and provide feedback
+   * Make action items for what things should be adjusted for better player experience
+ * Make "facing you" statue
+   * Remember to do this as its own branch off of the main branch
+   * Fun flavor element to add to world
+   * Should leverage animation system to turn instead of snapping to the opposite side, etc.
+ * Discuss further work on heat seeking NPC
+   * Consider range - how close is the hero before this activates?
+   * Consider velocity target based approach - discuss with mentor to get the basic idea there
+   * Consider how NPC attacking works - contact? short range "stomp"? other?
+ * Consider improvements to hero magic attack
+   * Add "heat seeking" version of projectiles used by miniboss
+   * Consider if this will adjust timing of damage -- probably should?
+   * Experiment with "held key" behavior -- repeated attack with cooldown?
+
+Daily Plan 2023-03-16
+---------------------
+ * ~Video call with Mentor in the morning to start up and again in the afternoon to wrap up~
+   * Can do additional checks in the day if desired
+ * ~Continue work on miniboss NPC~
+   * Boss class should derive from Patroller class
+   * Will want to figure out interesting firing pattern -- will involve keeping track of timing
+     * Consider: author the delays between firing as a list in the yaml -- would allow tuning and variation
+   * After boss is functional, but before working on animation, should review and merge
+ * Fill in Item class in Item.py
+   * Like class Fireball, will need several standard methods
+     * __init__ will be required; will need position for item as argument
+     * Renderpri() and OnRender() functions will be needed
+     * Updatepri() and OnUpdate() functions will be needed
+   * Update for Item should effectively check if any hero is touching
+     * When hero "picks up" Item it should do Game.game.RemoveRender() since we don't want it visible anymore
+     * When hero "picks up" Item it should do Game.game.RemoveUpdate() since we don't want it to update anymore
+     * When hero "picks up" Item it should go into that hero's lItem list (probably appended, i.e., added to end of list)
+   * Will need changes in World.py to allow .wld files to have Items added on specific tiles
+     * Add new ItemSpawner class, based on (but not derived from) Spawner class
+       * Will need similar __init__ function to Spawner class (args, anyway)
+     * Add entry in LoadFromFile to see 'item' and create Item, passing pos and some extra bits to Item.__init__:
+       * Should look for mpSecData\['tiles']\[sym]\['tags'] which should be a list of strings
+       * Should look for mpSecData\['tiles']\[sym]\['item-image'] to set image instead of hard coding in class
+       * Should not create Item if hero already has that Item (maybe checked by tags list?)
+ * Create Door class in Door.py
+   * Like class Fireball, will need several standard methods
+     * __init__ will be required; will need position for door as argument
+     * Renderpri() and OnRender() functions will be needed
+     * Updatepri() and OnUpdate() functions will be needed
+   * Update for Door should check Hero inventory for Item with appropriate tags
+     * If found, Door should switch to open state
+     * If not found, Door should switch to closed state
+   * In closed state, Door needs to add a "wall" rectangle to the world (see class World, self.lRectWall)
+   * In open state, Door needs to find matching "wall" rectangle and remove from the world
+   * This should work as a state machine -- if door is open, and wants to be open, nothing happens, etc.
+   * Discuss state machines with Mentor
+   * Will need changes in World.py to allow .wld files to have Doors added on specific tiles
+     * Add entry in LoadFromFile to see 'door' and create new Door object, passing pos and some extra bits to Door.__init__:
+       * Should look for mpSecData\['tiles']\[sym]\['tags'] which should be a list of strings
+       * Should look for mpSecData\['tiles']\[sym]\['door-closed-image'] to set image instead of hard coding in class
+       * Should look for mpSecData\['tiles']\[sym]\['door-open-image'] to set image instead of hard coding in class
+ * ~Work on flipbook animation system for boss~
+   * include flipbook animation so boss can "shoot" appropriately with animation
+   * Basic authoring: In the room config, list out the "fire" or other "action" files as a list
+     * Alt: maybe author as list of "hold time" and file -- allows authoring of speeds, etc., in one spot
+     * Actions: Fire, Damage, Move (maybe with directions), etc. -- should start with known ones we need (e.g., Fire)
+   * Basic code: Load list of anims, associate with action, and then run sequence of frames when action starts
+   * Basic timing: Will need current index in list of frames, and draw appropriate one in each OnRender call, incrementing frame as we go
+ * Make "facing you" statue
+   * Remember to do this as its own branch off of the main branch
+   * Fun flavor element to add to world
+   * Should leverage animation system to turn instead of snapping to the opposite side, etc.
+ * Discuss further work on heat seeking NPC
+   * Consider range - how close is the hero before this activates?
+   * Consider velocity target based approach - discuss with mentor to get the basic idea there
+   * Consider how NPC attacking works - contact? short range "stomp"? other?
+ * Consider improvements to hero magic attack
+   * Add "heat seeking" version of projectiles used by miniboss
+   * Consider if this will adjust timing of damage -- probably should?
+   * Experiment with "held key" behavior -- repeated attack with cooldown?
+
+Daily Plan 2023-03-09
+---------------------
+ * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
+   * Can do additional checks in the day if desired
+ * ~Fix main branch to match origin~
+   * Need to undo some checkins - can work with Mentor to get this done
+ * ~Continue work on miniboss NPC~
+   * Boss class should derive from Patroller class
+   * Will want to figure out interesting firing pattern -- will involve keeping track of timing
+     * Consider: author the delays between firing as a list in the yaml -- would allow tuning and variation
+   * After boss is functional, but before working on animation, should review and merge
+ * Fill in Item class in Item.py
+   * Like class Fireball, will need several standard methods
+     * __init__ will be required; will need position for item as argument
+     * Renderpri() and OnRender() functions will be needed
+     * Updatepri() and OnUpdate() functions will be needed
+   * Update for Item should effectively check if any hero is touching
+     * When hero "picks up" Item it should do Game.game.RemoveRender() since we don't want it visible anymore
+     * When hero "picks up" Item it should do Game.game.RemoveUpdate() since we don't want it to update anymore
+     * When hero "picks up" Item it should go into that hero's lItem list (probably appended, i.e., added to end of list)
+   * Will need changes in World.py to allow .wld files to have Items added on specific tiles
+     * Add new ItemSpawner class, based on (but not derived from) Spawner class
+       * Will need similar __init__ function to Spawner class (args, anyway)
+     * Add entry in LoadFromFile to see 'item' and create Item, passing pos and some extra bits to Item.__init__:
+       * Should look for mpSecData\['tiles']\[sym]\['tags'] which should be a list of strings
+       * Should look for mpSecData\['tiles']\[sym]\['item-image'] to set image instead of hard coding in class
+       * Should not create Item if hero already has that Item (maybe checked by tags list?)
+ * Create Door class in Door.py
+   * Like class Fireball, will need several standard methods
+     * __init__ will be required; will need position for door as argument
+     * Renderpri() and OnRender() functions will be needed
+     * Updatepri() and OnUpdate() functions will be needed
+   * Update for Door should check Hero inventory for Item with appropriate tags
+     * If found, Door should switch to open state
+     * If not found, Door should switch to closed state
+   * In closed state, Door needs to add a "wall" rectangle to the world (see class World, self.lRectWall)
+   * In open state, Door needs to find matching "wall" rectangle and remove from the world
+   * This should work as a state machine -- if door is open, and wants to be open, nothing happens, etc.
+   * Discuss state machines with Mentor
+   * Will need changes in World.py to allow .wld files to have Doors added on specific tiles
+     * Add entry in LoadFromFile to see 'door' and create new Door object, passing pos and some extra bits to Door.__init__:
+       * Should look for mpSecData\['tiles']\[sym]\['tags'] which should be a list of strings
+       * Should look for mpSecData\['tiles']\[sym]\['door-closed-image'] to set image instead of hard coding in class
+       * Should look for mpSecData\['tiles']\[sym]\['door-open-image'] to set image instead of hard coding in class
+ * Work on flipbook animation system for boss
+   * include flipbook animation so boss can "shoot" appropriately with animation
+   * Basic authoring: In the room config, list out the "fire" or other "action" files as a list
+     * Alt: maybe author as list of "hold time" and file -- allows authoring of speeds, etc., in one spot
+     * Actions: Fire, Damage, Move (maybe with directions), etc. -- should start with known ones we need (e.g., Fire)
+   * Basic code: Load list of anims, associate with action, and then run sequence of frames when action starts
+   * Basic timing: Will need current index in list of frames, and draw appropriate one in each OnRender call, incrementing frame as we go
+ * Make "facing you" statue
+   * Remember to do this as its own branch off of the main branch
+   * Fun flavor element to add to world
+   * Should leverage animation system to turn instead of snapping to the opposite side, etc.
+ * Discuss further work on heat seeking NPC
+   * Consider range - how close is the hero before this activates?
+   * Consider velocity target based approach - discuss with mentor to get the basic idea there
+   * Consider how NPC attacking works - contact? short range "stomp"? other?
+ * Consider improvements to hero magic attack
+   * Add "heat seeking" version of projectiles used by miniboss
+   * Consider if this will adjust timing of damage -- probably should?
+   * Experiment with "held key" behavior -- repeated attack with cooldown?
+
+Daily Plan 2023-03-02
+---------------------
+ * ~Video call with Mentor in the morning to start up and again in the afternoon to wrap up~
+   * Can do additional checks in the day if desired
+ * ~Discuss keys and locks~
+   * Existing Key and Lock classes are not ideal for this
+   * Make Item class, provide tags (= key/value pairs) on items, maybe?
+   * Items would be authored in the wld files like NPCs are (floor image, item image, item properties, etc.)
+   * Items could notice when hero touches (gets close enough) to them and add to inventory (hero has lItem already)
+   * Make Door class, scans hero Item list for appropriate key/value pair, allows passage if found?
+   * Doors would be authored in the wld files like NPCs are (floor image, door image, door properties, etc.)
+   * Maybe Doors consume Items that unlock them? Maybe not? May not matter in this use case.
+   * Do opened Doors persist (stay open) when player leaves and re-enters the room?
+ * ~Discuss button puzzles~
+   * Could possibly be done with Items as above as "buttons"
+   * In that case could have an ItemListener class, maybe, which gets notified on pickup for all items
+   * ItemListener could then monitor ordering
+     * If pattern matches, consume items (?) and open path (?) or take other action as appropriate
+     * If pattern doesn't match, reset items (?) so player can try again. Alt: player has to leave & re-enter.
+   * Would we want the solved/unsolved state of this to be persisted or reset when player leaves the room?
+ * ~Continue any desired work on layout~
+   * Once complete, make sure to commit to branch and push
+ * ~Continue work on miniboss NPC~
+   * Boss class should derive from Patroller class
+   * Will want to figure out interesting firing pattern -- will involve keeping track of timing
+     * Consider: author the delays between firing as a list in the yaml -- would allow tuning and variation
+   * After boss is functional, but before working on animation, should review and merge
+ * Work on flipbook animation system for boss
+   * include flipbook animation so boss can "shoot" appropriately with animation
+   * Basic authoring: In the room config, list out the "fire" or other "action" files as a list
+     * Alt: maybe author as list of "hold time" and file -- allows authoring of speeds, etc., in one spot
+     * Actions: Fire, Damage, Move (maybe with directions), etc. -- should start with known ones we need (e.g., Fire)
+   * Basic code: Load list of anims, associate with action, and then run sequence of frames when action starts
+   * Basic timing: Will need current index in list of frames, and draw appropriate one in each OnRender call, incrementing frame as we go
+ * Make "facing you" statue
+   * Remember to do this as its own branch off of the main branch
+   * Fun flavor element to add to world
+   * Should leverage animation system to turn instead of snapping to the opposite side, etc.
+ * Discuss further work on heat seeking NPC
+   * Consider range - how close is the hero before this activates?
+   * Consider velocity target based approach - discuss with mentor to get the basic idea there
+   * Consider how NPC attacking works - contact? short range "stomp"? other?
+ * Consider improvements to hero magic attack
+   * Add "heat seeking" version of projectiles used by miniboss
+   * Consider if this will adjust timing of damage -- probably should?
+   * Experiment with "held key" behavior -- repeated attack with cooldown?
+
+Daily Plan 2023-02-16
+---------------------
+ * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
+   * Can do additional checks in the day if desired
+ * ~Review changes from mentor~
+   * cleanup-priorities branch
+   * damage-rework branch
+ * ~Continue work on separate episode to demonstrate full end-to-end behaviors~
+   * See Menu.py for where to hook this up
+   * Consider some kind of interesting layout -- multiple rooms (Worlds) with different enemy types?
+ * Continue work on miniboss NPC
+   * Boss class should derive from Patroller class
+   * Will want to figure out interesting firing pattern -- will involve keeping track of timing
+     * Consider: author the delays between firing as a list in the yaml -- would allow tuning and variation
+   * Note that damage should wait -- don't worry about setting up health/hitpoints on the boss -- will be generic
+   * After boss is functional, but before working on animation, should review and merge so mentor can do generic NPC health work
+ * Work on flipbook animation system for boss
+   * include flipbook animation so boss can "shoot" appropriately with animation
+   * Basic authoring: In the room config, list out the "fire" or other "action" files as a list
+     * Alt: maybe author as list of "hold time" and file -- allows authoring of speeds, etc., in one spot
+     * Actions: Fire, Damage, Move (maybe with directions), etc. -- should start with known ones we need (e.g., Fire)
+   * Basic code: Load list of anims, associate with action, and then run sequence of frames when action starts
+   * Basic timing: Will need current index in list of frames, and draw appropriate one in each OnRender call, incrementing frame as we go
+ * Make "facing you" statue
+   * Remember to do this as its own branch off of the main branch
+   * Fun flavor element to add to world
+   * Should leverage animation system to turn instead of snapping to the opposite side, etc.
+ * Discuss further work on heat seeking NPC
+   * Consider range - how close is the hero before this activates?
+   * Consider velocity target based approach - discuss with mentor to get the basic idea there
+   * Consider how NPC attacking works - contact? short range "stomp"? other?
+ * Consider improvements to hero magic attack
+   * Add "heat seeking" version of projectiles used by miniboss
+   * Consider if this will adjust timing of damage -- probably should?
+   * Experiment with "held key" behavior -- repeated attack with cooldown?
+
 Daily Plan 2023-02-09
 ---------------------
  * Video call with Mentor in the morning to start up and again in the afternoon to wrap up
    * Can do additional checks in the day if desired
- * Code review changes for Fireball, etc.
+ * ~Code review changes for Fireball, etc.~
    * Will do this with Mentor at beginning of day
  * Continue work on miniboss NPC
    * Boss class should derive from Patroller class
@@ -13,10 +647,10 @@ Daily Plan 2023-02-09
      * Consider: author the delays between firing as a list in the yaml -- would allow tuning and variation
    * Note that damage should wait -- don't worry about setting up health/hitpoints on the boss -- will be generic
    * After boss is functional, but before working on animation, should review and merge so mentor can do generic NPC health work
- * Start setting up separate episode to demonstrate full end-to-end behaviors
+ * ~Start setting up separate episode to demonstrate full end-to-end behaviors~
    * See Menu.py for where to hook this up
    * Consider some kind of interesting layout -- multiple rooms (Worlds) with different enemy types?
-   * Could make own art for walls, floors, etc., to go with characters - remember 32x32 image size
+   * ~Could make own art for walls, floors, etc., to go with characters - remember 32x32 image size~
  * Work on flipbook animation system for boss
    * include flipbook animation so boss can "shoot" appropriately with animation
    * Basic authoring: In the room config, list out the "fire" or other "action" files as a list

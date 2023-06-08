@@ -28,8 +28,8 @@ tiles:
   $:
     image: worlds/Floorblock.png
     spawner: true
-    npc_type: pattroler
-    max_npcs: 2
+    npc_type: Boss
+    max_npcs: 1
     simultaneous_npcs: 1
     spawn_radius: 96
     npc_settings:
