@@ -370,16 +370,17 @@ class Hero:
 		self.checktime = False
 		tickCur = pygame.time.get_ticks()
 		tickInAnim = tickCur - self.tickAnimate
-		if tickInAnim >= 3500:
-			self.Hiyacount = 3
-			self.checktime = True
+		if tickInAnim >= 2500:
 			self.tickAnimate = tickCur
+			if self.Hiyacount < 3:
+				self.Hiyacount += 1
+				self.checktime = True
 
 	def UpdateAttackMagic(self):
-	
+		self.AMtimer()
 		keyStateAttack = self.mpKeyState.get(pygame.K_e)
 		if keyStateAttack.FIsPressed() and not self.fIsMagicAttackActive:
-			if(self.Hiyacount > 0 and self.checktime):
+			if(self.Hiyacount > 0):
 				self.Hiyacount -= 1
 				if not Game.game.LNpc():
 					randobj = Aimbox()
@@ -387,8 +388,6 @@ class Hero:
 				else:
 					npcbest = self.HFcount(Game.game.LNpc(), self.pos)
 					FH = Hyerball(self.pos, npcbest)
-			else:
-				self.AMtimer()
 			self.fIsMagicAttackActive = True
 		if not keyStateAttack.FIsPressed() and self.fIsMagicAttackActive:
 			self.fIsMagicAttackActive = False
