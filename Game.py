@@ -7,7 +7,6 @@ import os
 import pygame
 import sys
 import traceback
-
 import Hero
 import Menu
 import World
@@ -30,6 +29,7 @@ class RenderPri(Enum):
 	NPC = auto()
 	HERO = auto()
 	ITEM = auto()
+	HYERBALL = auto()
 	FIREBALL = auto()
 	MENU = auto()
 
@@ -40,6 +40,7 @@ class UpdatePri(Enum):
 
 	MENU = auto()
 	HERO = auto()
+	HYERBALL = auto()
 	NPC = auto()
 	ITEM = auto()
 	FIREBALL = auto()

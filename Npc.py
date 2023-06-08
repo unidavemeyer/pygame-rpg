@@ -47,7 +47,7 @@ class Npc:
 	def OnRender(self, surfScreen):
 		if Game.game.Mode() == Game.Mode.WORLDMAP:
 			surfScreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
-			Lib.RenderHpBar(surfScreen, self.pos, self.hpCur, self.hpMax)
+			Lib.RenderHpBar(surfScreen, self.pos, self.hpCur, self.hpMax, False)
 
 	def OnDamage(self, dHp):
 		self.hpCur += dHp
@@ -243,7 +243,6 @@ class HeroFinder(Npc):
 		self.hpMax = 50
 		self.hpCur = self.hpMax
 		self.surf = pygame.image.load(r"Amazoncrime.png")
-
 	def OnRender(self, surfScreen):
 		Npc.OnRender(self, surfScreen)
 
