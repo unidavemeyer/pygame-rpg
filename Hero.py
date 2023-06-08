@@ -280,7 +280,7 @@ class Hero:
 
 	def AddItem(self, item):
 		self.lItem.append(item)
-
+		
 	def AddGold(self, dGold):
 		self.gold += dGold
 

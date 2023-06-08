@@ -25,8 +25,10 @@ class RenderPri(Enum):
 	"""Enum tracking rendering priorities. Ordered from first (bottom) to last (top)."""
 
 	WORLD = auto()
+	DOOR = auto()
 	NPC = auto()
 	HERO = auto()
+	ITEM = auto()
 	HYERBALL = auto()
 	FIREBALL = auto()
 	MENU = auto()
@@ -40,7 +42,9 @@ class UpdatePri(Enum):
 	HERO = auto()
 	HYERBALL = auto()
 	NPC = auto()
+	ITEM = auto()
 	FIREBALL = auto()
+	DOOR = auto()
 	WORLD = auto()
 
 

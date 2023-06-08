@@ -2,15 +2,16 @@
 #
 # Copyright (c) 2012 by David Meyer
 
+import Door
 import Npc
 import Game
 import math
 import pygame
 import random
 import re
+import Item
 import Vec
 import yaml
-
 # NOTE (davidm) set True to get debug info printed from world operations
 
 g_fDebug = True
@@ -34,6 +35,7 @@ class World:
 		self.lPosStart = []				# start positions for hero characters
 		self.lKey = []					# keys, which interact with locks or other keys
 		self.lLock = []					# locks, which act as walls until unlocked
+		self.lDoor = []					# open/closed doors which can optionally block player/etc.
 		self.mpGroupMembers = {}		# mapping from group names to member lists
 
 		self.LoadFromFile(strPath)
@@ -66,6 +68,11 @@ class World:
 		Game.game.RemoveUpdate(self)
 		Game.game.RemoveRender(self)
 
+		# clean up any doors
+
+		for door in self.lDoor:
+			door.Kill()
+
 	def Updatepri(self):
 		return Game.UpdatePri.WORLD
 
@@ -96,10 +103,22 @@ class World:
 			key.OnUpdate()
 
 	def ColinfoFromRect(self, rectCheck):
+
+		# check walls
+
 		liRectCollide = []
 		liRectCollide.extend(rectCheck.collidelistall(self.lRectWall))
 		lRectCollide = [rect for iRect, rect in enumerate(self.lRectWall) if iRect in liRectCollide]
+
+		# check doors (closed ones)
+
+		lRectDoor = self.LRectDoor()
+		liRectCollide = []
+		liRectCollide.extend(rectCheck.collidelistall(lRectDoor))
+		lRectCollide.extend([rect for iRect, rect in enumerate(lRectDoor) if iRect in liRectCollide])
 		
+		# check locks
+
 		for lock in self.lLock:
 			if lock.FIsActive():
 				continue
@@ -111,6 +130,11 @@ class World:
 			return None
 
 		return Colinfo(lRectCollide)
+
+	def LRectDoor(self):
+		"""Generate rectangles for doors that are closed (i.e., ones things should collide with)"""
+
+		return [door.Rect() for door in self.lDoor if door.FIsClosed()]
 
 	def AddGroupMember(self, strGroup, member):
 		self.mpGroupMembers.setdefault(strGroup, []).append(member)
@@ -147,7 +171,13 @@ class World:
 
 		for lock in self.lLock:
 			lock.OnRender(surfScreen)
-
+	def ItemTrySpawn(self, mpVarValue, pos):
+		hero = Game.game.LHero()[0]
+		for item in hero.lItem:
+			if item.FMatches(mpVarValue):
+				return None
+		return Item.Item(self, mpVarValue, pos)
+		
 	def LoadFromFile(self, strPath):
 		"""Loads data from the given path and constructs the surface"""
 		""" for the world."""
@@ -166,7 +196,6 @@ class World:
 		#	- aaaaaa
 		#	- abbbba
 		#	- aaaaaa
-
 		fileIn = open(strPath, 'r')
 		mpSecData = yaml.safe_load(fileIn)
 		fileIn.close()
@@ -255,6 +284,17 @@ class World:
 										dSTile,
 										dSTile))
 
+				if mpSecData['tiles'][sym].get('item', False):
+					self.ItemTrySpawn(mpSecData['tiles'][sym], Vec.Vec(iCol * dSTile, iRow * dSTile))
+
+				if mpSecData['tiles'][sym].get('door', False):
+					self.lDoor.append(Door.Door(
+										mpSecData['tiles'][sym],
+										iCol * dSTile,
+										iRow * dSTile,
+										dSTile,
+										dSTile))
+
 		# Ensure we have a reasonable start position list (at least *some* start position)
 
 		if not self.lPosStart:
@@ -297,7 +337,6 @@ class Spawner:
 		self.sRadius = mpVarValue.get('spawn_radius', 64)
 		self.sRadiusHero = mpVarValue.get('hero_nospawn_radius', -1)
 		self.npcSettings = mpVarValue.get('npc_settings')
-
 		self.lNpcCur = []
 		self.cNpcLifetime = 0
 		self.world = world
@@ -414,7 +453,6 @@ class Spawner:
 
 		self.lNpcCur.append(npc)
 		self.cNpcLifetime += 1
-
 
 
 class Key:
