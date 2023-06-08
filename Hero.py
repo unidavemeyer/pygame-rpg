@@ -7,8 +7,48 @@ import Lib
 import pygame
 import Vec
 import Weapon
+import Npc
+import random
 
+class Hyerball():
+	
+	def __init__(self, posStart, target):
+		self.surf = pygame.image.load(r"Hyerball.png")
+		Game.game.AddUpdate(self)
+		Game.game.AddRender(self)
+		self.pos = posStart
+		self.target = target
+	
+	def Renderpri(self):
+		return Game.RenderPri.HYERBALL
 
+	def OnRender(self, surfScreen):
+		surfScreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
+	
+	def Updatepri(self):
+		return Game.UpdatePri.HYERBALL
+
+	def OnUpdate(self):
+		self.UpdateMove()
+	
+	def Kill(self):
+		Game.game.RemoveUpdate(self)
+		Game.game.RemoveRender(self)
+	
+	def UpdateMove(self):
+		dPos = self.target.pos - self.pos
+		sTarget = dPos.Len()
+		dPosdelay = Vec.VecLimitLen(dPos, 10)
+		self.pos = self.pos + dPosdelay
+		if sTarget < 10.0:
+			self.target.OnDamage(-15)	# BB (davidm) unify damage numbers somewhere?
+			self.Kill()
+
+class Aimbox:
+	def __init__(self):
+		self.pos = Vec.Vec(random.randrange(0,1000), random.randrange(0,1000))
+	def OnDamage(self, damage):
+		pass
 
 class Hero:
 	"""The game contains one or more Hero instances, which handles input, rendering, and"""
@@ -24,7 +64,7 @@ class Hero:
 		# Joystick tracking
 
 		self.joy = joy
-
+		self.tickAnimate = 0
 		# Tracking for key events
 
 		class KeyState:
@@ -59,12 +99,14 @@ class Hero:
 
 		self.v = Vec.Vec(0, 0)
 		self.pos = Vec.Vec(50, 50)
-
 		# player statistics
 
 		self.hpMax = 100
 		self.hpCur = self.hpMax
 		self.xp = 0
+		
+		self.Hiyacount = 3
+		self.Hiyacountmax = 3
 
 		# inventory
 
@@ -221,8 +263,8 @@ class Hero:
 			# BB (dave) very basic positioning here -- can flow off sides, no collision, etc.
 			surfScreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
 
-			Lib.RenderHpBar(surfScreen, self.pos, self.hpCur, self.hpMax)
-			
+			Lib.RenderHpBar(surfScreen, self.pos, self.hpCur, self.hpMax, False)
+			Lib.RenderHpBar(surfScreen, self.pos + Vec.Vec(0, 2), self.Hiyacount, self.Hiyacountmax, True)
 		elif Game.game.Mode() == Game.Mode.COMBAT:
 			# BB (davidm) draw the hero
 
@@ -308,14 +350,38 @@ class Hero:
 		vY = vMax * uUd
 
 		return Vec.Vec(vX, vY)
-		
+	def NpcFindTarget(self, lNpc, postarg):
+		dsBest = 1000
+		npcBest = None
+		for npcCheck in lNpc:
+			dsCheck = npcCheck.pos - postarg # how we get from the target position to the NPC
+			dsCheck = dsCheck.Len() # calc length
+			if dsCheck < dsBest:
+				dsBest = dsCheck
+				npcBest = npcCheck
+		return npcBest
+
+	def RechargeHiyaball(self):
+
+		tickCur = pygame.time.get_ticks()
+		tickInAnim = tickCur - self.tickAnimate
+		if tickInAnim >= 2500:
+			self.tickAnimate = tickCur
+			if self.Hiyacount < self.Hiyacountmax:
+				self.Hiyacount += 1
+
 	def UpdateAttackMagic(self):
-		
+		self.RechargeHiyaball()
 		keyStateAttack = self.mpKeyState.get(pygame.K_e)
 		if keyStateAttack.FIsPressed() and not self.fIsMagicAttackActive:
-			self.hpCur -= 10
-			for npc in Game.game.LNpc():
-				npc.OnDamage(-10)# BB (davidm) should damage numbers be unified somewhere?
+			if self.Hiyacount > 0:
+				self.Hiyacount -= 1
+				if not Game.game.LNpc():
+					randobj = Aimbox()
+					Hyerball(self.pos, randobj)
+				else:
+					npcBest = self.NpcFindTarget(Game.game.LNpc(), self.pos)
+					Hyerball(self.pos, npcBest)
 			self.fIsMagicAttackActive = True
 		if not keyStateAttack.FIsPressed() and self.fIsMagicAttackActive:
 			self.fIsMagicAttackActive = False

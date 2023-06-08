@@ -47,7 +47,7 @@ class Npc:
 	def OnRender(self, surfScreen):
 		if Game.game.Mode() == Game.Mode.WORLDMAP:
 			surfScreen.blit(self.surf, (int(self.pos.x), int(self.pos.y)))
-			Lib.RenderHpBar(surfScreen, self.pos, self.hpCur, self.hpMax)
+			Lib.RenderHpBar(surfScreen, self.pos, self.hpCur, self.hpMax, False)
 
 	def OnDamage(self, dHp):
 		self.hpCur += dHp
@@ -243,7 +243,6 @@ class HeroFinder(Npc):
 		self.hpMax = 50
 		self.hpCur = self.hpMax
 		self.surf = pygame.image.load(r"Amazoncrime.png")
-
 	def OnRender(self, surfScreen):
 		Npc.OnRender(self, surfScreen)
 
@@ -336,17 +335,15 @@ class Boss(Pattroler):
 		self.hpCur = self.hpMax
 		self.tickAttack = 0
 		self.tickAnimate = 0
-		Game.game.AddUpdate(self)
-		Game.game.AddRender(self)
 		self.fIsStage2 = False
 		self.fIsPrimed = False
-		self.surf1 = pygame.image.load(r"worker1.png")
-		self.surf2 = pygame.image.load(r"worker2.png")
-		self.surf3 = pygame.image.load(r"worker3.png")
-		self.surf4 = pygame.image.load(r"worker4.png")
-		self.surf5 = pygame.image.load(r"worker5.png")
-		self.surf6 = pygame.image.load(r"worker6.png")
-		self.surfDef = pygame.image.load(r"workerdef.png")
+		self.surf1 = pygame.image.load(r"Worker1.png")
+		self.surf2 = pygame.image.load(r"Worker2.png")
+		self.surf3 = pygame.image.load(r"Worker3.png")
+		self.surf4 = pygame.image.load(r"Worker4.png")
+		self.surf5 = pygame.image.load(r"Worker5.png")
+		self.surf6 = pygame.image.load(r"Worker6.png")
+		self.surfDef = pygame.image.load(r"Workerdef.png")
 		self.surf = self.surfDef
 	
 	def OnUpdate(self):
@@ -410,3 +407,15 @@ class Boss(Pattroler):
 		fire = Fireball(self.pos, hero.pos)
 		self.tickAttack = tickCur
 		
+	def Kill(self):
+		"""Add a boss key item to the hero's inventory upon death"""
+
+		# Add item to hero inventory; position at hero so we can update for auto-collect
+
+		hero = Game.game.LHero()[0]
+		itemKey = Item.Item(Game.game.World(), { 'tag': 'boss-key' }, hero.pos)
+		itemKey.OnUpdate()
+
+		# Run superclass behavior
+
+		super().Kill()

@@ -57,7 +57,6 @@ class World:
 		random.shuffle(liPosStart)
 
 		# Ensure we have enough start indices for everyone
-
 		lHero = Game.game.LHero()
 		while len(liPosStart) < len(lHero):
 			liPosStart.append(liPosStart[0])
@@ -85,7 +84,7 @@ class World:
 			return
 
 		# Let spawners we control do their things
-
+	
 		for spawner in self.lSpawner:
 			spawner.OnUpdate()
 
