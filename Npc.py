@@ -299,9 +299,8 @@ class Pattroler(Npc):
 	def __init__(self, world, hero):
 		Npc.__init__(self)
 
-		self.hpMax = 999
+		self.hpMax = 800
 		self.hpCur = self.hpMax
-
 		self.posGoal = Vec.Vec(300,160)
 		self.surf = pygame.image.load(r"broaintnoway.png")
 
