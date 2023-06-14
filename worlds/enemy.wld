@@ -37,12 +37,20 @@ tiles:
       sad_image: worlds/red_x.png
       group: lock1
       move_pattern: [[0,0,2], [0,4,2], [0,0,2], [0,-4,2]]
+  3:
+    image: worlds/kira-wall.png
+    door: true
+    gate: true
+    door-keytag: boss-tag
+    door-img-open: worlds/Floorblock.png
+    door-img-closed: worlds/wallsofmetal.png
+    target: fourth.wld
 plan:
   - wwwwwwwwwwwwwwwww
-  - wfffffffwfffffffw
-  - wfffffffwfffffffw
-  - wfffffffwfff$fffw
-  - wfffsfffwfffffffw
-  - wfffffffwfffffffw
-  - wfffffffwfffffffw
+  - wfffffff3fffffffd
+  - wfffffff3fffffffd
+  - wfffffff3fff$fffd
+  - wfffsfff3fffffffd
+  - wfffffff3fffffffd
+  - wfffffff3fffffffd
   - wwwwwwwwwwdwwwwww

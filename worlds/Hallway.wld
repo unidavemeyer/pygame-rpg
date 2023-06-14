@@ -46,9 +46,17 @@ tiles:
     gate: true
     target: start.wld
     move_pattern: [[0,0,2], [0,4,2], [0,0,2], [0,-4,2]]
+  3:
+    image: worlds/kira-wall.png
+    door: true
+    gate: true
+    door-keytag: yellowkey
+    door-img-open: worlds/door-open-yellow.png
+    door-img-closed: worlds/door-closed-yellow.png
+    target: fourth.wld
 plan:
   - wwwwwwwwwwwwwwwww
-  - 1fsffffffffffflf0
+  - 1fsfffffffffff3f0
   - wwwwwwwwwwwwwwwww
   - fffffffffffffffff
   - wwwwwwwwwwwwwwwww
