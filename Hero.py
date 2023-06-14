@@ -123,6 +123,7 @@ class Hero:
 		return Game.UpdatePri.HERO
 
 	def OnUpdate(self):
+
 		if Game.game.Mode() == Game.Mode.COMBAT:
 
 			# BB (dave) Handle damge, etc.
@@ -208,7 +209,8 @@ class Hero:
 				if npc.FShouldInteract(rectHero):
 					npc.OnInteract(self)
 					break
-			
+		if(self.hpCur <= 0):
+			Game.game.OnNewGame(Game.game.StrWorldNewGameLast())
 		self.UpdateAttackMagic()
 			
 	def Handlerpri(self):

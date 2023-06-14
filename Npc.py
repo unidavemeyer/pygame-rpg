@@ -239,16 +239,23 @@ class Animal(Npc):
 class HeroFinder(Npc):
 	def __init__(self, world, hero):
 		Npc.__init__(self)
-		self.dHpAttack = -5	# BB (davidm) currently unused
 		self.hpMax = 50
 		self.hpCur = self.hpMax
+
+		self.dHpAttack = -5		# damage per attack
+		self.dTAttack = 2.0		# delay between attacks
+		self.dSAttack = 20.0	# attack range
+		self.tickLastAttack = 0	# when the last attack happened
+
 		self.surf = pygame.image.load(r"Amazoncrime.png")
+
 	def OnRender(self, surfScreen):
 		Npc.OnRender(self, surfScreen)
 
 	def OnUpdate(self):
 		Npc.OnUpdate(self)
 		self.UpdateMove()
+		self.UpdateAttack()
 
 	def UpdateMove(self):
 		# BB what do we want to do with multiple heros bros? - ZAC
@@ -256,6 +263,28 @@ class HeroFinder(Npc):
 		dPos = hero.pos - self.pos
 		dPosMove = Vec.VecLimitLen(dPos, random.randrange(1,6))
 		self.SetPos(self.pos + dPosMove)
+
+	def UpdateAttack(self):
+		"""Attack all heroes that are in range, if allowed"""
+
+		# Rate limit how fast we can attack
+
+		# NOTE (davidm) ticks are documented to be in milliseconds, so we can
+		#  convert easily to seconds here
+
+		tickCur = pygame.time.get_ticks()
+		dT = (tickCur - self.tickLastAttack) / 1000.0
+		if dT < self.dTAttack:
+			return
+
+		# Attack any hero that we are close enough to
+
+		for hero in Game.game.LHero():
+			dPos = hero.pos - self.pos
+			dS = dPos.Len()
+			if dS < self.dSAttack:
+				hero.OnDamage(self.dHpAttack)
+				self.tickLastAttack = tickCur
 
 class Fireball():
 	
@@ -299,9 +328,8 @@ class Pattroler(Npc):
 	def __init__(self, world, hero):
 		Npc.__init__(self)
 
-		self.hpMax = 999
+		self.hpMax = 800
 		self.hpCur = self.hpMax
-
 		self.posGoal = Vec.Vec(300,160)
 		self.surf = pygame.image.load(r"broaintnoway.png")
 

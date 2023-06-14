@@ -18,6 +18,9 @@ tiles:
   3:
     image: worlds/Enterme.png
     gate: true
+    door-keytag: yellowkey
+    door-img-open: worlds/door-open-yellow.png
+    door-img-closed: worlds/door-closed-yellow.png
     target: fourth.wld
   4:
     image: worlds/Enterme.png
