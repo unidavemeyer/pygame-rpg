@@ -41,7 +41,7 @@ class Hyerball():
 		dPosdelay = Vec.VecLimitLen(dPos, 10)
 		self.pos = self.pos + dPosdelay
 		if sTarget < 10.0:
-			self.target.OnDamage(-25)	# BB (davidm) unify damage numbers somewhere?
+			self.target.OnDamage(-30)	# BB (davidm) unify damage numbers somewhere?
 			self.Kill()
 
 class Aimbox:
