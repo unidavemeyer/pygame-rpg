@@ -39,14 +39,12 @@ tiles:
       move_pattern: [[0,0,2], [0,4,2], [0,0,2], [0,-4,2]]
   u:
      image: worlds/green_box.png
-     item: true
-     tag: yellowkey
+     gate: true
+     target: third.wld
 plan:
   - wwwwwwwwwwwwwwwww
-  - wfffffffwfffffffw
-  - wfafffafwfffffffw
-  - wffffffflffff$ffw
+  - wffffffflfffffffw
+  - dsffffffffffffffu
   - wfffsffflfffffffw
-  - wfafffafwfffffffw
-  - wfffffffwfffffffw
-  - wwwwwwwwwwdwwwwww
+  - wwwwwwwwwwwwwwwww
+

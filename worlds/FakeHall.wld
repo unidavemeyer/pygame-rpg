@@ -1,0 +1,60 @@
+tiles:
+  w:
+    image: worlds/blackwall.png
+    wall: true
+  f:
+    color: [0, 0, 0]
+  s:
+    color: [0, 0, 0]
+    start: true
+  d:
+    image: worlds/Enterme.png
+    gate: true
+    target: start.wld
+  a:
+    image: worlds/kira-wall.png
+    key: true
+    activate_groups: [lock1]
+    held_image: worlds/key_held.png
+    unheld_image: worlds/key_unheld.png
+    group: key1
+    sticky: true
+  l:
+    image: worlds/blackwall.png
+    lock: true
+    group: lock1
+    inactive_image: worlds/Keylock.png
+    active_image: worlds/blackfloor.png
+  $:
+    image: worlds/kira-wall.png
+    spawner: true
+    npc_type: animal
+    max_npcs: 2
+    simultaneous_npcs: 2
+    spawn_radius: 96
+    npc_settings:
+      happy_image: worlds/green_box.png
+      sad_image: worlds/red_x.png
+      group: lock1
+  0:
+    image: worlds/Enterme.png
+    gate: true
+    target: enemy.wld
+    move_pattern: [[0,0,2], [0,4,2], [0,0,2], [0,-4,2]]
+  1:
+    image: worlds/key_held.png
+    gate: true
+    target: thirdfake.wld
+    move_pattern: [[0,0,2], [0,4,2], [0,0,2], [0,-4,2]]
+plan:
+  - wwwwwwwwwwwwwwwww
+  - wfffffff1fffffffw
+  - wwwwwwwfffwwwwwww
+  - wfffffffffffffffw
+  - wwwwwwfffffwwwwww
+  - wfffffffffffffffw
+  - wwwwwfffffffwwwww
+  - wfffffffffffffffw
+  - wwwwwwfffffwwwwww
+  - wfffffffsfffffffw
+  - wwwwwwwwwwwwwwwww

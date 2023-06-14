@@ -7,14 +7,10 @@ tiles:
   s:
     image: worlds/wallsofwood.png
     start: true
-  p:
-    color: [192, 122, 64]
-    gate: true
-    target: thirdfake.wld
   d:
     color: [192, 192, 64]
     gate: true
-    target: secondnext.wld
+    target: finalkey.wld
   a:
     image: worlds/kira-wall.png
     key: true
@@ -30,11 +26,11 @@ tiles:
     inactive_image: worlds/red_x.png
     active_image: worlds/green_box.png
   $:
-    image: worlds/kira-wall.png
+    image: worlds/wallsofwood.png
     spawner: true
-    npc_type: animal
-    max_npcs: 2
-    simultaneous_npcs: 2
+    npc_type: herofinder
+    max_npcs: 3
+    simultaneous_npcs: 3
     spawn_radius: 96
     npc_settings:
       happy_image: worlds/green_box.png
@@ -55,11 +51,11 @@ tiles:
     door-img-closed: worlds/door-closed-red.png
 
 plan:
-  - wwwwwwwwwpwwwwwww
-  - wfffwfffwfffffffw
-  - wfffffffwfwwwwwww
-  - wfffwffwwffffwffd
-  - wsffwfffffwffwffw
-  - wfffwwwwwwfffwffw
-  - wffffffpwfffffffw
+  - wwwwwwwwwwwwwwwww
+  - wffffffffffffff$w
+  - wwwwwwwwwwwfwwffw
+  - dffffffwfffffwffw
+  - wwwwwwfwwwwwwwffw
+  - wsffffffffffffffw
+  - wffffffffwwwwwwww
   - wwwwwwwwwwwwwwwww

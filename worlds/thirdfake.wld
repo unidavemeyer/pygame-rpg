@@ -14,7 +14,7 @@ tiles:
   i:
     image: worlds/Enterme.png
     gate: true
-    target: thirdnext.wld
+    target: Grabthemegakey.wld
   a:
     image: worlds/wallsofwood.png
     key: true
@@ -30,11 +30,11 @@ tiles:
     inactive_image: worlds/Keylock.png
     active_image: worlds/Floorblock.png
   $:
-    image: worlds/kira-wall.png
+    image: worlds/wallsofmetal.png
     spawner: true
-    npc_type: animal
-    max_npcs: 2
-    simultaneous_npcs: 2
+    npc_type: herofinder
+    max_npcs: 10
+    simultaneous_npcs: 10
     spawn_radius: 96
     npc_settings:
       happy_image: worlds/green_box.png
@@ -42,9 +42,9 @@ tiles:
       group: lock1
       move_pattern: [[0,0,2], [0,4,2], [0,0,2], [0,-4,2]]
 plan:
-  - wwwwwwwwwwwwwwwww
-  - wfffffffwfffffffw
-  - wfafffffwfffffffw
-  - dsffffffwfffffffi
-  - wffffffflfffffffw
-  - wwwwwwwwwwdwwwwww
+  - wwwwwwwwwwwwwwwwwww
+  - wfffffffffffffffffw
+  - wfffffffffffffffffw
+  - wsffffffffffff$fffd
+  - wffffffflfffffffffw
+  - wwwwwwwwwwwwwwwwwww

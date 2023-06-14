@@ -2,8 +2,11 @@ tiles:
   w:
     image: worlds/wallsofwood.png
     wall: true
+  v:
+    image: worlds/wallsofmetal.png
+    wall: true
   f:
-    color: [0, 0, 0]
+    image: worlds/editfloor.png
   s:
     color: [0, 0, 0]
     start: true
@@ -46,11 +49,30 @@ tiles:
     gate: true
     target: start.wld
     move_pattern: [[0,0,2], [0,4,2], [0,0,2], [0,-4,2]]
+  h:
+    image: worlds/Ent.png
+    gate: true
+    target: thirdfake.wld
+    move_pattern: [[0,0,2], [0,4,2], [0,0,2], [0,-4,2]]
+  j:
+    image: worlds/blackbox.png
+    gate: true
+    target: FakeHall.wld
+    move_pattern: [[0,0,2], [0,4,2], [0,0,2], [0,-4,2]]
+  k:
+    image: worlds/Enterme.png
+    gate: true
+    target: second.wld
+    move_pattern: [[0,0,2], [0,4,2], [0,0,2], [0,-4,2]]
 plan:
-  - wwwwwwwwwwwwwwwww
-  - 1fsfffffffffwwwww
-  - wwwwwwwwwwwfwwwww
-  - wwwwwwwwwwwfwwwww
-  - wwwwwwwwwwwfwwwww
-  - wwwfffffffffwwwww
-  - wwwwwwwwwwwwwwwww
+  - vvvvvwwwwwwwwwwwwwwww
+  - vfffffffffffffffwwwww
+  - vfffffffffffffffhwwww
+  - vfffffffffffffffwwwww
+  - vfffffffffffffffwwwww
+  - vsffffffffffffffjwwww
+  - vfffffffffffffffwwwww
+  - vfffffffffffffffwwwww
+  - vfffffffffffffffkwwww
+  - vfffffffffffffffwwwww
+  - vvvvvwwwwwwwwwwwwwwww
